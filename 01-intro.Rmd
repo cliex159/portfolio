@@ -1,0 +1,1824 @@
+# (PART) Personal Projects {.unnumbered}
+
+# Life Expectancy {.unnumbered}
+
+<h3>Description</h3>
+<p>This is a project in the course "Financial Mathematics" in which students are asked to visualize the life expectancy for a chosen country. I was able to scrape all of the datasets and perform further analysis in the big data.</p>
+
+## Datasets {.unnumbered}
+
+```{r setup, include=FALSE}
+library(httr)
+library(rvest)
+library(dplyr)
+library(data.table)
+library(gapminder)
+library(stringr)
+library(ggplot2)
+library(readr)
+library(tidyr)
+library(stringr)
+library(tidyverse)
+library(lubridate)
+library(readxl)
+library(highcharter)
+library(tidyquant)
+library(timetk)
+library(tibbletime)
+library(quantmod)
+library(PerformanceAnalytics)
+library(scales)
+library(plotly)
+library(rvest)
+library(xml2)
+library(tibble)
+library(quantreg)
+library(SparseM)
+library(tidyverse)
+library(kableExtra)
+library(rmarkdown)
+library(tidyverse)
+library(httr)
+library(rvest)
+library(urltools)
+library(purrr)
+library(RCurl)
+library(stringr)
+library(rebus)
+library(qdap)
+library(tidytext)
+library(tm)
+library(SnowballC)
+library(scales)
+library(rmarkdown)
+library(knitr)
+library(httr)
+library(rvest)
+library(dplyr)
+library(data.table)
+library(gapminder)
+library(stringr)
+library(ggplot2)
+library(readr)
+library(tidyr)
+library(stringr)
+```
+```{r global-options, include=FALSE}
+knitr::opts_chunk$set(fig.width=12, fig.height=8, fig.path='Figs/',
+                      echo=TRUE, warning=FALSE, message=FALSE)
+```
+
+### The Information Table {.unnumbered}
+
+First, we shall need to create an information table to observe *(1) the countries*, *(2) the HTTPS link access to the* **mortality.org** *for each country dataset* and *(3) the range of years accordingly*. This would be much more helpful along the way whenever we encounter the index or the time being of the datasets.
+
+```{r, results="hide"}
+## Information table {.unnumbered}
+countries =c("Australia", "Finland", "Latvia", "Slovenia", "Austria", "France", "Lithuania", "Spain", "Belarus", "Germany", "Luxembourg", "Sweden", "Belgium", "Greece", "Netherlands", "Switzerland", "Bulgaria", "Hong Kong", "New Zealand", "Taiwan", "Canada", "Hungary", "Norway", "U.K.", "Chile", "Iceland", "Poland", "U.S.A.", "Croatia", "Ireland", "Portugal", "Ukraine", "Czechia", "Israel", "Republic of Korea", "Denmark", "Italy", "Russia", "Estonia", "Japan", "Slovakia")
+
+inform=data.frame(country = countries,
+                  http= paste(rep("https://www.mortality.org",41),GET("https://www.mortality.org") %>% 
+                                read_html() %>% 
+                                html_nodes(xpath='//*[@id = "countries_table"]/tr/td/p/a') %>%
+                                html_attr('href'),sep=""),
+                  years=rep(0,41))
+
+## A function to extract years for each dataset
+get_years=function(http){
+  get=GET(http)
+  html <- read_html(get)
+  year=html %>% html_nodes(xpath='//p[contains(text(),"Life tables")]/../../../tr[12]/td[2]/p') %>% 
+    html_text(trim=TRUE)
+  return(year)
+}
+
+## Adding years to information table.  
+inform$years[1:41]=sapply(inform$http[1:24],get_years,USE.NAMES = FALSE)
+```
+
+```{r}
+glimpse(inform)
+```
+
+### Scraping the Data {.unnumbered}
+
+Note that using Rstudio Cloud yields much a quicker result! At this point, we shall have all the HTTPS and xpath to collect all of 40 datasets and store it in the *full_df* variable. This is a time-consuming step since we are having the conversation with a dataframe containing more than 800 thousand entries. Function data_set is constructed with the idea that:  
+
+1. Create the HTTPS connection to each country data using the xpath from **mortality.org** homepage.  
+2. Use the *read_table* function with the *content* argument to import txt file into R. Since **mortality.org** requires a personal account for downloading any data provided, we shall need to input the account in the *authenticate* argument.  
+3. Filter needed columns.  
+
+```{r, results="hide"}
+## A function to scrape data from the website.  
+data_set= function(i,gender){
+  print(paste("Successfully scrape ",i,":",inform$country[i]))
+  if(gender=='females'){
+    data=read_table(content(GET(paste(rep("https://www.mortality.org"),GET(inform$http[i]) %>% read_html() %>% html_nodes(xpath='//p[contains(text(),"Life tables")]/../../../tr[13]/td[3]/div/a') %>% html_attr("href"),sep=""),authenticate(user="dattran.hcmiu@gmail.com", password="1632536609", type = "basic"))),col_names = FALSE)
+  } else {
+    data=read_table(content(GET(paste(rep("https://www.mortality.org"),GET(inform$http[i]) %>% read_html() %>% html_nodes(xpath='//p[contains(text(),"Life tables")]/../../../tr[14]/td[3]/div/a') %>% html_attr("href"),sep=""),authenticate(user="dattran.hcmiu@gmail.com", password="1632536609", type = "basic"))),col_names = FALSE)
+  }
+  data_3=data[3:nrow(data),1:7]
+  colnames(data_3)=c("year", "Age", "mx", "qx", "ax", "lx", "dx")
+  data_3$country=inform$country[i]
+  data_3
+}
+
+## A loop to combine 2*40 data tables 
+table_combine=function(data_gender,gender){
+  for(i in 1:40){
+    new_data_gender=data.frame(data_gender[i])
+    if(i==1){
+      full_data_gender=new_data_gender
+    } else{
+      full_data_gender=rbind(full_data_gender,new_data_gender)
+    }
+  }
+  if(gender=="females"){
+    full_data_gender=full_data_gender %>% mutate(gender="females")
+  } else{
+    full_data_gender=full_data_gender %>% mutate(gender="males")
+  }
+}
+
+## Big data {.unnumbered}
+## Error for 25:Chile data still haven't been explained so we only apply the scrape data function for 40 numbers 
+full_df=rbind(table_combine(lapply(c(1:24,26:41),data_set,"females"),"females"),
+              table_combine(lapply(c(1:24,26:41),data_set,"males"),"males"))
+## Transform datatype to numeric 
+full_df=transform(full_df,Age=as.numeric(Age),
+                  qx=as.numeric(qx),
+                  lx=as.numeric(lx),
+                  year=as.numeric(year))
+```
+```{r}
+glimpse(full_df)
+```
+
+## USA Insights {.unnumbered}
+
+### Mortality rates {.unnumbered}
+
+The following codes compare mortality rates across the ages ranging from zero to one hundred and ten.
+
+```{r}
+## Filter USA, 2019. line: qx~Age by gender 
+usa_2019 = full_df %>% 
+         filter(country=="U.S.A.",
+                year==2019)
+ggplot(usa_2019, 
+       aes(x=Age, 
+           y=qx,group=1)) +
+geom_line(col="red") +
+labs(x="Age x", 
+     y= expression(paste("Mortality rate ", q[x])),
+     title="Mortality rates (U.S.A., 2019)") +
+facet_wrap(~gender)
+```
+
+The look is similar to the graph of an exponential function so it is suggested that taking logarithm and we may have further insights.
+
+```{r}
+## Filter USA, 2019. line: log(qx)~Age by gender 
+ggplot(usa_2019, 
+       aes(x=Age, 
+           y=log(qx),group=1)) +
+geom_line(col="red") +
+labs(x="Age x", 
+     y= expression(paste("Log Mortality rate ", q[x])), 
+     title="Log Mortality rates (U.S.A., 2019)") +
+facet_wrap(~gender)
+```
+A glance at this log mortality graph indicates three important features of the evolution of mortality rates:
+
+1. The rate for infants is locally high for the newborns, then it decreases.  
+2. It shows an upward hiccup around the age of eighteen. This is called the accident hump. The accident hump is often caused by increased fatalities from car accidents and is (usually more pronounced) in males compared to females.  
+3. And then it straightens back again, reflecting the human aging process.  
+
+### Survival probablity {.unnumbered}
+
+It is convenient to illustrate this section using examples. We calculate the 5-year survival probability of an 18-year-old. First extract px as 1 minus qx stored in the life table. We need the survival probability of an 18-year old until a 22-year-old. We then multiply these one-year survival probabilities to get the 5-year survival probability. Using the prod() function on the vector of relevant one-year survival probabilities gives you the result.
+$${}_{k}p_{x}=p_x.p_{x+1}...p_{x+k-1}$$
+Alternatively, we could evaluate this probability as the division of the number of alive people $l_x$ in different ages. Up to rounding errors, both calculations lead to the same result!
+$${}_{k}p_{x}=\frac{l_{x+k}}{l_{x}}$$
+```{r}
+## Filter USA,2019, Age>=18 
+## Add column survival 
+usa_survival = full_df %>% 
+         filter(country=="U.S.A.",
+                year==2019,
+                Age>=18) %>% 
+         group_by(gender) %>% 
+         mutate(survival=cumprod(1-qx),
+                k=0:(n()-1)) %>% 
+         ungroup()
+## Line: survival~1:92 (18-110) by gender 
+ggplot(usa_survival,
+       aes(x=k,y=survival)) +
+geom_line(col="red") +
+labs(x="k", 
+     y=expression(paste(""[k], "p"[18])),
+     title="Survival probabilities for people in age 18, 2019, U.S.A.") +
+facet_wrap(~gender)
+```
+
+This graph indicates the probability of how many more years people would still be alive after the age of eighteen, for example, the chance of an eighteen girl to survive more fifty years up to sixty-eight years old should be about ninety percent.
+
+### Life expectancy {.unnumbered}
+
+Let's start from the future lifetime, $K_x$, that is the number of whole years lived by (x). The probability that Kx takes value k is the probability that an x-year-old survives k years and then dies within the next year, at age x+k. Further manipulation shows that this probability is the difference between the k and the (k+1)-year survival probability of an x-year-old. 
+$$P(K_x=k)={}_{k}p_{x}.q_{x+k}={}_{k}p_{x}-{}_{k+1}p_{x}$$
+We can verify this equivalence empirically for the example of an 18-year-old. What is his 5-year deferred mortality probability? In the first expression you apply the reasoning with the 5-year survival probability and the mortality rate at age 23, while the second expression takes the difference between the 5- and the 6-year survival probability. Both expressions lead to the same result!
+
+$${}_{k}p_{x}.q_{x+k}$$
+
+$${}_{k}p_{x}-{}_{k+1}p_{x}$$
+
+Using the probability function of $K_x$, it is now straightforward to calculate the expected value of this random variable. That is the life expectancy of an x-year-old, expressed in whole years. For each possible outcome k, you multiply k with the probability that $K_x$ realizes this outcome. Taking the sum then results in the life expectancy. Further simplification leads to a simple expression: the sum of the k-year survival probabilities when k runs from 1 to its maximum possible value.
+
+$$E[K_x]= \sum_{k=0}^{\infty} k \times P(K_x=k) = \sum_{k=0}^{\infty} k \times ({}_{k}p_{x}-{}_{k+1}p_{x}) =  \sum_{k=1}^{\infty}{}_{k}p_{x}$$
+```{r}
+## Function to compute the curtate expected future lifetime for a given age and life table 
+curtate_future_lifetime <- function(age, life_table) {
+  px <- 1-life_table$qx
+  kpx <- cumprod(px[(age+1):length(px)])
+  sum(kpx)
+}
+
+## Vector of ages 
+ages <- (full_df %>% 
+           filter(country=="U.S.A.",
+                  year==2019,
+                  gender=="females") %>% 
+           mutate(Age=replace_na(Age,110)))$Age
+
+## Curtate future lifetimes for all ages 
+future_lifetimes <- sapply(ages, 
+                           curtate_future_lifetime, 
+                           full_df %>% 
+                             filter(country=="U.S.A.",
+                                    year==2019,
+                                    gender=="females") %>% 
+                             mutate(Age=replace_na(Age,110)))
+
+## Future lifetime by age 
+plot(ages, 
+     future_lifetimes, 
+     type = 'l', 
+     lwd = 2, 
+     col = "green", 
+     xlab = "Age x", 
+     ylab = "Future lifetime", 
+     main = "Future lifetime by age, females, 2019, U.S.A.")
+```
+So it’s quite intuitive that women in the USA live up to 80 years old, and for each more age they live the expected value decreases by 1 forming the linear pattern from zero to eighty, after which we see the extreme cases following just a small little tail.
+```{r}
+## Filter USA. line qx~Age by gender, color by year 
+usa = full_df %>% 
+         filter(country == "U.S.A.")
+ggplot(usa, 
+       aes(x=Age, y=qx, color = year)) +
+geom_line(aes(group = year)) + 
+facet_wrap(~gender) +
+labs(x="Age x", 
+     y= expression(paste("Mortality rate ", q[x])),
+     title="Mortality rates (USA, 1933-2019)")
+```
+Adding another dimension year to the plot with the attribute color, it is obvious to say as the years proceeded, the mortality rate has been stably improved and thus firmly decreased.
+We could try to compare the lifetime across the year between males and females:
+```{r}
+## Filter USA.  
+## Add column life_expectancy 
+usa_lifeex = full_df %>% 
+         filter(country == "U.S.A.") %>% 
+         group_by(gender,year) %>% 
+         mutate(kpx=cumprod(1-qx),
+                life_expectancy=sum(kpx)) %>% 
+         filter(Age==0)
+## line: life_expectancy~year, color by gender 
+ggplot(usa_lifeex, 
+       aes(x=year, y = life_expectancy, color = gender)) +
+geom_line() + 
+labs(x="Year", 
+     y= "Life Expectancy",
+     title="Life Expectancy, U.S.A.")
+```
+It is evident to suggest that women outlived, outlive and will outlive men.
+
+## Big Data {.unnumbered}
+
+### The general looks {.unnumbered}
+
+```{r}
+## Add column life_expectancy.  
+## Filter Age=0 
+age0_lifeex = full_df %>%
+         group_by(year,country,gender) %>% 
+         mutate(Age=replace_na(Age,110),
+                kpx=cumprod(1-qx),
+                life_expectancy=sum(kpx)) %>% 
+                filter(Age==0) %>% 
+                ungroup()
+## scatter:life_expectancy~year color by country by gender 
+ggplot(age0_lifeex,
+       aes(x=year,y=life_expectancy,color=country)) + 
+geom_point() +
+facet_wrap(~gender) +
+ggtitle("Lifetime in 40 countries between men and women") +
+  xlab("Year") + ylab("Life Expectancy")
+```
+This colorful scatter plot summarizes how the data of 800.000 entries behave when it comes to life duration among top-ranking countries across the years. This may be overwhelming but this gives the strongest evidence for developing lifetime as years going by. What’s more, while the maximum (point of) males is just higher than eighty, that of females converges to the age of ninety just for the next few years.
+
+```{r}
+## Add column life_expectancy 
+## Filter Age=0, interesting countries 
+some_age0_lifeex = full_df %>% 
+         filter(country %in% c("Australia", 
+                               "Canada", 
+                               "Hong Kong", 
+                               "Israel", 
+                               "Japan", 
+                               "Netherlands", 
+                               "New Zealand", 
+                               "Norway", 
+                               "Republic of Korea", 
+                               "Taiwan", 
+                               "U.K.", 
+                               "U.S.A.")) %>% 
+         group_by(gender,year) %>% 
+         mutate(kpx=cumprod(1-qx),
+                life_expectancy=sum(kpx)) %>% 
+         filter(Age==0)
+## life_expectancy~year, color by gender by country 
+ggplot(some_age0_lifeex, 
+       aes(x=year, y = life_expectancy, color = gender)) +
+geom_line() + 
+facet_wrap(~country) +
+ggtitle("Comparing women and men lifetime through years between 12 countries") +
+  xlab("Year") + ylab("Life Expectancy")
+```
+We can use line graph to compares the expectation of life for both sexes. Filter only countries of interest and split the data across the countries using is another way to view the data and the years available accordingly. Korea and Sweden have the smallest and the biggest dataset respectively. 
+
+### Big Data joining Gapminder {.unnumbered}
+
+```{r}
+df_gapminder = full_df %>% 
+       inner_join(gapminder,by=c("year","country")) %>% 
+       group_by(year,country,gender) %>% 
+       mutate(Age=replace_na(Age,110),
+              kpx=cumprod(1-qx),
+              life_expectancy=sum(kpx)) %>% 
+       filter(Age==0) %>% 
+       ungroup() %>%
+       filter(country %in% c("Australia", 
+                               "Canada", 
+                               "Hong Kong", 
+                               "Israel", 
+                               "Japan", 
+                               "Netherlands", 
+                               "New Zealand", 
+                               "Norway", 
+                               "Republic of Korea", 
+                               "Taiwan", 
+                               "U.K.", 
+                               "U.S.A."))
+
+ggplot(df_gapminder,
+       aes(x=year,y=life_expectancy,color=continent)) + 
+geom_point() +
+facet_wrap(~gender) +
+geom_text(aes(label=country),hjust=1, vjust=2,size=2) +
+ggtitle("How lifetime through years behave in continents between men and women") +
+  xlab("Year") + ylab("Life Expectancy")
+```
+It’s obvious to spot that the top 1 winner is Asia with 2 recurring champions Hong Kong and Japan and all of the other rich countries.
+```{r, include=FALSE}
+data(gapminder)
+gapminder$country=as.character(gapminder$country)
+gapminder$country=replace(gapminder$country, gapminder$country=="Hong Kong, China", "Hong Kong")
+gapminder$country=replace(gapminder$country, gapminder$country=="United Kingdom", "U.K.")
+gapminder$country=replace(gapminder$country, gapminder$country=="United States", "U.S.A.")
+gapminder$country=replace(gapminder$country, gapminder$country=="Czech Republic", "Czechia")
+gapminder$country=replace(gapminder$country, gapminder$country=="Korea, Rep.", "Republic of Korea")
+gapminder$country=replace(gapminder$country, gapminder$country=="Slovak Republic", "Slovakia")
+```
+
+Turning interests to 2007, let's use available information in gapminder to conduct some analysis:
+```{r}
+## Scatter:gdpPercap~life_expectancy, 2007 color by continent by gender 
+gender_continent_2007 = full_df %>% 
+         inner_join(gapminder,by=c("year","country")) %>% 
+         filter(country %in% c("Australia", 
+                               "Canada", 
+                               "Hong Kong", 
+                               "Israel", 
+                               "Japan", 
+                               "Netherlands", 
+                               "New Zealand", 
+                               "Norway", 
+                               "Republic of Korea", 
+                               "Taiwan", 
+                               "U.K.", 
+                               "U.S.A."),year==2007) %>%
+         group_by(year,country,gender) %>% 
+         mutate(Age=replace_na(Age,110),
+                kpx=cumprod(1-qx),
+                life_expectancy=sum(kpx)) %>% 
+         filter(Age==0) %>% 
+         ungroup() %>%
+         group_by(year,gender) %>%
+         arrange(desc(life_expectancy))
+ggplot(gender_continent_2007,
+       aes(x=gdpPercap,y=life_expectancy,color=continent,size=pop)) + 
+geom_point() +
+facet_wrap(~gender) +
+geom_text(aes(label=country),hjust=1, vjust=1,size=2) + 
+  ggtitle("How lifetime, and GDP per Capital behave between men and women") +
+  xlab("Year") + ylab("Life Expectancy")
+```
+Although the USA was superior with respect to the GDP per capita, the large population resulting from a whole lot of immigrants dragged the life expectancy down the road. So let's verify this assumption by viewing the data over the course of 12 5-year from 1952. However, we have to leave 1 dimension for the variable year to come in. Since the graph of women and men behave in a pretty similar way, we could take females and observe the consistent result.
+```{r}
+## Scatter:gdpPercap~life_expectancy, color by continent  
+continent_female = full_df %>% 
+         inner_join(gapminder,by=c("year","country")) %>% 
+         filter(country %in% c("Australia", 
+                               "Canada", 
+                               "Hong Kong", 
+                               "Israel", 
+                               "Japan", 
+                               "Netherlands", 
+                               "New Zealand", 
+                               "Norway", 
+                               "Republic of Korea", 
+                               "Taiwan", 
+                               "U.K.", 
+                               "U.S.A."),gender=="females") %>%
+         group_by(year,country,gender) %>% 
+         mutate(Age=replace_na(Age,110),
+                kpx=cumprod(1-qx),
+                life_expectancy=sum(kpx)) %>% 
+         filter(Age==0) %>% 
+         ungroup() %>%
+         group_by(year,gender) %>%
+         arrange(desc(life_expectancy))
+## Females, by years 
+ggplot(continent_female,
+       aes(x=gdpPercap,y=life_expectancy,color=continent,size=pop)) + 
+geom_point() +
+facet_wrap(~year) +
+geom_text(aes(label=country),hjust=1, vjust=1,size=2) +
+ggtitle("How population, GDP per Capital and lifetime behave through years") +
+  xlab("GDP per Capita") + ylab("Life Expectancy")
+```
+
+# Wage Determinants {.unnumbered}
+
+<h3>Description</h3>
+<p>This is a report for the presentation in the course "Research Methods in Finance" where students are asked to use R and apply statistical modeling to real datasets.  After scraping from <a href="careerbuilder.vn">careerbuilder.vn</a>, I used "Quantile Regression" to summarize important information including a manager's average salary.</p>
+
+## Introduction {.unnumbered}
+
+While Salary is one of the most important motivators in labor force, the existence of wage disparity is
+inevitable. According to economic theory, it is possible to divide the causes of the disparity wages into two
+groups. The first group can include the elements caused by changes in the labor market, the difference or the
+change of the working environment at the workplace, due to different differ in the nature of the work or due
+to differences in the characteristics of workers themselves. The second group includes causes about social
+stigma is either caused by discrimination in society or by people employment for employees. This group of
+causes leads to inequality in society. Therefore, in order to (1) determine the level of wage disparity at
+Vietnam, (2) identify factors that actually affect wages and (3) decompose the wage gap to clarify the
+difference.
+
+To accomplish the above purposes, the writing aims to complete the following goals:
+
+* Introduction to the theoretical basis and applicability of the regression method percentile and wage
+differential decomposition method based on percentile regression.
+* Regression of percentile function of real wages in Vietnam by means of percentile regression with
+bias correction sample selection and endogenous remediation.
+* Determine the wage gap by minimum years of experience with the data collected from an online
+recruitment platform.
+
+With selected research objectives and research methods, the paper topic has scientific and powerful
+meanings:
+
+* The topic applies the percentile regression method, a regression technique was introduced by
+Koenker & Bassett (1978) and has been used extensively widespread in the world but not yet
+popular in Vietnam. Very few of the Research project in Vietnam applying percentile regression
+technique, especially applied in the study of wage function and decomposition wage difference.
+* This financial research project presents a concise, complete and systematic way of theory of
+percentile regression.
+* The wage function of labor groups is estimated using Percentile regression method with adjustment
+for selection bias sample and handle endogenous phenomena in the model, giving an estimate solid
+and reliable quality.
+
+## Literature Review {.unnumbered}
+
+In nineteen seventy four, Mincer introduced a wage equation showing the relationship between the logarithm
+of income with factors such as years of schooling, work experience, and the square of the experience
+variable based on the argument that the amount of wages paid to a person now depends on his or her
+previous investment in human capital. However, this equation is quite tough to estimate since it involves a
+logarithm and a lot of variables contribute to this complicated model.
+
+**Mincer earnings function:**
+
+$$\ln(\omega) = \ln(\omega_0)+\rho s+ \beta_1x+\beta_2x^2$$
+
+* $\omega$: earnings
+* $\omega_0$: earnings of someone with no education and experience
+* $s$: years of education
+* $x$: years of experience
+* $\rho, \beta_1, \beta_2$: regression coefficients
+
+After Card D's research (1994), many other studies extended Mincer's wage equation using different
+independent variables in the open Mincer (1974) wage function.
+Some typical studies before percentile regression was applied:
+
+* Salary analysis: Starting with the study of Edgewort (1922). Followed by other studies by Becker
+(1957), Dunlop (1957), Slichter (1950), Cullen (1956), Dalton & Ford (1977) and Long &
+Link(1983), Dickens & Katz (1987), Krueger & Summers(1988) and Groshen (1991), Ferber &
+Green (1982); Lindley, Fish and Jackson (1992), Blackaby, Booth and Frank (2005).
+* Some typical studies on wage disparity applied in the past: reduce percentiles to the wage function:
+Buchinsky (1994) initiated the application of percentile regression method in estimating the function
+salary variable regression. Followed by other Fortin studies and Lemieux (1998), Ajwad et al.
+(2002), Albrecht et al associates (2003), Machado & Mata (2005), Melly (2006)
+Gunawardena(2006) Arulampalam et al (2007), Nestic (2010), Del Río, Gradín&Cantó (2011). 
+
+Very few studies in Vietnam use percentile regression for regression wage function and wage differential
+decomposition. Typical can be mentioned to the study of Hung et al (2007a) and Hung T.P and other
+associates (2007b).
+
+## Data {.unnumbered}
+
+The data is collected on recruitment website “careerbuilder.vn” by filtering jobs in Ho Chi Minh city over the finance majoring of Banking, Insurance, Real Estate and Security.
+
+<center>
+<img height="400" width="400" src = "https://raw.githubusercontent.com/ThanhDatIU/image/main/wage1.png">
+</center>
+
+Specifically, for a specific recruitment, we shall have the corresponding information including salary, 
+experience, education, and so on. Frequently, the salary is often hidden or found in a ranging format and the interest of this paper cares only for the minimum years of experience ranging from 8 million and 50 million.
+
+<center>
+<img height="400" width="400" src = "https://raw.githubusercontent.com/ThanhDatIU/image/main/wage1.png">
+</center>
+
+Looking at the data frame, it is clear to see that there are 3 categorical variables education, areas and levels.
+It is also obvious that age, experience, and salary could be considered as continuous variables.
+```{r, warning = F, message = F}
+mydata <- read.csv("https://raw.githubusercontent.com/ThanhDatIU/RMF_IU/main/careerbuilder.csv")
+```
+``` {r, message = FALSE, warning = FALSE, echo = FALSE}
+table = mydata
+paged_table(table)
+``` 
+
+We then turn categorical columns into dummy variables which are numeric variables that represents
+categorical data. As a practical matter, regression results are easiest to interpret when dummy variables are
+limited to two specific values, 0 or 1. Typically, 1 represents the presence of a qualitative attribute, and 0
+represents the absence.
+
+In total, we have 11 binary variables and 3 continuous variables since we only investigate the relationship
+between the minimum values of all the continuous variables including minimum age, minimum experience, 
+and minimum salary.
+
+``` {r, message = FALSE, warning = FALSE, echo = FALSE}
+df = mydata %>% mutate(
+  education = ifelse(university == 1, "university", 
+            ifelse(college == 1, "college", 
+            ifelse(intermediate == 1, "intermediate", "education_not_required"))), 
+  areas = ifelse(banking == 1, "banking", 
+        ifelse(insurance == 1, "insurance", 
+        ifelse(security == 1, "security", "real_estate"))), 
+  levels = ifelse(employee == 1, "employee", 
+         ifelse(observer == 1, "observer", ifelse(manager == 1, "manager", "chief_manager"))), 
+  gender = ifelse(male == 1, 1, ifelse(female == 1, 1, 0)))
+
+df_nogender_agelimited = df %>% 
+  filter(age != "not_limited", levels != "chief_manager", gender == 0) %>% 
+  mutate(min_age = as.numeric(min_age))
+```
+``` {r, message = FALSE, warning = FALSE, echo = FALSE}
+table = df_nogender_agelimited %>% select(education, 
+                                          areas, 
+                                          levels, 
+                                          min_age, 
+                                          max_age, 
+                                          min_exp, 
+                                          max_exp, 
+                                          min_salary, 
+                                          max_salary)
+paged_table(table)
+``` 
+
+## Methodology {.unnumbered}
+
+### Linear Regression Model {.unnumbered}
+
+* Model equation:
+$$y = \beta X$$
+* Mean squared error for linear regression
+$$MSE = \frac{1}{n} \sum_{i = 1}^{n}(y_i-\beta x_i)^2$$
+* Minimization problem:
+$$\hat\beta = \text{argmin}_\beta \frac{1}{n} \sum_{i = 1}^{n} (y_i-\beta x_i)^2$$
+
+The best linear regression model $Y$ equals beta $X$ is estimated by establishing mean squared error measuring the average of the squares of the errors.
+Then the coefficients of the OLS are found by coming up with the beta hat such that the mean squared error is minimized.
+
+Similarly, the quantile regression for model is estimated by establishing mean squared error measuring the average of the absolute deviations from a central point.
+Then the coefficients of the quantile regression are found by generating the betas hat such that the mean absolute deviation is minimized.
+
+### Quantile regression model {.unnumbered}
+
+The percentile regression method was introduced by Koenker& Bassett for the first time in 1978.
+
+* Model equation:
+$$y = \beta X$$
+* Mean squared error for linear regression
+
+$$MAD = \sum_{i:y_i > \beta x_i}^{n}\tau |y_i-\beta x_i| + \sum_{i:y_i < \beta x_i}^{n}(1-\tau) |y_i-\beta x_i|$$
+
+* Minimization problem:
+
+$$\hat\beta = \text{argmin}_\beta \frac{1}{n} \left(\sum_{i:y_i > \beta x_i}^{n}\tau |y_i-\beta x_i| + \sum_{i:y_i < \beta x_i}^{n}(1-\tau) |y_i-\beta x_i| \right)$$
+When $\tau$ is one half, the MAD is symmetrical so that the median always has the same number of data points above it as below it.
+But if instead the absolute residuals are weighted differently depending on whether they are positive or negative, we can calculate the quantiles of the distribution.
+To estimate the tau quantile, we would set the weight on positive observations to tau and that on negative observations to $1 – \tau$.
+We can select the quantiles of interest and common choices would be $0.1, 0.5, and 0.9$.
+
+## Results {.unnumbered}
+
+### Visualization {.unnumbered}
+
+#### Salary ~ Age {.unnumbered}
+
+``` {r, message = FALSE, warning = FALSE, echo = FALSE}
+ggplot(df_nogender_agelimited, 
+       aes(x = as.numeric(min_age), 
+           y = min_salary, 
+           color = areas, 
+           shape = levels)) + 
+  geom_point() + 
+  facet_wrap(~education) + 
+  labs(x = "Minimum Age", 
+       y = "Minimum Salary", 
+       title = "CareerBuilder Ho Chi Minh City Jobs in 2021") +
+  scale_x_continuous(limits = c(18, 36))
+```
+
+While not so many companies recruit applicant who does not have a degree or studies in an intermediate school, the number of jobs requiring university and college are quite high.
+A closer look into the university facet suggests that the correlation coefficients of minimum age and the minimum salary is considerably low implying that linear regression may not be working for this relationship.
+
+#### Salary ~ Exp {.unnumbered}
+
+On the other hand, when it comes to minimum years of experience as the x-axis, it is obvious to say that there is a strong linear relationship between minimum years of experience and minimum salary.
+However, the constant variance assumption may be violated given the fact that data points for 3 minimum years of experience vary much more noticeably than for those who only have one year or less working experience.
+
+``` {r, message = FALSE, warning = FALSE, echo = FALSE}
+ggplot(df_nogender_agelimited, aes(x = min_exp, 
+                                   y = min_salary, 
+                                   color = areas, 
+                                   shape = levels)) + 
+  geom_point() + 
+  facet_wrap(~education) +
+  labs(title = "CareerBuilder Ho Chi Minh City Jobs in 2021", 
+        x = "Minimum Age", y = "Minimum Salary") + 
+  theme_bw() +
+  scale_x_continuous(limits = c(0, 10), n.breaks = 10)
+```
+
+### Linear Regression Model {.unnumbered}
+
+#### Multiple Linear Regression Model {.unnumbered}
+
+Using the linear model function in the familiar stats library, it’s clear to see that all the education variables are not significant. 
+Insurance is meaningful implying all the areas in finance maybe explain the model. 
+The matrix singularity when it comes to the variable level and we may have to drop one factor for later analysis.
+But the most important thing that we should take notice of for this linear model is the two continuous variables age and experience. As previously acknowledged, while age is not statistically significant, the minimum experience variable explains the model with the corresponding two-point six.
+
+``` {r, message = FALSE, warning = FALSE, echo = FALSE}
+male = df_nogender_agelimited$male
+female = df_nogender_agelimited$female
+university = df_nogender_agelimited$university
+college = df_nogender_agelimited$college
+intermediate = df_nogender_agelimited$intermediate
+education_not_required = df_nogender_agelimited$education_not_required
+banking = df_nogender_agelimited$banking
+insurance = df_nogender_agelimited$insurance
+security = df_nogender_agelimited$security
+real_estate = df_nogender_agelimited$real_estate
+employee = df_nogender_agelimited$employee
+observer = df_nogender_agelimited$observer
+manager = df_nogender_agelimited$manager
+chief_manager = df_nogender_agelimited$chief_manager
+age = df_nogender_agelimited$age
+min_age = df_nogender_agelimited$min_age
+max_age = df_nogender_agelimited$max_age
+min_exp = df_nogender_agelimited$min_exp
+max_exp = df_nogender_agelimited$max_exp
+min_salary = df_nogender_agelimited$min_salary
+max_salary = df_nogender_agelimited$max_salary
+education = df_nogender_agelimited$education
+areas = df_nogender_agelimited$areas
+levels = df_nogender_agelimited$levels
+gender = df_nogender_agelimited$gender
+
+## OLS regression {.unnumbered}
+olsreg <- lm(min_salary~university+
+                        college+
+                        intermediate+
+                        education_not_required+
+                        banking+
+                        insurance+
+                        security+
+                        real_estate+
+                        employee+
+                        observer+
+                        manager+
+                        min_age+
+                        min_exp, 
+             data = df_nogender_agelimited)
+summary(olsreg)
+```
+
+>1. Education is not significant. 
+
+>2. Insurance salary  is significant*.
+
+>3. Levels are significant*.
+
+>4. Minimum age is not significant.
+
+>5. Minimum experience is significant*.
+
+#### Simple Linear Regression {.unnumbered}
+
+##### Areas {.unnumbered}
+
+So let’s try to use the linear model for only the areas in the finance variable. 
+It’s interesting that we can generally summarize the average salary of each of the majors in finance with insurance standing at the highest average salary of 26 million VND. Other majors seem to be consistent in the range from 15 to 18 million per month.
+
+``` {r, message = FALSE, warning = FALSE, echo = FALSE}
+## OLS regression {.unnumbered}
+olsreg <- lm(min_salary ~ areas+0, data = df_nogender_agelimited)
+summary(olsreg)
+```
+
+>6. Banking salary is 15 million VND on average.
+
+>7. Insurance salary is 26 million VND on average.
+
+>8. Real estate salary is 18 million VND on average.
+
+>9. Security salary is 16 million VND on average.
+
+```{r, warning = F, message = F}
+ggplot(df_nogender_agelimited, aes(x = as.factor(areas), y = min_salary, color = education)) + 
+  geom_point() +
+  theme_bw()
+```
+
+#### Levels {.unnumbered}
+
+Chances are a manager will earn the minimum salary more than 26 million which is considerably higher than the number of all of the observers and employees 14 and 18 million respectively.
+
+``` {r, message = FALSE, warning = FALSE, echo = FALSE}
+## OLS regression {.unnumbered}
+olsreg <- lm(min_salary ~ levels+0, data = df_nogender_agelimited)
+summary(olsreg)
+```
+
+>10. Manager salary is 26 million VND on average.
+
+>11. Observer salary is 18 million VND on average.
+
+>12. Employee salary is 14 million VND on average.
+
+```{r, warning = F, message = F}
+ggplot(df_nogender_agelimited, 
+       aes(x = factor(levels, levels = c("employee", "observer", "manager")), 
+           y = min_salary, color = education)) + 
+  geom_point() +
+  theme_bw()
+```
+
+#### Experience {.unnumbered}
+
+``` {r, message = FALSE, warning = FALSE, echo = FALSE}
+## OLS regression {.unnumbered}
+olsreg <- lm(min_salary ~ min_exp, 
+             data = df_nogender_agelimited)
+summary(olsreg)
+```
+
+>13. Experience is significant, for 1 more year of experience the average salary should increase by 3 million VND.
+
+```{r, warning = F, message = F}
+ggplot(df_nogender_agelimited, 
+       aes(x = as.numeric(min_exp), 
+           y = min_salary, 
+           color = education)) + 
+  geom_point()
+```
+
+And lastly, for the continuous variable experience despite the highly significant estimate, the model for this is working so well with the multiple R squared of only 30 percent. And that’s why we need Quantile Regression.
+
+### Quantile {.unnumbered}
+
+#### Table {.unnumbered}
+
+>1. Drop observer for avoiding matrix singularity. 
+
+``` {r, message = FALSE, warning = FALSE, echo = FALSE}
+quantreg.all <- rq(min_salary~banking+
+                     insurance+
+                     security+
+                     real_estate+
+                     employee+
+                     manager+
+                     min_exp, tau = seq(0.05, 0.95, by = 0.05),                   
+                   data = df_nogender_agelimited)
+quantreg.plot <- summary(quantreg.all)
+plot(quantreg.plot, xlim = c(0, 1), ylim = c(-6, 11))
+```
+
+>2. Insurance could be predicted using OLS.
+
+>3. Employee could be predicted using OLS.
+
+>4. Manager could be predicted using OLS.
+
+>5. And so Observer could be predicted using OLS.
+
+``` {r, message = FALSE, warning = FALSE, echo = FALSE}
+quantreg.all <- rq(min_salary~min_exp, 
+                   tau = seq(0.05, 0.95, by = 0.05), 
+                   data = mydata)
+quantreg.plot <- summary(quantreg.all)
+plot(quantreg.plot, xlim = c(0, 1), ylim = c(2, 4.5))
+```
+
+>6. Minimum experience cannot be predicted using OLS for salary less than 55% and greaterr than 80% or less than 31$ million VND or greater than 41.5$ million VND*. 
+
+Regressing Salary with only Minimum Years of Experience variable, the distinct disparity across the ranges seems to be more observable. The next step would be employing some visualizing tools to illustrate how the coefficients vary across the percentiles.
+
+``` {r, message = FALSE, warning = FALSE, echo = FALSE}
+library(broom)
+quantreg.all <- rq(min_salary~min_exp, 
+                   tau = seq(0.05, 0.95, by = 0.05), 
+                   data = mydata)
+
+quantreg.tidied <- tidy(quantreg.all)
+
+library(tidyr)
+quantreg.wide = quantreg.tidied %>% 
+  select(term, tau, estimate) %>% 
+  spread(tau, estimate)
+```
+``` {r, message = FALSE, warning = FALSE, echo = FALSE}
+paged_table(quantreg.wide)
+``` 
+
+#### Graph {.unnumbered}
+
+##### Salary ~ min_age {.unnumbered}
+
+In terms of min_age, the coefficients are significant with the lower 45 percentile, the coefficients are significantly different from the confidence internals of the OLS with the minimum reaching 1 at 5 percent lower tail. The opposite is true for the upper 80 percentile where the maximum coefficient stood at exactly 5 when we are considering the 5 percent upper tail.
+
+``` {r, message = FALSE, warning = FALSE, echo = FALSE}
+ggplot(df_nogender_agelimited, aes(x = as.numeric(min_age), y = min_salary)) + 
+  geom_point() + 
+  geom_smooth(method = "lm") + 
+  geom_quantile(quantiles = c(1:9/10), color = "red") +
+  scale_x_continuous(limits = c(18, 36))
+```
+
+##### Salary ~ min_exp {.unnumbered}
+
+``` {r, message = FALSE, warning = FALSE, echo = FALSE}
+##### Salary ~ Exp {.unnumbered}
+ggplot(df_nogender_agelimited, aes(x = min_exp, y = min_salary)) + 
+  geom_point() + 
+  geom_smooth(method = "lm") + 
+  geom_quantile(quantiles = c(1:9/10), color = "red") +
+  scale_x_continuous(limits = c(0, 10), n.breaks = 10)
+```
+
+The above scatter plot compares the performance of Linear Model and Quantile Model. It is obvious to suggest that Quantile represents a more natural and flexible way to capture the complexities inherent in the relationship by estimating models for the conditional quantile functions.
+
+## Conclusions {.unnumbered}
+
+The percentile regression approach, which was first developed by Koenker and Bassett (1978) and is widely used throughout the world but not yet popular in Vietnam, is employed in this project. Only a few research projects in Vietnam use the percentile regression approach, which is particularly useful for studying pay functions and decomposing wage differences. The financial report explains percentile regression theory in a clear, comprehensive, and systematic manner. The pay function of labor groups is estimated using the percentile regression approach with selection bias sample correction and endogenous phenomena handled in the model, yielding a solid and trustworthy estimate.
+
+The experience gap across pay distribution was examined in depth in the previous sections using data from Careerbuilder.vn There is a quantile impact for salaries less than 27 million and more than 40 million, according to the aggregate results of the entire sample. The reason for this might be that a finance major may need more than two years of work experience in order for an employee to earn a reasonable wage.
+ 
+Other than those accomplishments, the code snippet acknowledged in the Appendix could be considered as a typical source for learning Regression model in RStudio.
+
+## References {.unnumbered}
+
+Koenker, R. and Bassette, G., 1978. Regression quantiles. [online] Available at: <https://www.jstor.org/stable/1913643>
+
+Tran, T. A. T. (2018, February). Investigating the gender wage gap in Vietnam by quantile regression: Sticky floor or glass ceiling. [online] Available at: https://www.researchgate.net/publication/323870909_Investigating_the_gender_wage_gap_in_Vietnam_by_ quantile_regression_Sticky_floor_or_glass_ceiling
+
+Tran, T. A. T. (2014, June). Ước lượng hàm hồi quy tiền lương ở Việt Nam giai đoạn 2002 - 2010 bằng thủ tục Heckman hai bước. [online] Available at: http://jabes.ueh.edu.vn/Home/SearchArticle?article_Id = 2e855945-ac00-487d-a4f7-8bcec142927f
+
+## Appendix {.unnumbered}
+
+```{r, eval = F}
+## ----SETUP, include = FALSE-----------------------------------------------------------------------------------
+library(plyr)
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(lubridate)
+library(readxl)
+library(highcharter)
+library(tidyquant)
+library(timetk)
+library(tibbletime)
+library(quantmod)
+library(PerformanceAnalytics)
+library(scales)
+library(plotly)
+library(rvest)
+library(xml2)
+library(tibble)
+library(quantreg)
+library(SparseM)
+library(tidyverse)
+library(kableExtra)
+library(rmarkdown)
+
+
+## -------------------------------------------------------------------------------------------------------------
+mydata <- read.csv("https://raw.githubusercontent.com/ThanhDatIU/RMF_IU/main/careerbuilder.csv")
+
+## ---- message = FALSE, warning = FALSE, echo = FALSE----------------------------------------------------------
+table = mydata
+paged_table(table)
+
+
+## ---- message = FALSE, warning = FALSE, echo = FALSE----------------------------------------------------------
+df = mydata %>% mutate(
+  education = ifelse(university == 1, "university", 
+            ifelse(college == 1, "college", 
+            ifelse(intermediate == 1, "intermediate", "education_not_required"))), 
+  areas = ifelse(banking == 1, "banking", 
+        ifelse(insurance == 1, "insurance", 
+        ifelse(security == 1, "security", "real_estate"))), 
+  levels = ifelse(employee == 1, "employee", 
+         ifelse(observer == 1, "observer", ifelse(manager == 1, "manager", "chief_manager"))), 
+  gender = ifelse(male == 1, 1, ifelse(female == 1, 1, 0)))
+
+df_nogender_agelimited = df %>% 
+  filter(age != "not_limited", levels != "chief_manager", gender == 0) %>% 
+  mutate(min_age = as.numeric(min_age))
+
+## ---- message = FALSE, warning = FALSE, echo = FALSE----------------------------------------------------------
+table = df_nogender_agelimited %>% select(education, 
+                                          areas, 
+                                          levels, 
+                                          min_age, 
+                                          max_age, 
+                                          min_exp, 
+                                          max_exp, 
+                                          min_salary, 
+                                          max_salary)
+paged_table(table)
+
+
+## ---- message = FALSE, warning = FALSE, echo = FALSE----------------------------------------------------------
+ggplot(df_nogender_agelimited, 
+       aes(x = as.numeric(min_age), 
+           y = min_salary, 
+           color = areas, 
+           shape = levels)) + 
+  geom_point() + 
+  facet_wrap(~education) + 
+  labs(x = "Minimum Age", 
+       y = "Minimum Salary", 
+       title = "CareerBuilder Ho Chi Minh City Jobs in 2021") +
+  scale_x_continuous(limits = c(18, 36))
+
+
+## ---- message = FALSE, warning = FALSE, echo = FALSE----------------------------------------------------------
+ggplot(df_nogender_agelimited, aes(x = min_exp, 
+                                   y = min_salary, 
+                                   color = areas, 
+                                   shape = levels)) + 
+  geom_point() + 
+  facet_wrap(~education) +
+  labs(title = "CareerBuilder Ho Chi Minh City Jobs in 2021", 
+        x = "Minimum Age", y = "Minimum Salary") + 
+  theme_bw() +
+  scale_x_continuous(limits = c(0, 10), n.breaks = 10)
+
+
+## ---- message = FALSE, warning = FALSE, echo = FALSE----------------------------------------------------------
+male = df_nogender_agelimited$male
+female = df_nogender_agelimited$female
+university = df_nogender_agelimited$university
+college = df_nogender_agelimited$college
+intermediate = df_nogender_agelimited$intermediate
+education_not_required = df_nogender_agelimited$education_not_required
+banking = df_nogender_agelimited$banking
+insurance = df_nogender_agelimited$insurance
+security = df_nogender_agelimited$security
+real_estate = df_nogender_agelimited$real_estate
+employee = df_nogender_agelimited$employee
+observer = df_nogender_agelimited$observer
+manager = df_nogender_agelimited$manager
+chief_manager = df_nogender_agelimited$chief_manager
+age = df_nogender_agelimited$age
+min_age = df_nogender_agelimited$min_age
+max_age = df_nogender_agelimited$max_age
+min_exp = df_nogender_agelimited$min_exp
+max_exp = df_nogender_agelimited$max_exp
+min_salary = df_nogender_agelimited$min_salary
+max_salary = df_nogender_agelimited$max_salary
+education = df_nogender_agelimited$education
+areas = df_nogender_agelimited$areas
+levels = df_nogender_agelimited$levels
+gender = df_nogender_agelimited$gender
+
+# OLS regression
+olsreg <- lm(min_salary~university+
+                        college+
+                        intermediate+
+                        education_not_required+
+                        banking+
+                        insurance+
+                        security+
+                        real_estate+
+                        employee+
+                        observer+
+                        manager+
+                        min_age+
+                        min_exp, 
+             data = df_nogender_agelimited)
+summary(olsreg)
+
+
+## ---- message = FALSE, warning = FALSE, echo = FALSE----------------------------------------------------------
+# OLS regression
+olsreg <- lm(min_salary ~ areas+0, data = df_nogender_agelimited)
+summary(olsreg)
+
+
+## -------------------------------------------------------------------------------------------------------------
+ggplot(df_nogender_agelimited, aes(x = as.factor(areas), y = min_salary, color = education)) + 
+  geom_point() +
+  theme_bw()
+
+
+## ---- message = FALSE, warning = FALSE, echo = FALSE----------------------------------------------------------
+# OLS regression
+olsreg <- lm(min_salary ~ levels+0, data = df_nogender_agelimited)
+summary(olsreg)
+
+
+## -------------------------------------------------------------------------------------------------------------
+ggplot(df_nogender_agelimited, 
+       aes(x = factor(levels, levels = c("employee", "observer", "manager")), 
+           y = min_salary, color = education)) + 
+  geom_point() +
+  theme_bw()
+
+
+## ---- message = FALSE, warning = FALSE, echo = FALSE----------------------------------------------------------
+# OLS regression
+olsreg <- lm(min_salary ~ min_exp, 
+             data = df_nogender_agelimited)
+summary(olsreg)
+
+
+## -------------------------------------------------------------------------------------------------------------
+ggplot(df_nogender_agelimited, 
+       aes(x = as.numeric(min_exp), 
+           y = min_salary, 
+           color = education)) + 
+  geom_point()
+
+
+## ---- message = FALSE, warning = FALSE, echo = FALSE----------------------------------------------------------
+quantreg.all <- rq(min_salary~banking+
+                     insurance+
+                     security+
+                     real_estate+
+                     employee+
+                     manager+
+                     min_exp, tau = seq(0.05, 0.95, by = 0.05),                   
+                   data = df_nogender_agelimited)
+quantreg.plot <- summary(quantreg.all)
+plot(quantreg.plot, xlim = c(0, 1), ylim = c(-6, 11))
+
+
+## ---- message = FALSE, warning = FALSE, echo = FALSE----------------------------------------------------------
+quantreg.all <- rq(min_salary~min_exp, 
+                   tau = seq(0.05, 0.95, by = 0.05), 
+                   data = mydata)
+quantreg.plot <- summary(quantreg.all)
+plot(quantreg.plot, xlim = c(0, 1), ylim = c(2, 4.5))
+
+
+## ---- message = FALSE, warning = FALSE, echo = FALSE----------------------------------------------------------
+library(broom)
+quantreg.all <- rq(min_salary~min_exp, 
+                   tau = seq(0.05, 0.95, by = 0.05), 
+                   data = mydata)
+
+quantreg.tidied <- tidy(quantreg.all)
+
+library(tidyr)
+quantreg.wide = quantreg.tidied %>% 
+  select(term, tau, estimate) %>% 
+  spread(tau, estimate)
+
+## ---- message = FALSE, warning = FALSE, echo = FALSE----------------------------------------------------------
+paged_table(quantreg.wide)
+
+
+## ---- message = FALSE, warning = FALSE, echo = FALSE----------------------------------------------------------
+ggplot(df_nogender_agelimited, aes(x = as.numeric(min_age), y = min_salary)) + 
+  geom_point() + 
+  geom_smooth(method = "lm") + 
+  geom_quantile(quantiles = c(1:9/10), color = "red") +
+  scale_x_continuous(limits = c(18, 36))
+
+
+## ---- message = FALSE, warning = FALSE, echo = FALSE----------------------------------------------------------
+#### Salary ~ Exp
+ggplot(df_nogender_agelimited, aes(x = min_exp, y = min_salary)) + 
+  geom_point() + 
+  geom_smooth(method = "lm") + 
+  geom_quantile(quantiles = c(1:9/10), color = "red") +
+  scale_x_continuous(limits = c(0, 10), n.breaks = 10)
+```
+
+# IELTS Reading Topics {.unnumbered}
+
+<h3>Description</h3>
+<p>This project attempts to model the underlying topics of some reading passages in Cambridge English IELTS 11 to 15. To begin with, the raw text data is scraped from <a href="https://study4.com/tests">https://study4.com/tests</a> using package <code>rvest</code>. Other packages <code>tidytext</code> as well as <code>tidyverse</code> are then implemented to turn the raw data into a tidy data frame and acknowledge some relevant statistics corresponding to those reading passages. The two final parts demonstrate the work flow of text mining and topic modeling with 2 packages <code>quanteda</code> & <code>stm</code> to conclude the interested information.</p>
+
+## Scrape data with **rvest** {.unnumbered}
+
+<p>With R, it's easy to read in HTML using the rvest with the read_html() function. In the hierarchic nature of HTML for scraping, there's always a root node. The root has branches that lead to other nodes, or in the language of HTML, to children. With rvest, it's easy to quickly traverse the tree to select the nodes we're interested in.</p>
+
+<p>The function we're probably going to use the most when working with rvest is html_nodes(). It takes an HTML document or a so-called node set as input and returns its nodes, or more specifically, xml_nodesets. html_node() without the plural is a special case that only returns the first node that matches the selection.</p>
+
+<p>html_nodes() does not only take an html document, but also a so-called selector. This is a string that specifies a path through the html tree. The selector also adheres to a specific syntax, that is, the descendant syntax. To select only the text of headers, we write "//" followed by "h2".</p>
+
+<p>We can also extract the text with the html_text() function and the href attribute from a link with the html_attrs(). The plural form html_attrs() returns all attributes of an element as a named vector.</p>
+
+### All test available in 4study {.unnumbered}
+
+<p>Visit <a href="https://study4.com/tests">https://study4.com/tests</a>, search "IELTS cam reading" and store the link to <code>page</code>.</p>
+
+``` {r, message=FALSE, warning = FALSE}
+library(rvest)
+
+## Filter interested tests from the website and store the link to var page 
+page="https://study4.com/tests/?term=IELTS+cam+reading&page=1"
+```
+
+<p>Use read_html, html_nodes, html_attr to find element containing link for each test and store the links to <code>links</code>.</p>
+
+``` {r, message=FALSE, warning = FALSE}
+## Initiate var links 
+links= NULL
+  
+## Read in links as HTML document, navigate to needed HTML elements attribute and extract those hyperlink sub-domain 
+links=read_html(page) %>% 
+    html_nodes(xpath="/html/body/div[3]/div[2]/div[3]/div/div[1]/div[1]/div/div/div/a") %>% 
+    html_attr('href')
+head(links)
+```
+
+<p>Concatenate the homepage domain to those sub-domain <code>links</code>.</p>
+
+``` {r, message=FALSE, warning = FALSE}
+## Paste the homepage link to those sub-domain 
+links_full=paste("https://study4.com",links,"start",sep="")
+
+## Investigate the first 6 out of 60 links 
+head(links_full)
+```
+
+### Scrape Cambridge 10 to 15 {.unnumbered}
+
+<p>From those <code>links_full</code>, filtering out test 11 to 15.</p>
+
+``` {r, message=FALSE, warning = FALSE}
+## Only scraping Cambridge 10 to 15 
+links_scrape=links_full[5:24]
+```
+
+<p>Navigate to the left screen by selecting all class 'question-twocols-left' and collectively descending to 3 div children to get the elements containing only paragraphs. Each links_scrape should yield 3 results. Store all these results to nodes we shall have a list containing 60 nodes</p>
+
+``` {r, message=FALSE, warning = FALSE}
+## Initiate nodes 
+nodes=NULL
+
+## Read in each element of links_scrape as HTML document, navigate to needed HTML elements attribute and extract html element div containing needed paragraphs then cumulatively store them to nodes
+for(i in 1:length(links_scrape)){
+  reading=read_html(links_scrape[i]) %>%
+    html_nodes(xpath="//div[@class='question-twocols-left']/div/div/div")
+  nodes=c(nodes,reading)
+}
+
+## Investigate the first 6 out of 60 nodes 
+head(nodes)
+```
+
+### Passages to a data frame {.unnumbered}
+
+<p> Since those elements in <code>nodes</code> have 2 tag children <code>h2</code> and <code>p</code>, we should write 2 functions to extract the heading and the reading of the tests respectively.</p>
+
+``` {r, message=FALSE, warning = FALSE}
+## Write 2 functions to extract reading and header from those div element 
+
+## Use as.character() to transform those div nodes into html document, read them in and filter only paragraph elements and notice how the first paragraph element p[1], the  reading instructions, is ignored. Turn these p to text and concatenate with the separator new line characters
+nodes_to_reading=function(i){
+  as.character(nodes[[i]]) %>% 
+    read_html() %>% 
+    html_nodes(xpath='//p') %>% 
+    .[-1] %>% 
+    html_text(trim=TRUE) %>% 
+    paste(collapse="\n")
+}
+
+## Use as.character() to transform those div nodes into html document, read them in and filter only html element h2 containing the passage titles. Turn these p to text and concatenate with the separator new line characters
+nodes_to_header=function(i){
+  as.character(nodes[[i]]) %>% 
+    read_html() %>% 
+    html_nodes(xpath='//h2') %>% 
+    html_text(trim=TRUE) %>% 
+    paste(collapse="\n")
+}
+
+## Apply 2 functions to obtain 2 vectors containing 60 elements 
+reading=sapply(1:60,nodes_to_reading)
+header=sapply(1:60,nodes_to_header)
+```
+
+<p> Clean header **Preface to ‘How the other half thinks:\\nAdventures in mathematical reasoning’** and construct the data frame with the composite primary key book, test and passage<p>
+
+``` {r, message=FALSE, warning = FALSE}
+## Clean header: Preface to ‘How the other half thinks:\nAdventures in mathematical reasoning’ 
+header=str_replace_all(header, "\n"," ")
+
+## Put them all to get a data frame 
+df=data.frame(book=as.factor(rep(11:15, each=12)),
+              test=as.factor(rep(rep(1:4,each=3),5)),
+              passage=as.factor(rep(seq(1:3),20)),
+              header=header,
+              reading=reading)
+```
+``` {r, message=FALSE, warning = FALSE,echo=FALSE}
+paged_table(df)
+```  
+
+## Statistics with **tidyverse & tidytext** {.unnumbered}
+
+The process of splitting a text is referred to as tokenization. We have a data frame named <code>df</code> so let's call unnest_tokens() that performs tokenization in package <code>tidytext</code>. Most of this tutorial will be focusing on text into words, but in general tokens can be a sequence of characters, or a sequence of words so let's just have a look. 
+
+### Sentences {.unnumbered}
+
+The function takes a column from a table, splits it into sentences and, by default, it will drop the column with the original text. We get back a table in which each sentence is in its own row which then could be counted using  function <code>count()</code> from package <code>dplyr</code>, already included in <code>tidyverse</code>, to count the numbers of sentences which are in between 26 and 57.
+
+```{r, message=FALSE, warning = FALSE}
+library(tidyverse)
+library(tidytext)
+
+sentences=df %>% 
+  unnest_tokens(sentences,reading,token="sentences")
+
+count_sentences=sentences %>% 
+  group_by(book,test,passage,header) %>% 
+  count(header,sort=TRUE)
+```
+
+```{r, message=FALSE, warning = FALSE}
+kable(head(count_sentences,10))
+``` 
+
+### Words {.unnumbered}
+
+Performing the similar behaviors with words, we shall get the count ranges from 750 to 950. Further examination suggest that the numbers of words in passage one two and three are rather consistent standing at  854, 861 and 878 words in that order. 
+
+``` {r, message=FALSE, warning = FALSE}
+tidy_df=df %>% 
+  unnest_tokens(word,reading,token="words")
+
+count_words=tidy_df %>%  
+  group_by(book,test,passage,header) %>% count(header,sort=TRUE)
+```
+```{r, message=FALSE, warning = FALSE}
+kable(head(count_words,10))
+``` 
+
+``` {r, message=FALSE, warning = FALSE}
+## Average words in a passage 
+average=count_words %>% 
+  group_by(passage) %>% 
+  summarize(mean(n))
+average
+```
+
+What's more, let's graph 5 books using package <code>ggplot2</code>, too already included in <code>tidyverse</code>, to demonstrate how words vary across those books.
+
+``` {r, message=FALSE, warning = FALSE}
+## Plot words~book 
+ ggplot(count_words,
+        aes(x=book,
+            y=n,
+            size=passage,
+            color=test)) + 
+  geom_point()
+```
+
+``` {r, message=FALSE, warning = FALSE}
+## Book with lowest words 
+lowest_book=count_words %>% 
+  group_by(book) %>% 
+  summarize(total_words=sum(n)) %>% 
+  arrange(total_words)
+
+lowest_book
+```
+
+``` {r, message=FALSE, warning = FALSE}
+## Test with lowest words 
+lowest_test=count_words %>% 
+  group_by(book,test) %>% 
+  summarize(total_words=sum(n)) %>% 
+  arrange(total_words)
+
+lowest_test
+```
+
+## Clean documents with **tidytext & qdap** {.unnumbered}
+
+### Top frequent words {.unnumbered}
+
+Why do we have to clean the documents? First, we re-visit function count() to obtain frequencies of words within the whole corpus. Once we have the counts, we often will want to examine the most frequent words. This can be done by sorting the rows within each group in order of descending counts, and then realizing that the rank of a word is equal to its row number. Most frequent word will be in row 1, second most frequent - in row 2, and so on. However, the result is a table with a lot of common English stopwords.
+
+``` {r, message=FALSE, warning = FALSE}
+## Top frequent words 
+frequent_count=tidy_df %>%  
+  count(word, sort = TRUE) %>%
+  top_n(10)
+```
+```{r, message=FALSE, warning = FALSE}
+paged_table(frequent_count)
+``` 
+
+They are words that are considered as noise in text and should necessarily be removed. A good example of this are indefinite and definite articles "a" and "the". Stopwords often obscure word associations in topics: they are the most frequent words and show up at the top of the frequency tables, pushing the important words out of sight. The previous lesson had an example showing five most probable words in two topics. Words "the", "you", and "to" were in the output and they did not contribute to understanding what the topics were about.
+
+### Remove stopwords {.unnumbered}
+
+Let's say that we have all been familiar with an inner join of two tables, merging the tables using a column presenting key in both tables and indicating which rows are a match. Only the rows with matching key values make it into the output. Opposite to that, anti_join() drops the rows that have matching key values. This is perfect for situations when we remove some rows based on a criterion. After we perform anti_join(), the stopwords are removed.
+
+``` {r, message=FALSE, warning = FALSE}
+library(tidytext)
+
+nostopwords_df=tidy_df %>% 
+  anti_join(stop_words)
+
+nostopwords_df_count=nostopwords_df %>%  
+  count(word, sort = TRUE) %>%
+  top_n(100)
+```
+```{r, message=FALSE, warning = FALSE}
+paged_table(nostopwords_df_count)
+``` 
+
+However, it might make sense for the words "studies" and its singular form "study" to be considered one term.
+
+### Clean words {.unnumbered}
+
+<p>In bag of words text mining, cleaning helps aggregate terms. Specific preprocessing steps will vary based on the project. For example, the words used in IELTS reading are vastly different than those used in tweets, so the cleaning process can also be quite different.</p>
+<p>Common preprocessing functions include:</p>
+<ul>
+<li><code>tolower()</code>: Make all characters lowercase </li>
+<li><code>removePunctuation()</code>: Remove all punctuation marks </li>
+<li><code>removeNumbers()</code>: Remove numbers</li>
+<li><code>stripWhitespace()</code>: Remove excess whitespace</li>
+</ul>
+<p><code>tolower()</code> is part of base R, while the other three functions come from the <code>tm</code> package. </p>
+
+<p>The <code>qdap</code> package offers other text cleaning functions.  Each is useful in its own way and is particularly powerful when combined with the others.</p>
+<ul>
+<li><code>bracketX()</code>: Remove all text within brackets (e.g. "It's (so) cool" becomes "It's cool")</li>
+<li><code>replace_number()</code>: Replace numbers with their word equivalents (e.g. "2" becomes "two")</li>
+<li><code>replace_abbreviation()</code>: Replace abbreviations with their full text equivalents (e.g. "Sr" becomes "Senior")</li>
+<li><code>replace_contraction()</code>: Convert contractions back to their base words (e.g. "shouldn't" becomes "should not")</li>
+<li><code>replace_symbol()</code> Replace common symbols with their word equivalents (e.g. "$" becomes "dollar")</li>
+</ul>
+
+
+<p>Still, another useful preprocessing step involves <em>word-stemming</em> and <em>stem completion</em>. Word stemming reduces words to unify across documents.  For example, the stem of  "computational", "computers" and "computation" is "comput".</p>
+<p>The <code>tm</code> package provides the <code>stemDocument()</code> function to get to a word's root. This function either takes in a character vector and returns a character vector, or takes in a <code>PlainTextDocument</code> and returns a <code>PlainTextDocument</code>.</p>
+
+``` {r, message=FALSE, warning = FALSE}
+library(qdap)
+
+clean_documents= function(word){
+  word=str_replace_all(word, "’","'")
+  word=replace_contraction(word)
+  word=replace_number(word)
+  word=replace_abbreviation(word)
+  word=replace_symbol(word)
+  word=stemDocument(word)
+  word=tolower(word)
+  return(word)
+}
+
+clean_df=nostopwords_df %>% 
+  mutate(word=clean_documents(word))
+
+clean_df_count=clean_df %>%  
+  count(word, sort = TRUE) %>%
+  top_n(100) %>%
+  ungroup
+```
+
+```{r, message=FALSE, warning = FALSE}
+paged_table(clean_df_count)
+``` 
+
+## Topic modeling with **quanteda** & **stm** {.unnumbered}
+
+### Document-feature matrix {.unnumbered}
+
+<p>Let’s get started on a topic model! I am really a fan of the <a href="https://github.com/bstewart/stm">stm</a> package because excellent results have been gotten when experimenting with it. The <code>stm()</code> function take as its input a <code>dfm</code> from quanteda.</p>
+
+``` {r, message=FALSE, warning = FALSE}
+library(quanteda)
+library(stm)
+library(ggdendro)
+library(topicmodels)
+
+clean_df_dfm <- clean_df %>% 
+  mutate(header=paste(book,test,passage,header)) %>%
+  count(header, word, sort = TRUE) %>%
+  cast_dfm(header, word, n)
+
+clean_df_dfm[1:6,1:6]
+```
+
+### Dendrogram {.unnumbered}
+
+<div class="">
+<p>A simple way to do word cluster analysis is with a dendrogram on our term-document matrix.  
+Once we have a TDM, you can call <code>dist()</code> to compute the differences between each row of the matrix. </p>
+</div>
+
+``` {r, message=FALSE, warning = FALSE}
+distance=dist(as.matrix(clean_df_dfm), 
+                   method = "euclidean")
+```
+
+<p>Next, you call <code>hclust()</code> to perform cluster analysis on the dissimilarities of the distance matrix. Lastly, you can visualize the word frequency distances using a dendrogram and <code>plot()</code>. Often in text mining, you can tease out some interesting insights or word clusters based on a dendrogram.</p>
+
+``` {r, message=FALSE, warning = FALSE}
+hc=hclust(d = distance, 
+          method = "complete")
+
+ggdendrogram(hc, rotate=TRUE, theme_dendro=FALSE)
+```
+
+### Beta {.unnumbered}
+
+<p>The stm package has a <code>summary()</code> method for trained topic models like these that will print out some details to your screen, but I want to get back to a tidy data frame so I can use dplyr and ggplot2 for data manipulation and data visualization. I can use <code>tidy()</code> on the output of an stm model, and then I will get the probabilities that each word is generated from each topic.</p>
+
+It's nice that the stm package has a summary() method for trained topic models like these that will print out some details to the screen, here we have 12 topics with corresponding key words but we can't combine them, manipulate them, or even visualize them 
+
+``` {r, message=FALSE, warning = FALSE, results='hide'}
+library(stm)
+topic_model <- stm(clean_df_dfm, K = 12)
+```
+
+``` {r, message=FALSE, warning = FALSE}
+topic_model
+```
+
+``` {r, message=FALSE, warning = FALSE}
+summary(topic_model)
+```
+
+That's why we should take a look at the broom package, taking all of the topics and turning them into a data frame using the tidy function.
+
+Let’s <code>tidy()</code> the beta matrix for our topic model and look at the probabilities that each word is generated from each topic.
+
+``` {r, message=FALSE, warning = FALSE}
+library(broom)
+
+td_beta=tidy(topic_model, matrix="beta")
+
+td_beta %>%
+    group_by(topic) %>%
+    top_n(10, beta) %>%
+    ungroup() %>%
+    mutate(topic = paste0("Topic ", topic),
+           term = reorder_within(term, beta, topic)) %>%
+    ggplot(aes(term, beta, fill = as.factor(topic))) +
+    geom_col(alpha = 0.8, show.legend = FALSE) +
+    facet_wrap(~ topic, scales = "free_y") +
+    coord_flip() +
+    scale_x_reordered() +
+    labs(x = NULL, y = expression(beta),
+         title = "Highest word probabilities for each topic",
+         subtitle = "Different words are associated with different topics")
+
+```
+
+### Gamma {.unnumbered}
+
+<p>I’m also quite interested in the probabilities that each document is generated from each topic, that gamma matrix.</p>
+
+``` {r, message=FALSE, warning = FALSE}
+td_gamma <- tidy(topic_model, matrix = "gamma",                    
+                 document_names = rownames(clean_df_dfm))
+
+td_gamma %>% 
+  filter(gamma>0.5) %>% 
+  count(topic,sort=TRUE)
+```
+
+``` {r, message=FALSE, warning = FALSE}
+top_terms <- td_beta %>%
+  arrange(beta) %>%
+  group_by(topic) %>%
+  top_n(8, beta) %>%
+  arrange(-beta) %>%
+  select(topic, term) %>%
+  summarise(terms = list(term)) %>%
+  mutate(terms = map(terms, paste, collapse = ", ")) %>% 
+  unnest()
+
+gamma_terms <- td_gamma %>%
+  group_by(topic) %>%
+  summarise(gamma = mean(gamma)) %>%
+  arrange(desc(gamma)) %>%
+  left_join(top_terms, by = "topic") %>%
+  mutate(topic = paste0("Topic ", topic),
+         topic = reorder(topic, gamma))
+
+gamma_terms %>%
+  ggplot(aes(topic, gamma, label = terms, fill = topic)) +
+  geom_text(aes(label = terms), vjust = 0.3,hjust=-0.1) +
+  geom_col(show.legend = FALSE) +
+  coord_flip() + scale_y_continuous(limits=c(0,0.4)) +
+  theme_classic()
+```
+
+<p>This topic modeling process is a great example of the kind of workflow I often use with text and tidy data principles.</p>
+<ul>
+<li>I use tidy tools like dplyr, tidyr, and ggplot2 for initial data exploration and preparation.</li>
+<li>Then I <strong>cast</strong> to a non-tidy structure to perform some machine learning algorithm.</li>
+<li>I then <strong>tidy</strong> the results of my statistical modeling so I can use tidy data principles again to understand my model results.</li>
+</ul>
+
+# Baby Names - SQL {.unnumbered}
+
+<h3>Description</h3>
+<p>This is a DataCamp project that I have scrape all the HTML elements in the platform to my personal workspace. It is included in my portfolio only to show that I am comfortable with SQL queries.</p>
+
+## Classic American names {.unnumbered}
+
+<p><img src="https://assets.datacamp.com/production/project_1441/img/name.jpg" alt="Lots of name tags piled on top of each other." width="600"></p>
+
+<p>Photo by Travis Wise on <a href="https://commons.wikimedia.org/wiki/File:Hello_My_Name_Is_(15283079263).jpg" target="_blank">Wikimedia</a>.</p>
+
+<p>How have American baby name tastes changed since 1920?  Which names have remained popular for over 100 years, and how do those names compare to more recent top baby names? These are considerations for many new parents, but the skills we'll practice while answering these queries are broadly applicable. After all, understanding trends and popularity is important for many businesses, too! </p>
+
+<p>We'll be working with data provided by the United States Social Security Administration, which lists first names along with the number and sex of babies they were given to in each year. For processing speed purposes, we've limited the dataset to first names which were given to over 5,000 American babies in a given year. Our data spans 101 years, from 1920 through 2020.</p>
+
+<p>Let's get oriented to American baby name tastes by looking at the names that have stood the test of time!</p>
+```{r, warning = F, message = F}
+library(tidyquery)
+library(sqldf)
+baby_names = read.csv("https://raw.githubusercontent.com/cliex159/DataCampcsv/main/usa_baby_names.csv")
+```
+
+<div class="task"><div class="task--instructions"><div class="dc-html-content-syntax-highlight"><p>Find names that have been given to over 5,000 babies of either sex every year for the 101 years from 1920 through 2020; recall that names only show up in our dataset when at least 5,000 babies have been given that name in a year.</p>
+<ul>
+<li>Select <code>first_name</code> and the total number of babies that have ever been given that name.</li>
+<li>Group by <code>first_name</code> and filter for those names that appear in all 101 years.</li>
+<li>Order the results by the total number of babies that have ever been given that name, descending.</li>
+<li><em>The line <code>postgresql:///names</code> is used to connect to the database; don't remove it.</em> </li>
+</ul>
+```{r, warning = F, message = F}
+query("SELECT first_name, SUM(num)
+FROM baby_names
+GROUP BY first_name
+HAVING COUNT(year) = 101
+ORDER BY SUM(num) DESC;")
+```
+
+<hr>
+<h2>Good to know</h2>
+<p>This project uses techniques learned in <a href="https://app.datacamp.com/learn/courses/intermediate-sql" target="_blank" rel="noopener noreferrer">Intermediate SQL</a>, including <code>CASE WHEN</code> statements, pattern matching using the <code>LIKE</code> operator, subqueries, common table expressions, and window functions. You'll also be expected to know concepts from <a href="https://app.datacamp.com/learn/courses/introduction-to-sql" target="_blank" rel="noopener noreferrer">Introduction to SQL</a> and <a href="https://learn.datacamp.com/courses/joining-data-in-postgresql" target="_blank" rel="noopener noreferrer">Joining Data with SQL</a>, such as how to select columns from a table, filter rows where they meet a criterion, use aggregation functions, perform calculations on groups of rows, filter grouped data, and join data. </p></div></div></div>
+
+## Timeless or trendy? {.unnumbered}
+
+<p>Wow, it looks like there are a lot of timeless traditionally male names! Elizabeth is holding her own for the female names, too. </p>
+
+<p>Now, let's broaden our understanding of the dataset by looking at all names. We'll attempt to capture the type of popularity that each name in the dataset enjoyed. Was the name classic and popular across many years or trendy, only popular for a few years? Let's find out. </p>
+
+<div class="task"><div class="task--instructions"><div class="dc-html-content-syntax-highlight"><p>Classify each name's popularity according to the number of years that the name appears in the dataset.</p>
+<ul>
+<li>Select <code>first_name</code>, the sum of babies who've ever been given that name, and <code>popularity_type</code>. </li>
+<li>Classify all names in the dataset as 'Classic,' 'Semi-classic,' 'Semi-trendy,' or 'Trendy' based on whether the name appears in the dataset more than 80, 50, 20, or 0 times, respectively. </li>
+<li>Alias the new classification column as <code>popularity_type</code>.</li>
+<li>Order the results alphabetically by <code>first_name</code>.</li>
+</ul>
+```{r, warning = F, message = F}
+# -- Classify first names as 'Classic', 'Semi-classic', 'Semi-trendy', or 'Trendy' 
+# -- Alias this column as popularity_type 
+# -- Select first_name, the sum of babies who have ever had that name, and popularity_type 
+# -- Order the results alphabetically by first_name 
+
+query("SELECT first_name, SUM(num),
+    CASE WHEN COUNT(year) > 80 THEN 'Classic'
+        WHEN COUNT(year) > 50 THEN 'Semi-classic'
+        WHEN COUNT(year) > 20 THEN 'Semi-trendy'
+        ELSE 'Trendy' END AS popularity_type
+FROM baby_names
+GROUP BY first_name
+ORDER BY first_name;")
+```
+
+</div></div></div>
+
+## Top-ranked female names since 1920 {.unnumbered}
+
+<p>Did you find your favorite American celebrity's name on the popularity chart? Was it classic or trendy? How do you think the name Henry did? What about Jaxon?</p>
+
+<p>Since we didn't get many traditionally female names in our classic American names search in the first task, let's limit our search to names which were given to female babies. </p>
+
+<p>We can use this opportunity to practice window functions by assigning a rank to female names based on the number of babies that have ever been given that name. What are the top-ranked female names since 1920?</p>
+
+<div class="task"><div class="task--instructions"><div class="dc-html-content-syntax-highlight"><p>Let's take a look at the ten highest-ranked American female names in our dataset.</p>
+<ul>
+<li>Select <code>name_rank</code>, <code>first_name</code>, and the sum of babies who've ever had that name.</li>
+<li><code>RANK</code> the <code>first_name</code> by the sum of babies who've ever had that name, aliasing as <code>name_rank</code> and showing the names in descending order by <code>name_rank</code>.</li>
+<li>Filter the data to include only results where <code>sex</code> equals 'F'.</li>
+<li>Limit to ten results.</li>
+</ul>
+```{r, warning = F, message = F}
+# -- RANK names by the sum of babies who have ever had that name (descending), aliasing as name_rank 
+# -- Select name_rank, first_name, and the sum of babies who have ever had that name 
+# -- Filter the data for results where sex equals 'F' 
+# -- Limit to ten results 
+sqldf("
+SELECT
+    RANK() OVER(ORDER BY SUM(num) DESC) AS name_rank,
+    first_name, SUM(num)
+FROM baby_names
+WHERE sex = 'F'
+GROUP BY first_name
+LIMIT 10;")
+```
+
+</div></div></div>
+
+## Picking a baby name {.unnumbered}
+
+<p>Perhaps a friend has heard of our work analyzing baby names and would like help choosing a name for her baby, a girl. She doesn't like any of the top-ranked names we found in the previous task. </p>
+
+<p>She's set on a traditionally female name ending in the letter 'a' since she's heard that vowels in baby names are trendy. She's also looking for a name that has been popular in the years since 2015. </p>
+
+<p>Let's see what we can do to find some options for this friend!</p>
+
+<div class="task"><div class="task--instructions"><div class="dc-html-content-syntax-highlight"><p>Return a list of first names which meet this friend's baby name criteria.</p>
+<ul>
+<li>Select only the <code>first_name</code> column.</li>
+<li>Filter the data for results where <code>sex</code> equals 'F', the <code>year</code> is greater than 2015, and the <code>first_name</code> ends in an 'a.'</li>
+<li>Group the data by <code>first_name</code> and order by the total number of babies ever given that <code>first_name</code>, descending.</li>
+</ul>
+</div></div></div>
+```{r, warning = F, message = F}
+
+# -- Select only the first_name column 
+# -- Filter for results where sex is 'F', year is greater than 2015, and first_name ends in 'a' 
+# -- Group by first_name and order by the total number of babies given that first_name 
+query("SELECT first_name
+FROM baby_names
+WHERE sex = 'F' AND year > 2015
+    AND first_name LIKE '%a'
+GROUP BY first_name
+ORDER BY SUM(num) DESC;")
+```
+
+## The Olivia expansion {.unnumbered}
+
+<p>Based on the results in the previous task, we can see that Olivia is the most popular female name ending in 'A' since 2015. When did the name Olivia become so popular?</p>
+
+<p>Let's explore the rise of the name Olivia with the help of a window function.</p>
+
+<div class="task"><div class="task--instructions"><div class="dc-html-content-syntax-highlight"><p>Find the cumulative number of babies named Olivia over the years since the name first appeared in our dataset.</p>
+<ul>
+<li>Select <code>year</code>, <code>first_name</code>, <code>num</code> of Olivias in that year, and <code>cumulative_olivias</code>.</li>
+<li>Using a window function, sum the cumulative number of babies who have ever been named Olivia up to that <code>year</code>; alias as <code>cumulative_olivias</code>.</li>
+<li>Filter the results so that only data for the name Olivia is returned.</li>
+<li>Order the results by <code>year</code> from the earliest year Olivia appeared in the dataset to the most recent.</li>
+</ul>
+</div></div></div>
+```{r, warning = F, message = F}
+# -- Select year, first_name, num of Olivias in that year, and cumulative_olivias 
+# -- Sum the cumulative babies who have been named Olivia up to that year; alias as cumulative_olivias 
+# -- Filter so that only data for the name Olivia is returned. 
+# -- Order by year from the earliest year to most recent 
+
+sqldf("SELECT year, first_name, num,
+    SUM(num) OVER (ORDER BY year) AS cumulative_olivias
+FROM baby_names
+WHERE first_name = 'Olivia'
+ORDER BY year;")
+```
+
+## Many males with the same name {.unnumbered}
+
+<p>Wow, Olivia has had a meteoric rise! Let's take a look at traditionally male names now. We saw in the first task that there are nine traditionally male names given to at least 5,000 babies every single year in our 101-year dataset! Those names are classics, but showing up in the dataset every year doesn't necessarily mean that the timeless names were the most popular. Let's explore popular male names a little further.</p>
+
+<p>In the next two tasks, we will build up to listing every year along with the most popular male name in that year. This presents a common problem: how do we find the greatest X in a group? Or, in the context of this problem, how do we find the male name given to the highest number of babies in a year? </p>
+
+<p>In SQL, one approach is to use a subquery. We can first write a query that selects the <code>year</code> and the maximum <code>num</code> of babies given any single male name in that year. For example, in 1989, the male name given to the highest number of babies was given to 65,339 babies. We'll write this query in this task. In the next task, we can use the code from this task as a subquery to look up the <code>first_name</code> that was given to 65,339 babies in 1989… as well as the top male first name for all other years!</p>
+
+<div class="task"><div class="task--instructions"><div class="dc-html-content-syntax-highlight"><p>Write a query that selects the <code>year</code> and the maximum <code>num</code> of babies given any male name in that year.</p>
+<ul>
+<li>Select the <code>year</code> and the maximum <code>num</code> of babies given any one male name in that year; alias the maximum as <code>max_num</code>.</li>
+<li>Filter the data to include only results where <code>sex</code> equals 'M'.</li>
+</ul>
+</div></div></div>
+```{r, warning = F, message = F}
+# -- Select year and maximum number of babies given any one male name in that year, aliased as max_num 
+# -- Filter the data to include only results where sex equals 'M' 
+
+query("SELECT year, MAX(num) AS max_num
+FROM baby_names
+WHERE sex = 'M'
+GROUP BY year;")
+```
+
+## Top male names over the years {.unnumbered}
+
+<p>In the previous task, we found the maximum number of babies given any one male name in each year. Incredibly, the most popular name each year varied from being given to less than 20,000 babies to being given to more than 90,000! </p>
+
+<p>In this task, we find out what that top male name is for each year in our dataset. </p>
+
+<div class="task"><div class="task--instructions"><div class="dc-html-content-syntax-highlight"><p>Using the previous task's code as a subquery, look up the <code>first_name</code> that corresponds to the maximum number of babies given a specific male name in a year.</p>
+<ul>
+<li>Select <code>year</code>, the <code>first_name</code> given to the largest number of male babies, and <code>num</code> of babies given the <code>first_name</code> that year.</li>
+<li>Join <code>baby_names</code> to the code in the last task as a subquery, using whatever alias you like and joining on <em>both</em> columns in the subquery.</li>
+<li>Order the results by year, starting with the most recent year.</li>
+</ul>
+</div></div></div>
+```{r, warning = F, message = F}
+# -- Select year, first_name given to the largest number of male babies, and num of babies given that name 
+# -- Join baby_names to the code in the last task as a subquery 
+# -- Order results by year descending 
+
+sqldf("SELECT b.year, b.first_name, b.num
+FROM baby_names AS b
+INNER JOIN (
+    SELECT year, MAX(num) as max_num
+    FROM baby_names
+    WHERE sex = 'M'
+    GROUP BY year) AS subquery 
+ON subquery.year = b.year 
+    AND subquery.max_num = b.num
+ORDER BY b.year DESC;")
+```
+
+## The most years at number one {.unnumbered}
+
+<p>Noah and Liam have ruled the roost in the last few years, but if we scroll down in the results, it looks like Michael and Jacob have also spent a good number of years as the top name! Which name has been number one for the largest number of years? Let's use a common table expression to find out. </p>
+
+<div class="task"><div class="task--instructions"><div class="dc-html-content-syntax-highlight"><p>Return a list of first names that have been the top male first name in any year along with a count of the number of years that name has been the top name.</p>
+<ul>
+<li>Select <code>first_name</code> and a count of the number of years that the <code>first_name</code> appeared as a year's top name in the last task; alias this count as <code>count_top_name</code>.</li>
+<li>To do this, use the code from the previous task as a common table expression.</li>
+<li>Group by <code>first_name</code> and order the results from the name with the most years at the top to the name with the fewest.</li>
+</ul>
+```{r, warning = F, message = F}
+# -- Select first_name and a count of years it was the top name in the last task; alias as count_top_name 
+# -- Use the code from the previous task as a common table expression 
+# -- Group by first_name and order by count_top_name descending 
+
+sqldf("WITH top_male_names AS (
+    SELECT b.year, b.first_name, b.num
+    FROM baby_names AS b
+    INNER JOIN (
+        SELECT year, MAX(num) num
+        FROM baby_names
+        WHERE sex = 'M'
+        GROUP BY year) AS subquery 
+    ON subquery.year = b.year 
+        AND subquery.num = b.num
+    ORDER BY subquery.YEAR DESC
+    )
+SELECT first_name, COUNT(first_name) as count_top_name
+FROM top_male_names
+GROUP BY first_name
+ORDER BY COUNT(first_name) DESC;")
+```
+</div></div></div>

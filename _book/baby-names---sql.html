@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Baby Names - SQL | Tran Thanh Dat Portfolio</title>
+<meta name="author" content="Tran Thanh Dat">
+<meta name="description" content="Description  This is a DataCamp project that I have scrape all the HTML elements in the platform to my personal workspace. It is included in my portfolio only to show that I am comfortable with...">
+<meta name="generator" content="bookdown 0.25 with bs4_book()">
+<meta property="og:title" content="Baby Names - SQL | Tran Thanh Dat Portfolio">
+<meta property="og:type" content="book">
+<meta property="og:description" content="Description  This is a DataCamp project that I have scrape all the HTML elements in the platform to my personal workspace. It is included in my portfolio only to show that I am comfortable with...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Baby Names - SQL | Tran Thanh Dat Portfolio">
+<meta name="twitter:description" content="Description  This is a DataCamp project that I have scrape all the HTML elements in the platform to my personal workspace. It is included in my portfolio only to show that I am comfortable with...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="libs/pagedtable-1.1/js/pagedtable.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="bs4_style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Tran Thanh Dat Portfolio</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">About me</a></li>
+<li class="book-part">Personal Projects</li>
+<li><a class="" href="life-expectancy.html">Life Expectancy</a></li>
+<li><a class="" href="wage-determinants.html">Wage Determinants</a></li>
+<li><a class="" href="ielts-reading-topics.html">IELTS Reading Topics</a></li>
+<li><a class="active" href="baby-names---sql.html">Baby Names - SQL</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/cliex159/portfolio">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="baby-names---sql" class="section level1 unnumbered">
+<h1>Baby Names - SQL<a class="anchor" aria-label="anchor" href="#baby-names---sql"><i class="fas fa-link"></i></a>
+</h1>
+<h3>
+Description
+<a class="anchor" aria-label="anchor" href="#baby-names---sql"><i class="fas fa-link"></i></a>
+</h3>
+<p>
+This is a DataCamp project that I have scrape all the HTML elements in the platform to my personal workspace. It is included in my portfolio only to show that I am comfortable with SQL queries.
+</p>
+<div id="classic-american-names" class="section level2 unnumbered">
+<h2>Classic American names<a class="anchor" aria-label="anchor" href="#classic-american-names"><i class="fas fa-link"></i></a>
+</h2>
+<div class="inline-figure">
+<img src="https://assets.datacamp.com/production/project_1441/img/name.jpg" alt="Lots of name tags piled on top of each other." width="600">
+</div>
+<p>
+Photo by Travis Wise on <a href="https://commons.wikimedia.org/wiki/File:Hello_My_Name_Is_(15283079263).jpg" target="_blank">Wikimedia</a>.
+</p>
+<p>
+How have American baby name tastes changed since 1920? Which names have remained popular for over 100 years, and how do those names compare to more recent top baby names? These are considerations for many new parents, but the skills we’ll practice while answering these queries are broadly applicable. After all, understanding trends and popularity is important for many businesses, too!
+</p>
+<p>
+We’ll be working with data provided by the United States Social Security Administration, which lists first names along with the number and sex of babies they were given to in each year. For processing speed purposes, we’ve limited the dataset to first names which were given to over 5,000 American babies in a given year. Our data spans 101 years, from 1920 through 2020.
+</p>
+<p>
+Let’s get oriented to American baby name tastes by looking at the names that have stood the test of time!
+</p>
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ianmcook/tidyquery">tidyquery</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ggrothendieck/sqldf">sqldf</a></span><span class="op">)</span>
+<span class="va">baby_names</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/cliex159/DataCampcsv/main/usa_baby_names.csv"</span><span class="op">)</span></code></pre></div>
+<div class="task">
+<div class="task--instructions">
+<div class="dc-html-content-syntax-highlight">
+<p>
+Find names that have been given to over 5,000 babies of either sex every year for the 101 years from 1920 through 2020; recall that names only show up in our dataset when at least 5,000 babies have been given that name in a year.
+</p>
+<ul>
+<li>
+Select <code>first_name</code> and the total number of babies that have ever been given that name.
+</li>
+<li>
+Group by <code>first_name</code> and filter for those names that appear in all 101 years.
+</li>
+<li>
+Order the results by the total number of babies that have ever been given that name, descending.
+</li>
+<li>
+<em>The line <code>postgresql:///names</code> is used to connect to the database; don’t remove it.</em>
+</li>
+</ul>
+<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/tidyquery/man/query.html">query</a></span><span class="op">(</span><span class="st">"SELECT first_name, SUM(num)
+FROM baby_names
+GROUP BY first_name
+HAVING COUNT(year) = 101
+ORDER BY SUM(num) DESC;"</span><span class="op">)</span></code></pre></div>
+<pre><code>#&gt; # A tibble: 8 × 2
+#&gt;   first_name `sum(num, na.rm = TRUE)`
+#&gt;   &lt;chr&gt;                         &lt;int&gt;
+#&gt; 1 James                       4748138
+#&gt; 2 John                        4510721
+#&gt; 3 William                     3614424
+#&gt; 4 David                       3571498
+#&gt; 5 Joseph                      2361382
+#&gt; 6 Thomas                      2166802
+#&gt; 7 Charles                     2112352
+#&gt; 8 Elizabeth                   1436286</code></pre>
+<hr>
+<h2>
+Good to know
+</h2>
+<p>
+This project uses techniques learned in <a href="https://app.datacamp.com/learn/courses/intermediate-sql" target="_blank" rel="noopener noreferrer">Intermediate SQL</a>, including <code>CASE WHEN</code> statements, pattern matching using the <code>LIKE</code> operator, subqueries, common table expressions, and window functions. You’ll also be expected to know concepts from <a href="https://app.datacamp.com/learn/courses/introduction-to-sql" target="_blank" rel="noopener noreferrer">Introduction to SQL</a> and <a href="https://learn.datacamp.com/courses/joining-data-in-postgresql" target="_blank" rel="noopener noreferrer">Joining Data with SQL</a>, such as how to select columns from a table, filter rows where they meet a criterion, use aggregation functions, perform calculations on groups of rows, filter grouped data, and join data.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="timeless-or-trendy" class="section level2 unnumbered">
+<h2>Timeless or trendy?<a class="anchor" aria-label="anchor" href="#timeless-or-trendy"><i class="fas fa-link"></i></a>
+</h2>
+<p>
+Wow, it looks like there are a lot of timeless traditionally male names! Elizabeth is holding her own for the female names, too.
+</p>
+<p>
+Now, let’s broaden our understanding of the dataset by looking at all names. We’ll attempt to capture the type of popularity that each name in the dataset enjoyed. Was the name classic and popular across many years or trendy, only popular for a few years? Let’s find out.
+</p>
+<div class="task">
+<div class="task--instructions">
+<div class="dc-html-content-syntax-highlight">
+<p>
+Classify each name’s popularity according to the number of years that the name appears in the dataset.
+</p>
+<ul>
+<li>
+Select <code>first_name</code>, the sum of babies who’ve ever been given that name, and <code>popularity_type</code>.
+</li>
+<li>
+Classify all names in the dataset as ‘Classic,’ ‘Semi-classic,’ ‘Semi-trendy,’ or ‘Trendy’ based on whether the name appears in the dataset more than 80, 50, 20, or 0 times, respectively.
+</li>
+<li>
+Alias the new classification column as <code>popularity_type</code>.
+</li>
+<li>
+Order the results alphabetically by <code>first_name</code>.
+</li>
+</ul>
+<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># -- Classify first names as 'Classic', 'Semi-classic', 'Semi-trendy', or 'Trendy' </span>
+<span class="co"># -- Alias this column as popularity_type </span>
+<span class="co"># -- Select first_name, the sum of babies who have ever had that name, and popularity_type </span>
+<span class="co"># -- Order the results alphabetically by first_name </span>
+
+<span class="fu"><a href="https://rdrr.io/pkg/tidyquery/man/query.html">query</a></span><span class="op">(</span><span class="st">"SELECT first_name, SUM(num),
+    CASE WHEN COUNT(year) &gt; 80 THEN 'Classic'
+        WHEN COUNT(year) &gt; 50 THEN 'Semi-classic'
+        WHEN COUNT(year) &gt; 20 THEN 'Semi-trendy'
+        ELSE 'Trendy' END AS popularity_type
+FROM baby_names
+GROUP BY first_name
+ORDER BY first_name;"</span><span class="op">)</span></code></pre></div>
+<pre><code>#&gt; # A tibble: 547 × 3
+#&gt;    first_name `sum(num, na.rm = TRUE)` popularity_type
+#&gt;    &lt;chr&gt;                         &lt;int&gt; &lt;chr&gt;          
+#&gt;  1 Aaliyah                       15870 Trendy         
+#&gt;  2 Aaron                        530592 Semi-classic   
+#&gt;  3 Abigail                      338485 Semi-trendy    
+#&gt;  4 Adam                         497293 Semi-trendy    
+#&gt;  5 Addison                      107433 Trendy         
+#&gt;  6 Adrian                       147741 Semi-trendy    
+#&gt;  7 Aidan                         68566 Trendy         
+#&gt;  8 Aiden                        216194 Trendy         
+#&gt;  9 Alan                         162041 Semi-trendy    
+#&gt; 10 Albert                       260945 Semi-trendy    
+#&gt; # … with 537 more rows</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div id="top-ranked-female-names-since-1920" class="section level2 unnumbered">
+<h2>Top-ranked female names since 1920<a class="anchor" aria-label="anchor" href="#top-ranked-female-names-since-1920"><i class="fas fa-link"></i></a>
+</h2>
+<p>
+Did you find your favorite American celebrity’s name on the popularity chart? Was it classic or trendy? How do you think the name Henry did? What about Jaxon?
+</p>
+<p>
+Since we didn’t get many traditionally female names in our classic American names search in the first task, let’s limit our search to names which were given to female babies.
+</p>
+<p>
+We can use this opportunity to practice window functions by assigning a rank to female names based on the number of babies that have ever been given that name. What are the top-ranked female names since 1920?
+</p>
+<div class="task">
+<div class="task--instructions">
+<div class="dc-html-content-syntax-highlight">
+<p>
+Let’s take a look at the ten highest-ranked American female names in our dataset.
+</p>
+<ul>
+<li>
+Select <code>name_rank</code>, <code>first_name</code>, and the sum of babies who’ve ever had that name.
+</li>
+<li>
+<code>RANK</code> the <code>first_name</code> by the sum of babies who’ve ever had that name, aliasing as <code>name_rank</code> and showing the names in descending order by <code>name_rank</code>.
+</li>
+<li>
+Filter the data to include only results where <code>sex</code> equals ‘F’.
+</li>
+<li>
+Limit to ten results.
+</li>
+</ul>
+<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># -- RANK names by the sum of babies who have ever had that name (descending), aliasing as name_rank </span>
+<span class="co"># -- Select name_rank, first_name, and the sum of babies who have ever had that name </span>
+<span class="co"># -- Filter the data for results where sex equals 'F' </span>
+<span class="co"># -- Limit to ten results </span>
+<span class="fu"><a href="https://rdrr.io/pkg/sqldf/man/sqldf.html">sqldf</a></span><span class="op">(</span><span class="st">"
+SELECT
+    RANK() OVER(ORDER BY SUM(num) DESC) AS name_rank,
+    first_name, SUM(num)
+FROM baby_names
+WHERE sex = 'F'
+GROUP BY first_name
+LIMIT 10;"</span><span class="op">)</span></code></pre></div>
+<pre><code>#&gt;    name_rank first_name SUM(num)
+#&gt; 1          1       Mary  3215850
+#&gt; 2          2   Patricia  1479802
+#&gt; 3          3  Elizabeth  1436286
+#&gt; 4          4   Jennifer  1404743
+#&gt; 5          5      Linda  1361021
+#&gt; 6          6    Barbara  1343901
+#&gt; 7          7      Susan  1025728
+#&gt; 8          8    Jessica   994210
+#&gt; 9          9       Lisa   920119
+#&gt; 10        10      Betty   893396</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div id="picking-a-baby-name" class="section level2 unnumbered">
+<h2>Picking a baby name<a class="anchor" aria-label="anchor" href="#picking-a-baby-name"><i class="fas fa-link"></i></a>
+</h2>
+<p>
+Perhaps a friend has heard of our work analyzing baby names and would like help choosing a name for her baby, a girl. She doesn’t like any of the top-ranked names we found in the previous task.
+</p>
+<p>
+She’s set on a traditionally female name ending in the letter ‘a’ since she’s heard that vowels in baby names are trendy. She’s also looking for a name that has been popular in the years since 2015.
+</p>
+<p>
+Let’s see what we can do to find some options for this friend!
+</p>
+<div class="task">
+<div class="task--instructions">
+<div class="dc-html-content-syntax-highlight">
+<p>
+Return a list of first names which meet this friend’s baby name criteria.
+</p>
+<ul>
+<li>
+Select only the <code>first_name</code> column.
+</li>
+<li>
+Filter the data for results where <code>sex</code> equals ‘F’, the <code>year</code> is greater than 2015, and the <code>first_name</code> ends in an ‘a.’
+</li>
+<li>
+Group the data by <code>first_name</code> and order by the total number of babies ever given that <code>first_name</code>, descending.
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># -- Select only the first_name column </span>
+<span class="co"># -- Filter for results where sex is 'F', year is greater than 2015, and first_name ends in 'a' </span>
+<span class="co"># -- Group by first_name and order by the total number of babies given that first_name </span>
+<span class="fu"><a href="https://rdrr.io/pkg/tidyquery/man/query.html">query</a></span><span class="op">(</span><span class="st">"SELECT first_name
+FROM baby_names
+WHERE sex = 'F' AND year &gt; 2015
+    AND first_name LIKE '%a'
+GROUP BY first_name
+ORDER BY SUM(num) DESC;"</span><span class="op">)</span></code></pre></div>
+<pre><code>#&gt; # A tibble: 19 × 1
+#&gt;    first_name
+#&gt;    &lt;chr&gt;     
+#&gt;  1 Olivia    
+#&gt;  2 Emma      
+#&gt;  3 Ava       
+#&gt;  4 Sophia    
+#&gt;  5 Isabella  
+#&gt;  6 Mia       
+#&gt;  7 Amelia    
+#&gt;  8 Ella      
+#&gt;  9 Sofia     
+#&gt; 10 Camila    
+#&gt; 11 Aria      
+#&gt; 12 Victoria  
+#&gt; 13 Layla     
+#&gt; 14 Nora      
+#&gt; 15 Mila      
+#&gt; 16 Luna      
+#&gt; 17 Stella    
+#&gt; 18 Gianna    
+#&gt; 19 Aurora</code></pre>
+</div>
+<div id="the-olivia-expansion" class="section level2 unnumbered">
+<h2>The Olivia expansion<a class="anchor" aria-label="anchor" href="#the-olivia-expansion"><i class="fas fa-link"></i></a>
+</h2>
+<p>
+Based on the results in the previous task, we can see that Olivia is the most popular female name ending in ‘A’ since 2015. When did the name Olivia become so popular?
+</p>
+<p>
+Let’s explore the rise of the name Olivia with the help of a window function.
+</p>
+<div class="task">
+<div class="task--instructions">
+<div class="dc-html-content-syntax-highlight">
+<p>
+Find the cumulative number of babies named Olivia over the years since the name first appeared in our dataset.
+</p>
+<ul>
+<li>
+Select <code>year</code>, <code>first_name</code>, <code>num</code> of Olivias in that year, and <code>cumulative_olivias</code>.
+</li>
+<li>
+Using a window function, sum the cumulative number of babies who have ever been named Olivia up to that <code>year</code>; alias as <code>cumulative_olivias</code>.
+</li>
+<li>
+Filter the results so that only data for the name Olivia is returned.
+</li>
+<li>
+Order the results by <code>year</code> from the earliest year Olivia appeared in the dataset to the most recent.
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># -- Select year, first_name, num of Olivias in that year, and cumulative_olivias </span>
+<span class="co"># -- Sum the cumulative babies who have been named Olivia up to that year; alias as cumulative_olivias </span>
+<span class="co"># -- Filter so that only data for the name Olivia is returned. </span>
+<span class="co"># -- Order by year from the earliest year to most recent </span>
+
+<span class="fu"><a href="https://rdrr.io/pkg/sqldf/man/sqldf.html">sqldf</a></span><span class="op">(</span><span class="st">"SELECT year, first_name, num,
+    SUM(num) OVER (ORDER BY year) AS cumulative_olivias
+FROM baby_names
+WHERE first_name = 'Olivia'
+ORDER BY year;"</span><span class="op">)</span></code></pre></div>
+<pre><code>#&gt;    year first_name   num cumulative_olivias
+#&gt; 1  1991     Olivia  5601               5601
+#&gt; 2  1992     Olivia  5809              11410
+#&gt; 3  1993     Olivia  6340              17750
+#&gt; 4  1994     Olivia  6434              24184
+#&gt; 5  1995     Olivia  7624              31808
+#&gt; 6  1996     Olivia  8124              39932
+#&gt; 7  1997     Olivia  9477              49409
+#&gt; 8  1998     Olivia 10610              60019
+#&gt; 9  1999     Olivia 11255              71274
+#&gt; 10 2000     Olivia 12852              84126
+#&gt; 11 2001     Olivia 13977              98103
+#&gt; 12 2002     Olivia 14630             112733
+#&gt; 13 2003     Olivia 16152             128885
+#&gt; 14 2004     Olivia 16106             144991
+#&gt; 15 2005     Olivia 15694             160685
+#&gt; 16 2006     Olivia 15501             176186
+#&gt; 17 2007     Olivia 16584             192770
+#&gt; 18 2008     Olivia 17084             209854
+#&gt; 19 2009     Olivia 17438             227292
+#&gt; 20 2010     Olivia 17029             244321
+#&gt; 21 2011     Olivia 17327             261648
+#&gt; 22 2012     Olivia 17320             278968
+#&gt; 23 2013     Olivia 18439             297407
+#&gt; 24 2014     Olivia 19823             317230
+#&gt; 25 2015     Olivia 19710             336940
+#&gt; 26 2016     Olivia 19380             356320
+#&gt; 27 2017     Olivia 18744             375064
+#&gt; 28 2018     Olivia 18011             393075
+#&gt; 29 2019     Olivia 18508             411583
+#&gt; 30 2020     Olivia 17535             429118</code></pre>
+</div>
+<div id="many-males-with-the-same-name" class="section level2 unnumbered">
+<h2>Many males with the same name<a class="anchor" aria-label="anchor" href="#many-males-with-the-same-name"><i class="fas fa-link"></i></a>
+</h2>
+<p>
+Wow, Olivia has had a meteoric rise! Let’s take a look at traditionally male names now. We saw in the first task that there are nine traditionally male names given to at least 5,000 babies every single year in our 101-year dataset! Those names are classics, but showing up in the dataset every year doesn’t necessarily mean that the timeless names were the most popular. Let’s explore popular male names a little further.
+</p>
+<p>
+In the next two tasks, we will build up to listing every year along with the most popular male name in that year. This presents a common problem: how do we find the greatest X in a group? Or, in the context of this problem, how do we find the male name given to the highest number of babies in a year?
+</p>
+<p>
+In SQL, one approach is to use a subquery. We can first write a query that selects the <code>year</code> and the maximum <code>num</code> of babies given any single male name in that year. For example, in 1989, the male name given to the highest number of babies was given to 65,339 babies. We’ll write this query in this task. In the next task, we can use the code from this task as a subquery to look up the <code>first_name</code> that was given to 65,339 babies in 1989… as well as the top male first name for all other years!
+</p>
+<div class="task">
+<div class="task--instructions">
+<div class="dc-html-content-syntax-highlight">
+<p>
+Write a query that selects the <code>year</code> and the maximum <code>num</code> of babies given any male name in that year.
+</p>
+<ul>
+<li>
+Select the <code>year</code> and the maximum <code>num</code> of babies given any one male name in that year; alias the maximum as <code>max_num</code>.
+</li>
+<li>
+Filter the data to include only results where <code>sex</code> equals ‘M’.
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># -- Select year and maximum number of babies given any one male name in that year, aliased as max_num </span>
+<span class="co"># -- Filter the data to include only results where sex equals 'M' </span>
+
+<span class="fu"><a href="https://rdrr.io/pkg/tidyquery/man/query.html">query</a></span><span class="op">(</span><span class="st">"SELECT year, MAX(num) AS max_num
+FROM baby_names
+WHERE sex = 'M'
+GROUP BY year;"</span><span class="op">)</span></code></pre></div>
+<pre><code>#&gt; # A tibble: 101 × 2
+#&gt;     year max_num
+#&gt;    &lt;int&gt;   &lt;int&gt;
+#&gt;  1  1920   56914
+#&gt;  2  1921   58215
+#&gt;  3  1922   57280
+#&gt;  4  1923   57469
+#&gt;  5  1924   60801
+#&gt;  6  1925   60897
+#&gt;  7  1926   61130
+#&gt;  8  1927   61671
+#&gt;  9  1928   60703
+#&gt; 10  1929   59804
+#&gt; # … with 91 more rows</code></pre>
+</div>
+<div id="top-male-names-over-the-years" class="section level2 unnumbered">
+<h2>Top male names over the years<a class="anchor" aria-label="anchor" href="#top-male-names-over-the-years"><i class="fas fa-link"></i></a>
+</h2>
+<p>
+In the previous task, we found the maximum number of babies given any one male name in each year. Incredibly, the most popular name each year varied from being given to less than 20,000 babies to being given to more than 90,000!
+</p>
+<p>
+In this task, we find out what that top male name is for each year in our dataset.
+</p>
+<div class="task">
+<div class="task--instructions">
+<div class="dc-html-content-syntax-highlight">
+<p>
+Using the previous task’s code as a subquery, look up the <code>first_name</code> that corresponds to the maximum number of babies given a specific male name in a year.
+</p>
+<ul>
+<li>
+Select <code>year</code>, the <code>first_name</code> given to the largest number of male babies, and <code>num</code> of babies given the <code>first_name</code> that year.
+</li>
+<li>
+Join <code>baby_names</code> to the code in the last task as a subquery, using whatever alias you like and joining on <em>both</em> columns in the subquery.
+</li>
+<li>
+Order the results by year, starting with the most recent year.
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># -- Select year, first_name given to the largest number of male babies, and num of babies given that name </span>
+<span class="co"># -- Join baby_names to the code in the last task as a subquery </span>
+<span class="co"># -- Order results by year descending </span>
+
+<span class="fu"><a href="https://rdrr.io/pkg/sqldf/man/sqldf.html">sqldf</a></span><span class="op">(</span><span class="st">"SELECT b.year, b.first_name, b.num
+FROM baby_names AS b
+INNER JOIN (
+    SELECT year, MAX(num) as max_num
+    FROM baby_names
+    WHERE sex = 'M'
+    GROUP BY year) AS subquery 
+ON subquery.year = b.year 
+    AND subquery.max_num = b.num
+ORDER BY b.year DESC;"</span><span class="op">)</span></code></pre></div>
+<pre><code>#&gt;     year first_name   num
+#&gt; 1   2020       Liam 19659
+#&gt; 2   2019       Liam 20555
+#&gt; 3   2018       Liam 19924
+#&gt; 4   2017       Liam 18824
+#&gt; 5   2016       Noah 19154
+#&gt; 6   2015       Noah 19650
+#&gt; 7   2014       Noah 19319
+#&gt; 8   2013       Noah 18266
+#&gt; 9   2012      Jacob 19088
+#&gt; 10  2011      Jacob 20378
+#&gt; 11  2010      Jacob 22139
+#&gt; 12  2009      Jacob 21184
+#&gt; 13  2008      Jacob 22603
+#&gt; 14  2007      Jacob 24292
+#&gt; 15  2006      Jacob 24850
+#&gt; 16  2005      Jacob 25837
+#&gt; 17  2004      Jacob 27886
+#&gt; 18  2003      Jacob 29643
+#&gt; 19  2002      Jacob 30579
+#&gt; 20  2001      Jacob 32554
+#&gt; 21  2000      Jacob 34483
+#&gt; 22  1999      Jacob 35367
+#&gt; 23  1998    Michael 36616
+#&gt; 24  1997    Michael 37549
+#&gt; 25  1996    Michael 38365
+#&gt; 26  1995    Michael 41399
+#&gt; 27  1994    Michael 44472
+#&gt; 28  1993    Michael 49554
+#&gt; 29  1992    Michael 54397
+#&gt; 30  1991    Michael 60793
+#&gt; 31  1990    Michael 65302
+#&gt; 32  1989    Michael 65399
+#&gt; 33  1988    Michael 64150
+#&gt; 34  1987    Michael 63654
+#&gt; 35  1986    Michael 64224
+#&gt; 36  1985    Michael 64924
+#&gt; 37  1984    Michael 67745
+#&gt; 38  1983    Michael 68010
+#&gt; 39  1982    Michael 68244
+#&gt; 40  1981    Michael 68776
+#&gt; 41  1980    Michael 68704
+#&gt; 42  1979    Michael 67742
+#&gt; 43  1978    Michael 67157
+#&gt; 44  1977    Michael 67609
+#&gt; 45  1976    Michael 66947
+#&gt; 46  1975    Michael 68451
+#&gt; 47  1974    Michael 67580
+#&gt; 48  1973    Michael 67842
+#&gt; 49  1972    Michael 71401
+#&gt; 50  1971    Michael 77599
+#&gt; 51  1970    Michael 85291
+#&gt; 52  1969    Michael 85201
+#&gt; 53  1968    Michael 81995
+#&gt; 54  1967    Michael 82440
+#&gt; 55  1966    Michael 79990
+#&gt; 56  1965    Michael 81021
+#&gt; 57  1964    Michael 82642
+#&gt; 58  1963    Michael 83778
+#&gt; 59  1962    Michael 85041
+#&gt; 60  1961    Michael 86917
+#&gt; 61  1960      David 85933
+#&gt; 62  1959    Michael 85224
+#&gt; 63  1958    Michael 90564
+#&gt; 64  1957    Michael 92718
+#&gt; 65  1956    Michael 90665
+#&gt; 66  1955    Michael 88372
+#&gt; 67  1954    Michael 88576
+#&gt; 68  1953     Robert 86247
+#&gt; 69  1952      James 87063
+#&gt; 70  1951      James 87261
+#&gt; 71  1950      James 86229
+#&gt; 72  1949      James 86865
+#&gt; 73  1948      James 88589
+#&gt; 74  1947      James 94764
+#&gt; 75  1946      James 87439
+#&gt; 76  1945      James 74460
+#&gt; 77  1944      James 76954
+#&gt; 78  1943      James 80274
+#&gt; 79  1942      James 77174
+#&gt; 80  1941      James 66743
+#&gt; 81  1940      James 62476
+#&gt; 82  1939     Robert 59653
+#&gt; 83  1938     Robert 62269
+#&gt; 84  1937     Robert 61842
+#&gt; 85  1936     Robert 58499
+#&gt; 86  1935     Robert 56522
+#&gt; 87  1934     Robert 55834
+#&gt; 88  1933     Robert 54223
+#&gt; 89  1932     Robert 59265
+#&gt; 90  1931     Robert 60518
+#&gt; 91  1930     Robert 62149
+#&gt; 92  1929     Robert 59804
+#&gt; 93  1928     Robert 60703
+#&gt; 94  1927     Robert 61671
+#&gt; 95  1926     Robert 61130
+#&gt; 96  1925     Robert 60897
+#&gt; 97  1924     Robert 60801
+#&gt; 98  1923       John 57469
+#&gt; 99  1922       John 57280
+#&gt; 100 1921       John 58215
+#&gt; 101 1920       John 56914</code></pre>
+</div>
+<div id="the-most-years-at-number-one" class="section level2 unnumbered">
+<h2>The most years at number one<a class="anchor" aria-label="anchor" href="#the-most-years-at-number-one"><i class="fas fa-link"></i></a>
+</h2>
+<p>
+Noah and Liam have ruled the roost in the last few years, but if we scroll down in the results, it looks like Michael and Jacob have also spent a good number of years as the top name! Which name has been number one for the largest number of years? Let’s use a common table expression to find out.
+</p>
+<div class="task">
+<div class="task--instructions">
+<div class="dc-html-content-syntax-highlight">
+<p>
+Return a list of first names that have been the top male first name in any year along with a count of the number of years that name has been the top name.
+</p>
+<ul>
+<li>
+Select <code>first_name</code> and a count of the number of years that the <code>first_name</code> appeared as a year’s top name in the last task; alias this count as <code>count_top_name</code>.
+</li>
+<li>
+To do this, use the code from the previous task as a common table expression.
+</li>
+<li>
+Group by <code>first_name</code> and order the results from the name with the most years at the top to the name with the fewest.
+</li>
+</ul>
+<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># -- Select first_name and a count of years it was the top name in the last task; alias as count_top_name </span>
+<span class="co"># -- Use the code from the previous task as a common table expression </span>
+<span class="co"># -- Group by first_name and order by count_top_name descending </span>
+
+<span class="fu"><a href="https://rdrr.io/pkg/sqldf/man/sqldf.html">sqldf</a></span><span class="op">(</span><span class="st">"WITH top_male_names AS (
+    SELECT b.year, b.first_name, b.num
+    FROM baby_names AS b
+    INNER JOIN (
+        SELECT year, MAX(num) num
+        FROM baby_names
+        WHERE sex = 'M'
+        GROUP BY year) AS subquery 
+    ON subquery.year = b.year 
+        AND subquery.num = b.num
+    ORDER BY subquery.YEAR DESC
+    )
+SELECT first_name, COUNT(first_name) as count_top_name
+FROM top_male_names
+GROUP BY first_name
+ORDER BY COUNT(first_name) DESC;"</span><span class="op">)</span></code></pre></div>
+<pre><code>#&gt;   first_name count_top_name
+#&gt; 1    Michael             44
+#&gt; 2     Robert             17
+#&gt; 3      Jacob             14
+#&gt; 4      James             13
+#&gt; 5       Noah              4
+#&gt; 6       Liam              4
+#&gt; 7       John              4
+#&gt; 8      David              1</code></pre>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="ielts-reading-topics.html">IELTS Reading Topics</a></div>
+<div class="empty"></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li>
+<a class="nav-link" href="#baby-names---sql">Baby Names - SQL</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#baby-names---sql">
+Description
+</a></li></ul>
+</li>
+<li><a class="nav-link" href="#classic-american-names">Classic American names</a></li>
+<li><a class="nav-link" href="#timeless-or-trendy">Timeless or trendy?</a></li>
+<li><a class="nav-link" href="#top-ranked-female-names-since-1920">Top-ranked female names since 1920</a></li>
+<li><a class="nav-link" href="#picking-a-baby-name">Picking a baby name</a></li>
+<li><a class="nav-link" href="#the-olivia-expansion">The Olivia expansion</a></li>
+<li><a class="nav-link" href="#many-males-with-the-same-name">Many males with the same name</a></li>
+<li><a class="nav-link" href="#top-male-names-over-the-years">Top male names over the years</a></li>
+<li><a class="nav-link" href="#the-most-years-at-number-one">The most years at number one</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/cliex159/portfolio/blob/master/01-intro.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/cliex159/portfolio/edit/master/01-intro.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Tran Thanh Dat Portfolio</strong>" was written by Tran Thanh Dat. It was last built on 2022-04-25.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

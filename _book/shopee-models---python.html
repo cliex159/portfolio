@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Shopee Models - Python | Tran Thanh Dat Portfolio</title>
+<meta name="author" content="Tran Thanh Dat">
+<meta name="description" content="import numpy as np import tensorflow as tf import sklearn import pandas as pd import os from sklearn.tree import DecisionTreeRegressor from sklearn.model_selection import train_test_split from...">
+<meta name="generator" content="bookdown 0.25 with bs4_book()">
+<meta property="og:title" content="Shopee Models - Python | Tran Thanh Dat Portfolio">
+<meta property="og:type" content="book">
+<meta property="og:description" content="import numpy as np import tensorflow as tf import sklearn import pandas as pd import os from sklearn.tree import DecisionTreeRegressor from sklearn.model_selection import train_test_split from...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Shopee Models - Python | Tran Thanh Dat Portfolio">
+<meta name="twitter:description" content="import numpy as np import tensorflow as tf import sklearn import pandas as pd import os from sklearn.tree import DecisionTreeRegressor from sklearn.model_selection import train_test_split from...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="libs/pagedtable-1.1/js/pagedtable.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="bs4_style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Tran Thanh Dat Portfolio</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Course Descripition</a></li>
+<li class="book-part">Personal Projects</li>
+<li><a class="" href="life-expectancy.html">Life Expectancy</a></li>
+<li><a class="" href="wage-determinants.html">Wage Determinants</a></li>
+<li><a class="" href="ielts-reading-topics.html">IELTS Reading Topics</a></li>
+<li><a class="" href="baby-names---sql.html">Baby Names - SQL</a></li>
+<li><a class="active" href="shopee-models---python.html">Shopee Models - Python</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/cliex159/portfolio">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="shopee-models---python" class="section level1 unnumbered">
+<h1>Shopee Models - Python<a class="anchor" aria-label="anchor" href="#shopee-models---python"><i class="fas fa-link"></i></a>
+</h1>
+<div class="sourceCode" id="cb85"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb85-1"><a href="shopee-models---python.html#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb85-2"><a href="shopee-models---python.html#cb85-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tensorflow <span class="im">as</span> tf</span>
+<span id="cb85-3"><a href="shopee-models---python.html#cb85-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sklearn</span>
+<span id="cb85-4"><a href="shopee-models---python.html#cb85-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb85-5"><a href="shopee-models---python.html#cb85-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb85-6"><a href="shopee-models---python.html#cb85-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeRegressor</span>
+<span id="cb85-7"><a href="shopee-models---python.html#cb85-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb85-8"><a href="shopee-models---python.html#cb85-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestRegressor</span>
+<span id="cb85-9"><a href="shopee-models---python.html#cb85-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> MinMaxScaler, StandardScaler</span>
+<span id="cb85-10"><a href="shopee-models---python.html#cb85-10" aria-hidden="true" tabindex="-1"></a>normalizer <span class="op">=</span> StandardScaler()</span>
+<span id="cb85-11"><a href="shopee-models---python.html#cb85-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression, Ridge, Lasso</span>
+<span id="cb85-12"><a href="shopee-models---python.html#cb85-12" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb85-13"><a href="shopee-models---python.html#cb85-13" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">"ignore"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb86"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb86-1"><a href="shopee-models---python.html#cb86-1" aria-hidden="true" tabindex="-1"></a>item_df <span class="op">=</span> pd.read_csv(<span class="st">"https://raw.githubusercontent.com/cliex159/Shopee/main/items.csv"</span>,</span>
+<span id="cb86-2"><a href="shopee-models---python.html#cb86-2" aria-hidden="true" tabindex="-1"></a>                      encoding <span class="op">=</span> <span class="st">'utf-8'</span>, delimiter <span class="op">=</span> <span class="st">"</span><span class="ch">\t</span><span class="st">"</span>)</span>
+<span id="cb86-3"><a href="shopee-models---python.html#cb86-3" aria-hidden="true" tabindex="-1"></a>item_df.info()</span></code></pre></div>
+<pre><code>#&gt; &lt;class 'pandas.core.frame.DataFrame'&gt;
+#&gt; RangeIndex: 15638 entries, 0 to 15637
+#&gt; Data columns (total 21 columns):
+#&gt;  #   Column              Non-Null Count  Dtype  
+#&gt; ---  ------              --------------  -----  
+#&gt;  0   id                  15638 non-null  int64  
+#&gt;  1   name                15638 non-null  object 
+#&gt;  2   avg_rating          15638 non-null  float64
+#&gt;  3   n_reviews           15638 non-null  int64  
+#&gt;  4   n_sold              15638 non-null  float64
+#&gt;  5   price               15638 non-null  float64
+#&gt;  6   n_loved             15638 non-null  int64  
+#&gt;  7   n_rate_5            15638 non-null  int64  
+#&gt;  8   rate_4              15638 non-null  int64  
+#&gt;  9   rate_3              15638 non-null  int64  
+#&gt;  10  rate_2              15638 non-null  int64  
+#&gt;  11  rate_1              15638 non-null  int64  
+#&gt;  12  rate_with_cmt       15638 non-null  int64  
+#&gt;  13  rate_with_imgvid    15638 non-null  int64  
+#&gt;  14  shop_name           15638 non-null  object 
+#&gt;  15  shop_n_review       15638 non-null  int64  
+#&gt;  16  shop_n_product      15638 non-null  int64  
+#&gt;  17  shop_rate_feedback  15638 non-null  object 
+#&gt;  18  shop_time_feedback  15638 non-null  object 
+#&gt;  19  shop_age            15638 non-null  float64
+#&gt;  20  shop_follower       15638 non-null  int64  
+#&gt; dtypes: float64(4), int64(13), object(4)
+#&gt; memory usage: 2.5+ MB</code></pre>
+<div class="sourceCode" id="cb88"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb88-1"><a href="shopee-models---python.html#cb88-1" aria-hidden="true" tabindex="-1"></a>search_df <span class="op">=</span> pd.read_csv(<span class="st">"https://raw.githubusercontent.com/cliex159/Shopee/main/search_15k6.csv"</span>,</span>
+<span id="cb88-2"><a href="shopee-models---python.html#cb88-2" aria-hidden="true" tabindex="-1"></a>                        encoding <span class="op">=</span> <span class="st">'utf-8'</span>, delimiter <span class="op">=</span> <span class="st">"</span><span class="ch">\t</span><span class="st">"</span>)</span>
+<span id="cb88-3"><a href="shopee-models---python.html#cb88-3" aria-hidden="true" tabindex="-1"></a>search_df.info()</span></code></pre></div>
+<pre><code>#&gt; &lt;class 'pandas.core.frame.DataFrame'&gt;
+#&gt; RangeIndex: 15648 entries, 0 to 15647
+#&gt; Data columns (total 8 columns):
+#&gt;  #   Column        Non-Null Count  Dtype  
+#&gt; ---  ------        --------------  -----  
+#&gt;  0   id            15648 non-null  int64  
+#&gt;  1   name          15648 non-null  object 
+#&gt;  2   category      15648 non-null  object 
+#&gt;  3   n_sold        15648 non-null  float64
+#&gt;  4   price         15648 non-null  float64
+#&gt;  5   shop_address  15648 non-null  object 
+#&gt;  6   image_url     15648 non-null  object 
+#&gt;  7   url           15648 non-null  object 
+#&gt; dtypes: float64(2), int64(1), object(5)
+#&gt; memory usage: 978.1+ KB</code></pre>
+<div class="sourceCode" id="cb90"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb90-1"><a href="shopee-models---python.html#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert shop_rate_feedback and shop_time_feedback's None values to zeros</span></span>
+<span id="cb90-2"><a href="shopee-models---python.html#cb90-2" aria-hidden="true" tabindex="-1"></a>item_df[[<span class="st">'shop_rate_feedback'</span>]] <span class="op">=</span> item_df[[<span class="st">'shop_rate_feedback'</span>]].replace(<span class="st">"None"</span>, <span class="dv">0</span>).astype(<span class="bu">int</span>)</span>
+<span id="cb90-3"><a href="shopee-models---python.html#cb90-3" aria-hidden="true" tabindex="-1"></a>item_df[[<span class="st">'shop_time_feedback'</span>]] <span class="op">=</span> item_df[[<span class="st">'shop_time_feedback'</span>]].replace(<span class="st">"None"</span>, <span class="dv">0</span>).astype(<span class="bu">int</span>)</span>
+<span id="cb90-4"><a href="shopee-models---python.html#cb90-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-5"><a href="shopee-models---python.html#cb90-5" aria-hidden="true" tabindex="-1"></a>full_df <span class="op">=</span> search_df.merge(item_df, how <span class="op">=</span> <span class="st">'inner'</span>, on <span class="op">=</span> [<span class="st">'id'</span>], </span>
+<span id="cb90-6"><a href="shopee-models---python.html#cb90-6" aria-hidden="true" tabindex="-1"></a>                          suffixes <span class="op">=</span> (<span class="va">None</span>, <span class="st">'_2'</span>))</span>
+<span id="cb90-7"><a href="shopee-models---python.html#cb90-7" aria-hidden="true" tabindex="-1"></a>full_df</span></code></pre></div>
+<pre><code>#&gt;           id  ... shop_follower
+#&gt; 0          0  ...         25619
+#&gt; 1          1  ...         25620
+#&gt; 2          2  ...         27558
+#&gt; 3          3  ...         25620
+#&gt; 4          4  ...          1547
+#&gt; ...      ...  ...           ...
+#&gt; 15633  15643  ...          1983
+#&gt; 15634  15644  ...          1903
+#&gt; 15635  15645  ...          4226
+#&gt; 15636  15646  ...           986
+#&gt; 15637  15647  ...         10684
+#&gt; 
+#&gt; [15638 rows x 28 columns]</code></pre>
+<div class="sourceCode" id="cb92"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb92-1"><a href="shopee-models---python.html#cb92-1" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> full_df[<span class="st">'n_sold'</span>].to_numpy() <span class="co">#get the label</span></span>
+<span id="cb92-2"><a href="shopee-models---python.html#cb92-2" aria-hidden="true" tabindex="-1"></a>y</span></code></pre></div>
+<pre><code>#&gt; array([7800., 6600., 8800., ...,   33.,   41.,   27.])</code></pre>
+<div class="sourceCode" id="cb94"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb94-1"><a href="shopee-models---python.html#cb94-1" aria-hidden="true" tabindex="-1"></a>category <span class="op">=</span> pd.get_dummies(full_df[<span class="st">'category'</span>], drop_first<span class="op">=</span><span class="va">True</span>) <span class="co">#Convert category to one hot encoding</span></span>
+<span id="cb94-2"><a href="shopee-models---python.html#cb94-2" aria-hidden="true" tabindex="-1"></a>price <span class="op">=</span> full_df[[<span class="st">'price'</span>]]</span>
+<span id="cb94-3"><a href="shopee-models---python.html#cb94-3" aria-hidden="true" tabindex="-1"></a>shop_address <span class="op">=</span> pd.get_dummies(full_df[<span class="st">'shop_address'</span>], drop_first<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb94-4"><a href="shopee-models---python.html#cb94-4" aria-hidden="true" tabindex="-1"></a>avg_rating <span class="op">=</span> full_df[[<span class="st">'avg_rating'</span>]]</span>
+<span id="cb94-5"><a href="shopee-models---python.html#cb94-5" aria-hidden="true" tabindex="-1"></a>n_reviews <span class="op">=</span> full_df[[<span class="st">'n_reviews'</span>]]</span>
+<span id="cb94-6"><a href="shopee-models---python.html#cb94-6" aria-hidden="true" tabindex="-1"></a>n_loved <span class="op">=</span> full_df[[<span class="st">'n_loved'</span>]]</span>
+<span id="cb94-7"><a href="shopee-models---python.html#cb94-7" aria-hidden="true" tabindex="-1"></a>shop_n_review <span class="op">=</span> full_df[[<span class="st">'shop_n_review'</span>]]</span>
+<span id="cb94-8"><a href="shopee-models---python.html#cb94-8" aria-hidden="true" tabindex="-1"></a>shop_n_product <span class="op">=</span> full_df[[<span class="st">'shop_n_product'</span>]]</span>
+<span id="cb94-9"><a href="shopee-models---python.html#cb94-9" aria-hidden="true" tabindex="-1"></a>shop_rate_feedback <span class="op">=</span> full_df[[<span class="st">'shop_rate_feedback'</span>]]</span>
+<span id="cb94-10"><a href="shopee-models---python.html#cb94-10" aria-hidden="true" tabindex="-1"></a>shop_time_feedback <span class="op">=</span> full_df[[<span class="st">'shop_time_feedback'</span>]]</span>
+<span id="cb94-11"><a href="shopee-models---python.html#cb94-11" aria-hidden="true" tabindex="-1"></a>shop_age <span class="op">=</span> full_df[[<span class="st">'shop_age'</span>]]</span>
+<span id="cb94-12"><a href="shopee-models---python.html#cb94-12" aria-hidden="true" tabindex="-1"></a>shop_follower <span class="op">=</span> full_df[[<span class="st">'shop_follower'</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb95"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb95-1"><a href="shopee-models---python.html#cb95-1" aria-hidden="true" tabindex="-1"></a>feature_list <span class="op">=</span> [shop_address, </span>
+<span id="cb95-2"><a href="shopee-models---python.html#cb95-2" aria-hidden="true" tabindex="-1"></a>                category, </span>
+<span id="cb95-3"><a href="shopee-models---python.html#cb95-3" aria-hidden="true" tabindex="-1"></a>                price,</span>
+<span id="cb95-4"><a href="shopee-models---python.html#cb95-4" aria-hidden="true" tabindex="-1"></a>                avg_rating, </span>
+<span id="cb95-5"><a href="shopee-models---python.html#cb95-5" aria-hidden="true" tabindex="-1"></a>                n_reviews, </span>
+<span id="cb95-6"><a href="shopee-models---python.html#cb95-6" aria-hidden="true" tabindex="-1"></a>                n_loved,</span>
+<span id="cb95-7"><a href="shopee-models---python.html#cb95-7" aria-hidden="true" tabindex="-1"></a>                shop_n_review, </span>
+<span id="cb95-8"><a href="shopee-models---python.html#cb95-8" aria-hidden="true" tabindex="-1"></a>                shop_n_product, </span>
+<span id="cb95-9"><a href="shopee-models---python.html#cb95-9" aria-hidden="true" tabindex="-1"></a>                shop_rate_feedback, </span>
+<span id="cb95-10"><a href="shopee-models---python.html#cb95-10" aria-hidden="true" tabindex="-1"></a>                shop_time_feedback, </span>
+<span id="cb95-11"><a href="shopee-models---python.html#cb95-11" aria-hidden="true" tabindex="-1"></a>                shop_age, </span>
+<span id="cb95-12"><a href="shopee-models---python.html#cb95-12" aria-hidden="true" tabindex="-1"></a>                shop_follower]</span></code></pre></div>
+<div class="sourceCode" id="cb96"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb96-1"><a href="shopee-models---python.html#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Metrics():</span>
+<span id="cb96-2"><a href="shopee-models---python.html#cb96-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb96-3"><a href="shopee-models---python.html#cb96-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">@staticmethod</span></span>
+<span id="cb96-4"><a href="shopee-models---python.html#cb96-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> computeMAE(y_true, y_pred):</span>
+<span id="cb96-5"><a href="shopee-models---python.html#cb96-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> np.mean(np.<span class="bu">abs</span>(y_true<span class="op">-</span>y_pred))</span>
+<span id="cb96-6"><a href="shopee-models---python.html#cb96-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb96-7"><a href="shopee-models---python.html#cb96-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">@staticmethod</span></span>
+<span id="cb96-8"><a href="shopee-models---python.html#cb96-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> computeSIA(y_true, y_pred, eps <span class="op">=</span> <span class="dv">500</span>): <span class="co"># soft interval accuracy</span></span>
+<span id="cb96-9"><a href="shopee-models---python.html#cb96-9" aria-hidden="true" tabindex="-1"></a>        error <span class="op">=</span> np.<span class="bu">abs</span>(y_true <span class="op">-</span> y_pred)</span>
+<span id="cb96-10"><a href="shopee-models---python.html#cb96-10" aria-hidden="true" tabindex="-1"></a>        res <span class="op">=</span> np.mean(((error <span class="op">-</span> eps) <span class="op">&lt;</span> <span class="dv">0</span> ) <span class="op">&amp;</span> (y_pred <span class="op">&gt;=</span> <span class="dv">0</span>))</span>
+<span id="cb96-11"><a href="shopee-models---python.html#cb96-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> res</span></code></pre></div>
+<div class="sourceCode" id="cb97"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb97-1"><a href="shopee-models---python.html#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> run_model(y, model_name, feature_list):</span>
+<span id="cb97-2"><a href="shopee-models---python.html#cb97-2" aria-hidden="true" tabindex="-1"></a>  X <span class="op">=</span> np.hstack(feature_list)</span>
+<span id="cb97-3"><a href="shopee-models---python.html#cb97-3" aria-hidden="true" tabindex="-1"></a>  X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size <span class="op">=</span> <span class="fl">0.2</span>,</span>
+<span id="cb97-4"><a href="shopee-models---python.html#cb97-4" aria-hidden="true" tabindex="-1"></a>                                                      random_state <span class="op">=</span> <span class="dv">1</span>)</span>
+<span id="cb97-5"><a href="shopee-models---python.html#cb97-5" aria-hidden="true" tabindex="-1"></a>  X_train, X_val, y_train, y_val <span class="op">=</span> train_test_split(X_train, y_train, </span>
+<span id="cb97-6"><a href="shopee-models---python.html#cb97-6" aria-hidden="true" tabindex="-1"></a>                                                    test_size <span class="op">=</span> <span class="fl">0.2</span>,</span>
+<span id="cb97-7"><a href="shopee-models---python.html#cb97-7" aria-hidden="true" tabindex="-1"></a>                                                    random_state <span class="op">=</span> <span class="dv">1</span>)</span>
+<span id="cb97-8"><a href="shopee-models---python.html#cb97-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb97-9"><a href="shopee-models---python.html#cb97-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> model_name <span class="op">!=</span> <span class="st">'random_forest'</span>:</span>
+<span id="cb97-10"><a href="shopee-models---python.html#cb97-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> [X_train, X_val, X_test]:</span>
+<span id="cb97-11"><a href="shopee-models---python.html#cb97-11" aria-hidden="true" tabindex="-1"></a>      i <span class="op">=</span> normalizer.fit_transform(i)</span>
+<span id="cb97-12"><a href="shopee-models---python.html#cb97-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb97-13"><a href="shopee-models---python.html#cb97-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> model_name <span class="op">==</span> <span class="st">'ridge'</span> <span class="kw">or</span> model_name <span class="op">==</span> <span class="st">'lasso'</span>:</span>
+<span id="cb97-14"><a href="shopee-models---python.html#cb97-14" aria-hidden="true" tabindex="-1"></a>    alphas <span class="op">=</span> np.linspace(<span class="fl">0.001</span>, <span class="dv">10</span>, num <span class="op">=</span> <span class="dv">100</span>)</span>
+<span id="cb97-15"><a href="shopee-models---python.html#cb97-15" aria-hidden="true" tabindex="-1"></a>    best_val <span class="op">=</span> np.inf</span>
+<span id="cb97-16"><a href="shopee-models---python.html#cb97-16" aria-hidden="true" tabindex="-1"></a>    best_alpha <span class="op">=</span> <span class="op">-</span><span class="dv">1</span></span>
+<span id="cb97-17"><a href="shopee-models---python.html#cb97-17" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb97-18"><a href="shopee-models---python.html#cb97-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> alpha <span class="kw">in</span> alphas:</span>
+<span id="cb97-19"><a href="shopee-models---python.html#cb97-19" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> model_name <span class="op">==</span> <span class="st">'ridge'</span>:</span>
+<span id="cb97-20"><a href="shopee-models---python.html#cb97-20" aria-hidden="true" tabindex="-1"></a>        tmp_model <span class="op">=</span> Ridge(alpha)</span>
+<span id="cb97-21"><a href="shopee-models---python.html#cb97-21" aria-hidden="true" tabindex="-1"></a>      <span class="cf">else</span>:</span>
+<span id="cb97-22"><a href="shopee-models---python.html#cb97-22" aria-hidden="true" tabindex="-1"></a>        tmp_model <span class="op">=</span> Lasso(alpha)</span>
+<span id="cb97-23"><a href="shopee-models---python.html#cb97-23" aria-hidden="true" tabindex="-1"></a>      tmp_model.fit(X_train ,y_train)</span>
+<span id="cb97-24"><a href="shopee-models---python.html#cb97-24" aria-hidden="true" tabindex="-1"></a>      mae_val <span class="op">=</span> Metrics.computeMAE(y_val, tmp_model.predict(X_val))</span>
+<span id="cb97-25"><a href="shopee-models---python.html#cb97-25" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> mae_val <span class="op">&lt;</span> best_val:</span>
+<span id="cb97-26"><a href="shopee-models---python.html#cb97-26" aria-hidden="true" tabindex="-1"></a>        best_val <span class="op">=</span> mae_val</span>
+<span id="cb97-27"><a href="shopee-models---python.html#cb97-27" aria-hidden="true" tabindex="-1"></a>        model <span class="op">=</span> tmp_model</span>
+<span id="cb97-28"><a href="shopee-models---python.html#cb97-28" aria-hidden="true" tabindex="-1"></a>        best_alpha <span class="op">=</span> alpha</span>
+<span id="cb97-29"><a href="shopee-models---python.html#cb97-29" aria-hidden="true" tabindex="-1"></a>  <span class="cf">elif</span> model_name <span class="op">==</span> <span class="st">'random_forest'</span>:</span>
+<span id="cb97-30"><a href="shopee-models---python.html#cb97-30" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> RandomForestRegressor()</span>
+<span id="cb97-31"><a href="shopee-models---python.html#cb97-31" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span>:</span>
+<span id="cb97-32"><a href="shopee-models---python.html#cb97-32" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> LinearRegression()</span>
+<span id="cb97-33"><a href="shopee-models---python.html#cb97-33" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb97-34"><a href="shopee-models---python.html#cb97-34" aria-hidden="true" tabindex="-1"></a>  model.fit(X_train, y_train)</span>
+<span id="cb97-35"><a href="shopee-models---python.html#cb97-35" aria-hidden="true" tabindex="-1"></a>  mae_train <span class="op">=</span> Metrics.computeMAE(y_train, model.predict(X_train))</span>
+<span id="cb97-36"><a href="shopee-models---python.html#cb97-36" aria-hidden="true" tabindex="-1"></a>  mae_val <span class="op">=</span> Metrics.computeMAE(y_val, model.predict(X_val))</span>
+<span id="cb97-37"><a href="shopee-models---python.html#cb97-37" aria-hidden="true" tabindex="-1"></a>  mae_test <span class="op">=</span> Metrics.computeMAE(y_test, model.predict(X_test))</span>
+<span id="cb97-38"><a href="shopee-models---python.html#cb97-38" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">'MAE:'</span>, mae_train, mae_val, mae_test)</span>
+<span id="cb97-39"><a href="shopee-models---python.html#cb97-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-40"><a href="shopee-models---python.html#cb97-40" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> i <span class="kw">in</span> [<span class="dv">200</span>, <span class="dv">500</span>, <span class="dv">1000</span>]:</span>
+<span id="cb97-41"><a href="shopee-models---python.html#cb97-41" aria-hidden="true" tabindex="-1"></a>    SIA_train <span class="op">=</span> Metrics.computeSIA(y_train, model.predict(X_train), i)</span>
+<span id="cb97-42"><a href="shopee-models---python.html#cb97-42" aria-hidden="true" tabindex="-1"></a>    SIA_val <span class="op">=</span> Metrics.computeSIA(y_val, model.predict(X_val), i)</span>
+<span id="cb97-43"><a href="shopee-models---python.html#cb97-43" aria-hidden="true" tabindex="-1"></a>    SIA_test <span class="op">=</span> Metrics.computeSIA(y_test, model.predict(X_test), i)</span>
+<span id="cb97-44"><a href="shopee-models---python.html#cb97-44" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'SIA'</span>, i, end <span class="op">=</span> <span class="st">''</span>)</span>
+<span id="cb97-45"><a href="shopee-models---python.html#cb97-45" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">':'</span>, SIA_train, SIA_val, SIA_test)</span>
+<span id="cb97-46"><a href="shopee-models---python.html#cb97-46" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb97-47"><a href="shopee-models---python.html#cb97-47" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> model_name <span class="op">==</span> <span class="st">'random_forest'</span>:</span>
+<span id="cb97-48"><a href="shopee-models---python.html#cb97-48" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [model, <span class="va">None</span>]</span>
+<span id="cb97-49"><a href="shopee-models---python.html#cb97-49" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> [model, model.coef_]</span></code></pre></div>
+<div class="sourceCode" id="cb98"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb98-1"><a href="shopee-models---python.html#cb98-1" aria-hidden="true" tabindex="-1"></a>linear_result <span class="op">=</span> run_model(y, <span class="st">'linear'</span>, feature_list)</span></code></pre></div>
+<pre><code>#&gt; MAE: 609.7938223734083 583.2836529980842 616.4516485483218
+#&gt; SIA 200: 0.3290367705835332 0.3181454836131095 0.32960358056265987
+#&gt; SIA 500: 0.5636490807354116 0.5523581135091926 0.5629795396419437
+#&gt; SIA 1000: 0.7140287769784173 0.7218225419664268 0.7244245524296675</code></pre>
+<div class="sourceCode" id="cb100"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb100-1"><a href="shopee-models---python.html#cb100-1" aria-hidden="true" tabindex="-1"></a>random_forest_result <span class="op">=</span> run_model(y, <span class="st">'random_forest'</span>, feature_list)</span></code></pre></div>
+<pre><code>#&gt; MAE: 163.35005946036821 411.7157778792839 470.6420652998519
+#&gt; SIA 200: 0.8565147881694645 0.6642685851318945 0.6678388746803069
+#&gt; SIA 500: 0.9437450039968026 0.8421262989608314 0.834079283887468
+#&gt; SIA 1000: 0.9757194244604317 0.9184652278177458 0.9178388746803069</code></pre>
+<div class="sourceCode" id="cb102"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb102-1"><a href="shopee-models---python.html#cb102-1" aria-hidden="true" tabindex="-1"></a>ridge_result <span class="op">=</span> run_model(y, <span class="st">'ridge'</span>, feature_list)</span></code></pre></div>
+<pre><code>#&gt; MAE: 607.6181378819125 580.567734126372 614.837097772289
+#&gt; SIA 200: 0.33243405275779375 0.3261390887290168 0.3343989769820972
+#&gt; SIA 500: 0.5695443645083933 0.5591526778577138 0.5684143222506394
+#&gt; SIA 1000: 0.71982414068745 0.7258193445243805 0.7282608695652174</code></pre>
+<div class="sourceCode" id="cb104"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb104-1"><a href="shopee-models---python.html#cb104-1" aria-hidden="true" tabindex="-1"></a>lasso_result <span class="op">=</span> run_model(y, <span class="st">'lasso'</span>, feature_list)</span></code></pre></div>
+<pre><code>#&gt; MAE: 593.8248862786495 564.9157782627142 601.5359099661443
+#&gt; SIA 200: 0.34932054356514786 0.3349320543565148 0.3420716112531969
+#&gt; SIA 500: 0.64568345323741 0.6506794564348521 0.6355498721227621
+#&gt; SIA 1000: 0.7812749800159872 0.7953637090327738 0.7784526854219949</code></pre>
+<div class="sourceCode" id="cb106"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb106-1"><a href="shopee-models---python.html#cb106-1" aria-hidden="true" tabindex="-1"></a>indices <span class="op">=</span> np.nonzero(np.around(lasso_result[<span class="dv">1</span>]))[<span class="dv">0</span>]</span>
+<span id="cb106-2"><a href="shopee-models---python.html#cb106-2" aria-hidden="true" tabindex="-1"></a>indices</span></code></pre></div>
+<pre><code>#&gt; array([16, 34, 57, 59, 65, 68, 69, 71, 74, 78])</code></pre>
+<div class="sourceCode" id="cb108"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb108-1"><a href="shopee-models---python.html#cb108-1" aria-hidden="true" tabindex="-1"></a>col <span class="op">=</span> []</span>
+<span id="cb108-2"><a href="shopee-models---python.html#cb108-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, <span class="bu">len</span>(feature_list)):</span>
+<span id="cb108-3"><a href="shopee-models---python.html#cb108-3" aria-hidden="true" tabindex="-1"></a>  col.extend(<span class="bu">list</span>(feature_list[i].columns))</span>
+<span id="cb108-4"><a href="shopee-models---python.html#cb108-4" aria-hidden="true" tabindex="-1"></a>reduced_features <span class="op">=</span> [col[i] <span class="cf">for</span> i <span class="kw">in</span> indices]</span>
+<span id="cb108-5"><a href="shopee-models---python.html#cb108-5" aria-hidden="true" tabindex="-1"></a>reduced_features</span></code></pre></div>
+<pre><code>#&gt; ['Hà Nội', 'Nước ngoài', 'CAPSAC', 'DIENTHOAI', 'MIENGDAN', 'PINSAC', 'SIM', 'VOBAOOPLUNG', 'n_reviews', 'shop_rate_feedback']</code></pre>
+<div class="sourceCode" id="cb110"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb110-1"><a href="shopee-models---python.html#cb110-1" aria-hidden="true" tabindex="-1"></a>reduced_shop_address <span class="op">=</span> shop_address[shop_address.columns.intersection(reduced_features)]</span>
+<span id="cb110-2"><a href="shopee-models---python.html#cb110-2" aria-hidden="true" tabindex="-1"></a>reduced_category <span class="op">=</span> category[category.columns.intersection(reduced_features)]</span>
+<span id="cb110-3"><a href="shopee-models---python.html#cb110-3" aria-hidden="true" tabindex="-1"></a>reduced_feature_list <span class="op">=</span> [reduced_shop_address, reduced_category, n_reviews,</span>
+<span id="cb110-4"><a href="shopee-models---python.html#cb110-4" aria-hidden="true" tabindex="-1"></a>                        shop_rate_feedback]</span></code></pre></div>
+<div class="sourceCode" id="cb111"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb111-1"><a href="shopee-models---python.html#cb111-1" aria-hidden="true" tabindex="-1"></a>linear_result <span class="op">=</span> run_model(y, <span class="st">'linear'</span>, reduced_feature_list)</span></code></pre></div>
+<pre><code>#&gt; MAE: 586.5304368083267 550.4088843034011 595.5261589539618
+#&gt; SIA 200: 0.4442446043165468 0.4412470023980815 0.4421355498721228
+#&gt; SIA 500: 0.6284972022382095 0.6286970423661071 0.6195652173913043
+#&gt; SIA 1000: 0.7878697042366107 0.790167865707434 0.7902813299232737</code></pre>
+<div class="sourceCode" id="cb113"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb113-1"><a href="shopee-models---python.html#cb113-1" aria-hidden="true" tabindex="-1"></a>random_forest_result <span class="op">=</span> run_model(y, <span class="st">'random_forest'</span>, reduced_feature_list)</span></code></pre></div>
+<pre><code>#&gt; MAE: 216.65510875264286 501.46907298534734 551.2565487228669
+#&gt; SIA 200: 0.7931654676258992 0.5991207034372502 0.5971867007672634
+#&gt; SIA 500: 0.9209632294164668 0.7889688249400479 0.7874040920716112
+#&gt; SIA 1000: 0.9641286970423661 0.8908872901678657 0.8881074168797954</code></pre>
+<div class="sourceCode" id="cb115"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb115-1"><a href="shopee-models---python.html#cb115-1" aria-hidden="true" tabindex="-1"></a>ridge_result <span class="op">=</span> run_model(y, <span class="st">'ridge'</span>, reduced_feature_list)</span></code></pre></div>
+<pre><code>#&gt; MAE: 585.1050438735872 549.0842192510827 594.1983295265389
+#&gt; SIA 200: 0.4487410071942446 0.4448441247002398 0.4475703324808184
+#&gt; SIA 500: 0.636290967226219 0.6382893685051958 0.6253196930946292
+#&gt; SIA 1000: 0.7949640287769785 0.7973621103117506 0.7953964194373402</code></pre>
+<div class="sourceCode" id="cb117"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb117-1"><a href="shopee-models---python.html#cb117-1" aria-hidden="true" tabindex="-1"></a>lasso_result <span class="op">=</span> run_model(y, <span class="st">'lasso'</span>, reduced_feature_list)</span></code></pre></div>
+<pre><code>#&gt; MAE: 573.2357612697077 538.6261065512206 584.0227859478343
+#&gt; SIA 200: 0.5001998401278976 0.4904076738609113 0.4913682864450128
+#&gt; SIA 500: 0.7405075939248601 0.7294164668265388 0.729539641943734
+#&gt; SIA 1000: 0.8707034372501998 0.8709032773780975 0.8663682864450127</code></pre>
+
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="baby-names---sql.html">Baby Names - SQL</a></div>
+<div class="empty"></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav"><li><a class="nav-link" href="#shopee-models---python">Shopee Models - Python</a></li></ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/cliex159/portfolio/blob/master/01-intro.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/cliex159/portfolio/edit/master/01-intro.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Tran Thanh Dat Portfolio</strong>" was written by Tran Thanh Dat. It was last built on 2022-04-25.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>
