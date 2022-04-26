@@ -1960,6 +1960,92 @@ gamma_terms %>%
 <li>I then <strong>tidy</strong> the results of my statistical modeling so I can use tidy data principles again to understand my model results.</li>
 </ul>
 
+# Global Warming {.unnumbered}
+
+<h3>Description</h3>
+<p>This is my first R Programming project. I was only mediocre at programming at the time so I had to collectively modify the code searched from Google to get the results. The visualization and hypothesis testing in this project amazed me at the time by how statistics can truly make a comparison between 2 datasets.</p>
+
+## Datasets {.unnumbered}
+
+### Climate Change Knowledge Portal {.unnumbered}
+
+The CCKP is committed to transparency and data availability. We can visit [World bank climate](climateknowledgeportal.worldbank.org) for reference. All data presented on the site is freely available for download. You can tailor your specific download needs by completing the requests for each download tab. Spatial data is provided as a global NetCDF file, with Climatology, Timeseries and Heatplot data is provided as a CSV file. Data is not intended for commercial purposes.
+
+### Accessing data from Github {.unnumbered}
+
+Data is easier accessed from my Github profile. Here I'm importing the csv files directly from Git.
+
+```r
+df=rbind(read.csv("https://raw.githubusercontent.com/ThanhDatIU/File-CSV-Storage/main/1961_1990.csv") %>%
+           mutate(period="1961-1990",B=substring(Statistics,1,3),B_Y=paste(B,Year)),
+         read.csv("https://raw.githubusercontent.com/ThanhDatIU/File-CSV-Storage/main/1991_2020.csv") %>%
+           mutate(period="1991-2020",B=substring(Statistics,1,3),B_Y=paste(B,Year)))
+glimpse(df)
+```
+
+```
+#> Rows: 708
+#> Columns: 6
+#> $ Temperature <dbl> 18.33, 20.50, 21.78, 25.10, 27.04, 26.88, 27.21, 26.76, 26…
+#> $ Year        <int> 1961, 1961, 1961, 1961, 1961, 1961, 1961, 1961, 1961, 1961…
+#> $ Statistics  <chr> "Jan Average", "Feb Average", "Mar Average", "Apr Average"…
+#> $ period      <chr> "1961-1990", "1961-1990", "1961-1990", "1961-1990", "1961-…
+#> $ B           <chr> "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "S…
+#> $ B_Y         <chr> "Jan 1961", "Feb 1961", "Mar 1961", "Apr 1961", "May 1961"…
+```
+## Illustrations for the temperatures {.unnumbered}
+
+### Trends of Vietnam temperatures {.unnumbered}
+
+The layer *stat_smooth* layer in ggplot2 is used to illustrates the specific trends of temperatures for 60 years. 
+
+```r
+ggplot(df,aes(as.yearmon(B_Y),Temperature,color=period)) + geom_line() + stat_smooth()
+```
+
+<img src="01-intro_files/figure-html/unnamed-chunk-69-1.png" width="90%" style="display: block; margin: auto;" />
+Seasonality is observed. It is all about the tilt of the Earth’s axis. Many people believe that the temperature changes because the Earth is closer to the sun in summer and farther from the sun in winter. In fact, the Earth is farthest from the sun in July and is closest to the sun in January!
+
+### Visualizing the data when grouped by months {.unnumbered}
+
+
+```r
+ggplot(df %>% group_by(period,B) %>% summarize(B_Y,stat=mean(Temperature)), 
+       aes(x=factor(B, levels=c("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec")), 
+           y=stat, 
+           group=period)) +
+geom_line(aes(linetype=period, color=period)) +
+geom_point(aes(color=period))+
+scale_y_continuous(expand = c(0, 0), limits = c(18, 30))
+```
+
+<img src="01-intro_files/figure-html/unnamed-chunk-70-1.png" width="90%" style="display: block; margin: auto;" />
+From the line chart and the mean value table, a conclusion of the increment in temperature can be drawn. The least change is happening in May and the most are for December. This shows that the winter in Vietnam comes between December and February every year, which means that it is quite late for the coldest season of the year. However, because Vietnam is a tropical country so this piece of information is not clearly stated that the global warming effect is strongly affected the temperature of Vietnam.
+
+## Hypothesis testing {.unnumbered}
+
+We create a hypothesis test that whether the increment in temperature between May (1961-1990) and May (1991-2020) exceeds the average changes in temperature. To show that global warming is the real issue, we shall need to prove that the average temperatures of the second period were greater than that of the first one or $\mu_2>\mu_1$. So we need to construct the hypothesis to reject the negation of this.
+$$H_0:\mu_1-\mu_2> 0 \\ H_A:\mu_1-\mu_2<\ 0$$
+
+```r
+t.test(df %>% filter(period=="1961-1990") %>% select(Temperature), df %>% filter(period=="1991-2020") %>% select(Temperature), "l")
+```
+
+```
+#> 
+#> 	Welch Two Sample t-test
+#> 
+#> data:  df %>% filter(period == "1961-1990") %>% select(Temperature) and df %>% filter(period == "1991-2020") %>% select(Temperature)
+#> t = -2.1362, df = 705.97, p-value = 0.0165
+#> alternative hypothesis: true difference in means is less than 0
+#> 95 percent confidence interval:
+#>        -Inf -0.1006944
+#> sample estimates:
+#> mean of x mean of y 
+#>  24.21169  24.65138
+```
+Here please keep in mind that *"l"* denote the alternative hypothesis. Because p-value is 0.0165 or we are sure up to 98.35% that the null hypothesis is rejected, meaning the temperatures had been increased.
+
 # Baby Names - SQL {.unnumbered}
 
 <h3>Description</h3>
