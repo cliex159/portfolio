@@ -1,7 +1,7 @@
 --- 
 title: "Tran Thanh Dat Portfolio"
 author: "Tran Thanh Dat"
-date: "2022-04-26"
+date: "2022-04-27"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
@@ -19,7 +19,7 @@ csl: chicago-fullnote-bibliography.csl
 
 # About me {.unnumbered}
 
-I am an eager-to-learn college senior majoring in Applied Mathematics about delivering valuable data through analytical functions and data retrieval methods. At the workplace, considering myself a team-oriented critical thinker with intern experience and relevant undergraduate coursework, I am highly motivated to join a group of seasoned data analysts and cross-functional teammates where I anticipate growth and the chance to prove my abilities by reaching clients as fluent English speaker.
+I am an eager-to-learn college senior majoring in Applied Mathematics and fascinated about delivering valuable data through analytical functions and data retrieval methods. At workplace, considering myself a team-oriented critical thinker with intern experience and relevant undergraduate coursework, I am highly motivated to join a group of seasoned data analysts and cross-functional teammates where I anticipate growth and the chance to prove my abilities by reaching clients as a fluent English speaker.
 
 <center>
 <img height="250" width="250" alt="May be an image of 1 person and text" class="i09qtzwb n7fi1qx3 datstx6m pmk7jnqg j9ispegn kr520xx4 k4urcfbm bixrwtb6" referrerpolicy="origin-when-cross-origin" src="https://raw.githubusercontent.com/ThanhDatIU/image/main/avatar.png">

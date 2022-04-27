@@ -7,7 +7,7 @@
 <title>Wage Determinants | Tran Thanh Dat Portfolio</title>
 <meta name="author" content="Tran Thanh Dat">
 <meta name="description" content="Description  This is a report for the presentation in the course “Research Methods in Finance” where students are asked to use R and apply statistical modeling to real datasets. After scraping...">
-<meta name="generator" content="bookdown 0.25 with bs4_book()">
+<meta name="generator" content="bookdown 0.26.2 with bs4_book()">
 <meta property="og:title" content="Wage Determinants | Tran Thanh Dat Portfolio">
 <meta property="og:type" content="book">
 <meta property="og:description" content="Description  This is a report for the presentation in the course “Research Methods in Finance” where students are asked to use R and apply statistical modeling to real datasets. After scraping...">
@@ -16,7 +16,7 @@
 <meta name="twitter:description" content="Description  This is a report for the presentation in the course “Research Methods in Finance” where students are asked to use R and apply statistical modeling to real datasets. After scraping...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1.9000/transition.js"></script><script src="libs/bs3compat-0.3.1.9000/tabs.js"></script><script src="libs/bs3compat-0.3.1.9000/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
@@ -229,7 +229,7 @@ We can select the quantiles of interest and common choices would be <span class=
 <div id="salary-age" class="section level4 unnumbered">
 <h4>Salary ~ Age<a class="anchor" aria-label="anchor" href="#salary-age"><i class="fas fa-link"></i></a>
 </h4>
-<div class="inline-figure"><img src="01-intro_files/figure-html/unnamed-chunk-21-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="01-intro_files/figure-html/unnamed-chunk-5-1.png" width="90%" style="display: block; margin: auto;"></div>
 <p>While not so many companies recruit applicant who does not have a degree or studies in an intermediate school, the number of jobs requiring university and college are quite high.
 A closer look into the university facet suggests that the correlation coefficients of minimum age and the minimum salary is considerably low implying that linear regression may not be working for this relationship.</p>
 </div>
@@ -238,7 +238,7 @@ A closer look into the university facet suggests that the correlation coefficien
 </h4>
 <p>On the other hand, when it comes to minimum years of experience as the x-axis, it is obvious to say that there is a strong linear relationship between minimum years of experience and minimum salary.
 However, the constant variance assumption may be violated given the fact that data points for 3 minimum years of experience vary much more noticeably than for those who only have one year or less working experience.</p>
-<div class="inline-figure"><img src="01-intro_files/figure-html/unnamed-chunk-22-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="01-intro_files/figure-html/unnamed-chunk-6-1.png" width="90%" style="display: block; margin: auto;"></div>
 </div>
 </div>
 <div id="linear-regression-model-1" class="section level3 unnumbered">
@@ -362,7 +362,7 @@ It’s interesting that we can generally summarize the average salary of each of
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">df_nogender_agelimited</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">areas</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">min_salary</span>, color <span class="op">=</span> <span class="va">education</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="01-intro_files/figure-html/unnamed-chunk-25-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="01-intro_files/figure-html/unnamed-chunk-9-1.png" width="90%" style="display: block; margin: auto;"></div>
 </div>
 </div>
 <div id="levels" class="section level4 unnumbered">
@@ -409,7 +409,7 @@ It’s interesting that we can generally summarize the average salary of each of
            y <span class="op">=</span> <span class="va">min_salary</span>, color <span class="op">=</span> <span class="va">education</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="01-intro_files/figure-html/unnamed-chunk-27-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="01-intro_files/figure-html/unnamed-chunk-11-1.png" width="90%" style="display: block; margin: auto;"></div>
 </div>
 <div id="experience-1" class="section level4 unnumbered">
 <h4>Experience<a class="anchor" aria-label="anchor" href="#experience-1"><i class="fas fa-link"></i></a>
@@ -443,7 +443,7 @@ It’s interesting that we can generally summarize the average salary of each of
            y <span class="op">=</span> <span class="va">min_salary</span>, 
            color <span class="op">=</span> <span class="va">education</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="01-intro_files/figure-html/unnamed-chunk-29-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="01-intro_files/figure-html/unnamed-chunk-13-1.png" width="90%" style="display: block; margin: auto;"></div>
 <p>And lastly, for the continuous variable experience despite the highly significant estimate, the model for this is working so well with the multiple R squared of only 30 percent. And that’s why we need Quantile Regression.</p>
 </div>
 </div>
@@ -458,7 +458,7 @@ It’s interesting that we can generally summarize the average salary of each of
 <li>Drop observer for avoiding matrix singularity.</li>
 </ol>
 </blockquote>
-<div class="inline-figure"><img src="01-intro_files/figure-html/unnamed-chunk-30-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="01-intro_files/figure-html/unnamed-chunk-14-1.png" width="90%" style="display: block; margin: auto;"></div>
 <blockquote>
 <ol start="2" style="list-style-type: decimal">
 <li>Insurance could be predicted using OLS.</li>
@@ -479,7 +479,7 @@ It’s interesting that we can generally summarize the average salary of each of
 <li>And so Observer could be predicted using OLS.</li>
 </ol>
 </blockquote>
-<div class="inline-figure"><img src="01-intro_files/figure-html/unnamed-chunk-31-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="01-intro_files/figure-html/unnamed-chunk-15-1.png" width="90%" style="display: block; margin: auto;"></div>
 <blockquote>
 <ol start="6" style="list-style-type: decimal">
 <li>Minimum experience cannot be predicted using OLS for salary less than 55% and greaterr than 80% or less than 31$ million VND or greater than 41.5$ million VND*.</li>
@@ -499,12 +499,12 @@ It’s interesting that we can generally summarize the average salary of each of
 <h5>Salary ~ min_age<a class="anchor" aria-label="anchor" href="#salary-min_age"><i class="fas fa-link"></i></a>
 </h5>
 <p>In terms of min_age, the coefficients are significant with the lower 45 percentile, the coefficients are significantly different from the confidence internals of the OLS with the minimum reaching 1 at 5 percent lower tail. The opposite is true for the upper 80 percentile where the maximum coefficient stood at exactly 5 when we are considering the 5 percent upper tail.</p>
-<div class="inline-figure"><img src="01-intro_files/figure-html/unnamed-chunk-34-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="01-intro_files/figure-html/unnamed-chunk-18-1.png" width="90%" style="display: block; margin: auto;"></div>
 </div>
 <div id="salary-min_exp" class="section level5 unnumbered">
 <h5>Salary ~ min_exp<a class="anchor" aria-label="anchor" href="#salary-min_exp"><i class="fas fa-link"></i></a>
 </h5>
-<div class="inline-figure"><img src="01-intro_files/figure-html/unnamed-chunk-35-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="01-intro_files/figure-html/unnamed-chunk-19-1.png" width="90%" style="display: block; margin: auto;"></div>
 <p>The above scatter plot compares the performance of Linear Model and Quantile Model. It is obvious to suggest that Quantile represents a more natural and flexible way to capture the complexities inherent in the relationship by estimating models for the conditional quantile functions.</p>
 </div>
 </div>
@@ -804,7 +804,7 @@ Description
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Tran Thanh Dat Portfolio</strong>" was written by Tran Thanh Dat. It was last built on 2022-04-26.</p>
+    <p>"<strong>Tran Thanh Dat Portfolio</strong>" was written by Tran Thanh Dat. It was last built on 2022-04-27.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

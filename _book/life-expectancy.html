@@ -6,17 +6,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Life Expectancy | Tran Thanh Dat Portfolio</title>
 <meta name="author" content="Tran Thanh Dat">
-<meta name="description" content="Description  This is a project in the course “Financial Mathematics” in which students are asked to visualize the life expectancy for a chosen country. I was able to scrape all of the datasets and...">
-<meta name="generator" content="bookdown 0.25 with bs4_book()">
+<meta name="description" content="Datasets  The Information Table First, we shall need to create an information table to observe (1) the countries, (2) the HTTPS link access to the mortality.org for each country dataset and (3)...">
+<meta name="generator" content="bookdown 0.26.2 with bs4_book()">
 <meta property="og:title" content="Life Expectancy | Tran Thanh Dat Portfolio">
 <meta property="og:type" content="book">
-<meta property="og:description" content="Description  This is a project in the course “Financial Mathematics” in which students are asked to visualize the life expectancy for a chosen country. I was able to scrape all of the datasets and...">
+<meta property="og:description" content="Datasets  The Information Table First, we shall need to create an information table to observe (1) the countries, (2) the HTTPS link access to the mortality.org for each country dataset and (3)...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Life Expectancy | Tran Thanh Dat Portfolio">
-<meta name="twitter:description" content="Description  This is a project in the course “Financial Mathematics” in which students are asked to visualize the life expectancy for a chosen country. I was able to scrape all of the datasets and...">
+<meta name="twitter:description" content="Datasets  The Information Table First, we shall need to create an information table to observe (1) the countries, (2) the HTTPS link access to the mortality.org for each country dataset and (3)...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1.9000/transition.js"></script><script src="libs/bs3compat-0.3.1.9000/tabs.js"></script><script src="libs/bs3compat-0.3.1.9000/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
@@ -61,13 +61,6 @@
   </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="life-expectancy" class="section level1 unnumbered">
 <h1>Life Expectancy<a class="anchor" aria-label="anchor" href="#life-expectancy"><i class="fas fa-link"></i></a>
 </h1>
-<h3>
-Description
-<a class="anchor" aria-label="anchor" href="#life-expectancy"><i class="fas fa-link"></i></a>
-</h3>
-<p>
-This is a project in the course “Financial Mathematics” in which students are asked to visualize the life expectancy for a chosen country. I was able to scrape all of the datasets and perform further analysis in the big data.
-</p>
 <div id="datasets" class="section level2 unnumbered">
 <h2>Datasets<a class="anchor" aria-label="anchor" href="#datasets"><i class="fas fa-link"></i></a>
 </h2>
@@ -76,26 +69,20 @@ This is a project in the course “Financial Mathematics” in which students ar
 </h3>
 <p>First, we shall need to create an information table to observe <em>(1) the countries</em>, <em>(2) the HTTPS link access to the</em> <strong>mortality.org</strong> <em>for each country dataset</em> and <em>(3) the range of years accordingly</em>. This would be much more helpful along the way whenever we encounter the index or the time being of the datasets.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Information table {.unnumbered}</span>
-<span class="va">countries</span> <span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Australia"</span>, <span class="st">"Finland"</span>, <span class="st">"Latvia"</span>, <span class="st">"Slovenia"</span>, <span class="st">"Austria"</span>, <span class="st">"France"</span>, <span class="st">"Lithuania"</span>, <span class="st">"Spain"</span>, <span class="st">"Belarus"</span>, <span class="st">"Germany"</span>, <span class="st">"Luxembourg"</span>, <span class="st">"Sweden"</span>, <span class="st">"Belgium"</span>, <span class="st">"Greece"</span>, <span class="st">"Netherlands"</span>, <span class="st">"Switzerland"</span>, <span class="st">"Bulgaria"</span>, <span class="st">"Hong Kong"</span>, <span class="st">"New Zealand"</span>, <span class="st">"Taiwan"</span>, <span class="st">"Canada"</span>, <span class="st">"Hungary"</span>, <span class="st">"Norway"</span>, <span class="st">"U.K."</span>, <span class="st">"Chile"</span>, <span class="st">"Iceland"</span>, <span class="st">"Poland"</span>, <span class="st">"U.S.A."</span>, <span class="st">"Croatia"</span>, <span class="st">"Ireland"</span>, <span class="st">"Portugal"</span>, <span class="st">"Ukraine"</span>, <span class="st">"Czechia"</span>, <span class="st">"Israel"</span>, <span class="st">"Republic of Korea"</span>, <span class="st">"Denmark"</span>, <span class="st">"Italy"</span>, <span class="st">"Russia"</span>, <span class="st">"Estonia"</span>, <span class="st">"Japan"</span>, <span class="st">"Slovakia"</span><span class="op">)</span>
-
-<span class="va">inform</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>country <span class="op">=</span> <span class="va">countries</span>,
-                  http<span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"https://www.mortality.org"</span>,<span class="fl">41</span><span class="op">)</span>,<span class="fu">GET</span><span class="op">(</span><span class="st">"https://www.mortality.org"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-                                <span class="fu">read_html</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-                                <span class="fu">html_nodes</span><span class="op">(</span>xpath<span class="op">=</span><span class="st">'//*[@id = "countries_table"]/tr/td/p/a'</span><span class="op">)</span> <span class="op">%&gt;%</span>
-                                <span class="fu">html_attr</span><span class="op">(</span><span class="st">'href'</span><span class="op">)</span>,sep<span class="op">=</span><span class="st">""</span><span class="op">)</span>,
+<code class="sourceCode R"><span class="co"># Information table</span>
+<span class="va">inform</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>country<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Australia"</span>, <span class="st">"Finland"</span>, <span class="st">"Latvia"</span>, <span class="st">"Slovenia"</span>, <span class="st">"Austria"</span>, <span class="st">"France"</span>, <span class="st">"Lithuania"</span>, <span class="st">"Spain"</span>, <span class="st">"Belarus"</span>, <span class="st">"Germany"</span>, <span class="st">"Luxembourg"</span>, <span class="st">"Sweden"</span>, <span class="st">"Belgium"</span>, <span class="st">"Greece"</span>, <span class="st">"Netherlands"</span>, <span class="st">"Switzerland"</span>, <span class="st">"Bulgaria"</span>, <span class="st">"Hong Kong"</span>, <span class="st">"New Zealand"</span>, <span class="st">"Taiwan"</span>, <span class="st">"Canada"</span>, <span class="st">"Hungary"</span>, <span class="st">"Norway"</span>, <span class="st">"U.K."</span>, <span class="st">"Chile"</span>, <span class="st">"Iceland"</span>, <span class="st">"Poland"</span>, <span class="st">"U.S.A."</span>, <span class="st">"Croatia"</span>, <span class="st">"Ireland"</span>, <span class="st">"Portugal"</span>, <span class="st">"Ukraine"</span>, <span class="st">"Czechia"</span>, <span class="st">"Israel"</span>, <span class="st">"Republic of Korea"</span>, <span class="st">"Denmark"</span>, <span class="st">"Italy"</span>, <span class="st">"Russia"</span>, <span class="st">"Estonia"</span>, <span class="st">"Japan"</span>, <span class="st">"Slovakia"</span><span class="op">)</span>,
+                  http<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"https://www.mortality.org"</span>,<span class="fl">41</span><span class="op">)</span>,<span class="fu">GET</span><span class="op">(</span><span class="st">"https://www.mortality.org"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">read_html</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">html_nodes</span><span class="op">(</span>xpath<span class="op">=</span><span class="st">'//*[@id = "countries_table"]/tr/td/p/a'</span><span class="op">)</span> <span class="op">%&gt;%</span>                            <span class="fu">html_attr</span><span class="op">(</span><span class="st">'href'</span><span class="op">)</span>,sep<span class="op">=</span><span class="st">""</span><span class="op">)</span>,
                   years<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">41</span><span class="op">)</span><span class="op">)</span>
 
-<span class="co">## A function to extract years for each dataset</span>
+<span class="co"># A function to extract years for each dataset</span>
 <span class="va">get_years</span><span class="op">=</span><span class="kw">function</span><span class="op">(</span><span class="va">http</span><span class="op">)</span><span class="op">{</span>
   <span class="va">get</span><span class="op">=</span><span class="fu">GET</span><span class="op">(</span><span class="va">http</span><span class="op">)</span>
   <span class="va">html</span> <span class="op">&lt;-</span> <span class="fu">read_html</span><span class="op">(</span><span class="va">get</span><span class="op">)</span>
-  <span class="va">year</span><span class="op">=</span><span class="va">html</span> <span class="op">%&gt;%</span> <span class="fu">html_nodes</span><span class="op">(</span>xpath<span class="op">=</span><span class="st">'//p[contains(text(),"Life tables")]/../../../tr[12]/td[2]/p'</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-    <span class="fu">html_text</span><span class="op">(</span>trim<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
+  <span class="va">year</span><span class="op">=</span><span class="va">html</span> <span class="op">%&gt;%</span> <span class="fu">html_nodes</span><span class="op">(</span>xpath<span class="op">=</span><span class="st">'//p[contains(text(),"Life tables")]/../../../tr[12]/td[2]/p'</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">html_text</span><span class="op">(</span>trim<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
   <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span>
 <span class="op">}</span>
 
-<span class="co">## Adding years to information table.  </span>
+<span class="co"># Adding years to information table. </span>
 <span class="va">inform</span><span class="op">$</span><span class="va">years</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">41</span><span class="op">]</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">inform</span><span class="op">$</span><span class="va">http</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">24</span><span class="op">]</span>,<span class="va">get_years</span>,USE.NAMES <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">glimpse</span><span class="op">(</span><span class="va">inform</span><span class="op">)</span></code></pre></div>
@@ -117,8 +104,8 @@ This is a project in the course “Financial Mathematics” in which students ar
 <li>Filter needed columns.</li>
 </ol>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## A function to scrape data from the website.  </span>
-<span class="va">data_set</span><span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">i</span>,<span class="va">gender</span><span class="op">)</span><span class="op">{</span>
+<code class="sourceCode R"><span class="co"># A function to scrape data from the website. </span>
+<span class="va">data_set</span><span class="op">=</span><span class="kw">function</span><span class="op">(</span><span class="va">i</span>,<span class="va">gender</span><span class="op">)</span><span class="op">{</span>
   <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"Successfully scrape "</span>,<span class="va">i</span>,<span class="st">":"</span>,<span class="va">inform</span><span class="op">$</span><span class="va">country</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
   <span class="kw">if</span><span class="op">(</span><span class="va">gender</span><span class="op">==</span><span class="st">'females'</span><span class="op">)</span><span class="op">{</span>
     <span class="va">data</span><span class="op">=</span><span class="fu">read_table</span><span class="op">(</span><span class="fu">content</span><span class="op">(</span><span class="fu">GET</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"https://www.mortality.org"</span><span class="op">)</span>,<span class="fu">GET</span><span class="op">(</span><span class="va">inform</span><span class="op">$</span><span class="va">http</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">read_html</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">html_nodes</span><span class="op">(</span>xpath<span class="op">=</span><span class="st">'//p[contains(text(),"Life tables")]/../../../tr[13]/td[3]/div/a'</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">html_attr</span><span class="op">(</span><span class="st">"href"</span><span class="op">)</span>,sep<span class="op">=</span><span class="st">""</span><span class="op">)</span>,<span class="fu">authenticate</span><span class="op">(</span>user<span class="op">=</span><span class="st">"dattran.hcmiu@gmail.com"</span>, password<span class="op">=</span><span class="st">"1632536609"</span>, type <span class="op">=</span> <span class="st">"basic"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,col_names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
@@ -130,8 +117,7 @@ This is a project in the course “Financial Mathematics” in which students ar
   <span class="va">data_3</span><span class="op">$</span><span class="va">country</span><span class="op">=</span><span class="va">inform</span><span class="op">$</span><span class="va">country</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>
   <span class="va">data_3</span>
 <span class="op">}</span>
-
-<span class="co">## A loop to combine 2*40 data tables </span>
+<span class="co"># A loop to combine 2*40 data tables</span>
 <span class="va">table_combine</span><span class="op">=</span><span class="kw">function</span><span class="op">(</span><span class="va">data_gender</span>,<span class="va">gender</span><span class="op">)</span><span class="op">{</span>
   <span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">40</span><span class="op">)</span><span class="op">{</span>
     <span class="va">new_data_gender</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">data_gender</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span>
@@ -147,16 +133,11 @@ This is a project in the course “Financial Mathematics” in which students ar
     <span class="va">full_data_gender</span><span class="op">=</span><span class="va">full_data_gender</span> <span class="op">%&gt;%</span> <span class="fu">mutate</span><span class="op">(</span>gender<span class="op">=</span><span class="st">"males"</span><span class="op">)</span>
   <span class="op">}</span>
 <span class="op">}</span>
-
-<span class="co">## Big data {.unnumbered}</span>
-<span class="co">## Error for 25:Chile data still haven't been explained so we only apply the scrape data function for 40 numbers </span>
-<span class="va">full_df</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="fu">table_combine</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">24</span>,<span class="fl">26</span><span class="op">:</span><span class="fl">41</span><span class="op">)</span>,<span class="va">data_set</span>,<span class="st">"females"</span><span class="op">)</span>,<span class="st">"females"</span><span class="op">)</span>,
-              <span class="fu">table_combine</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">24</span>,<span class="fl">26</span><span class="op">:</span><span class="fl">41</span><span class="op">)</span>,<span class="va">data_set</span>,<span class="st">"males"</span><span class="op">)</span>,<span class="st">"males"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">## Transform datatype to numeric </span>
-<span class="va">full_df</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/transform.html">transform</a></span><span class="op">(</span><span class="va">full_df</span>,Age<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">Age</span><span class="op">)</span>,
-                  qx<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">qx</span><span class="op">)</span>,
-                  lx<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">lx</span><span class="op">)</span>,
-                  year<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="co"># Big data</span>
+<span class="co"># Error for 25:Chile data still haven't been explained so we only apply the scrape data function for 40 numbers</span>
+<span class="va">full_df</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="fu">table_combine</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">24</span>,<span class="fl">26</span><span class="op">:</span><span class="fl">41</span><span class="op">)</span>,<span class="va">data_set</span>,<span class="st">"females"</span><span class="op">)</span>,<span class="st">"females"</span><span class="op">)</span>,<span class="fu">table_combine</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">24</span>,<span class="fl">26</span><span class="op">:</span><span class="fl">41</span><span class="op">)</span>,<span class="va">data_set</span>,<span class="st">"males"</span><span class="op">)</span>,<span class="st">"males"</span><span class="op">)</span><span class="op">)</span>
+<span class="co"># Transform datatype to numeric</span>
+<span class="va">full_df</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/transform.html">transform</a></span><span class="op">(</span><span class="va">full_df</span>,Age<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">Age</span><span class="op">)</span>,qx<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">qx</span><span class="op">)</span>,lx<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">lx</span><span class="op">)</span>,year<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">glimpse</span><span class="op">(</span><span class="va">full_df</span><span class="op">)</span></code></pre></div>
 <pre><code>#&gt; Rows: 816,516
@@ -180,32 +161,34 @@ This is a project in the course “Financial Mathematics” in which students ar
 </h3>
 <p>The following codes compare mortality rates across the ages ranging from zero to one hundred and ten.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Filter USA, 2019. line: qx~Age by gender </span>
-<span class="va">usa_2019</span> <span class="op">=</span> <span class="va">full_df</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="co"># Filter USA, 2019. line: qx~Age by gender</span>
+<span class="fu">ggplot</span><span class="op">(</span><span class="va">full_df</span> <span class="op">%&gt;%</span> 
          <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">country</span><span class="op">==</span><span class="st">"U.S.A."</span>,
-                <span class="va">year</span><span class="op">==</span><span class="fl">2019</span><span class="op">)</span>
-<span class="fu">ggplot</span><span class="op">(</span><span class="va">usa_2019</span>, 
-       <span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">Age</span>, 
-           y<span class="op">=</span><span class="va">qx</span>,group<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+                <span class="va">year</span><span class="op">==</span><span class="fl">2019</span><span class="op">)</span>, 
+       <span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">Age</span>, y<span class="op">=</span><span class="va">qx</span>,group<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
 <span class="fu">geom_line</span><span class="op">(</span>col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span> <span class="op">+</span>
 <span class="fu">labs</span><span class="op">(</span>x<span class="op">=</span><span class="st">"Age x"</span>, 
-     y<span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html">expression</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"Mortality rate "</span>, <span class="va">q</span><span class="op">[</span><span class="va">x</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>,
+     y<span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html">expression</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"Mortality rate "</span>, 
+                         <span class="va">q</span><span class="op">[</span><span class="va">x</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>,
      title<span class="op">=</span><span class="st">"Mortality rates (U.S.A., 2019)"</span><span class="op">)</span> <span class="op">+</span>
 <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span><span class="va">gender</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="01-intro_files/figure-html/unnamed-chunk-5-1.png" width="90%" style="display: block; margin: auto;"></div>
-<p>The look is similar to the graph of an exponential function so it is suggested that taking logarithm and we may have further insights.</p>
+<div class="inline-figure">
+<img src="02-cross-refs_files/figure-html/unnamed-chunk-6-1.png" width="90%" style="display: block; margin: auto;">
+The look is similar to the graph of an exponential function so it is suggested that taking logarithm and we may have further insights.</div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Filter USA, 2019. line: log(qx)~Age by gender </span>
-<span class="fu">ggplot</span><span class="op">(</span><span class="va">usa_2019</span>, 
-       <span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">Age</span>, 
-           y<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">qx</span><span class="op">)</span>,group<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+<code class="sourceCode R"><span class="co"># Filter USA, 2019. line: log(qx)~Age by gender</span>
+<span class="fu">ggplot</span><span class="op">(</span><span class="va">full_df</span> <span class="op">%&gt;%</span> 
+         <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">country</span><span class="op">==</span><span class="st">"U.S.A."</span>,
+                <span class="va">year</span><span class="op">==</span><span class="fl">2019</span><span class="op">)</span>, 
+       <span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">Age</span>, y<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">qx</span><span class="op">)</span>,group<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
 <span class="fu">geom_line</span><span class="op">(</span>col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span> <span class="op">+</span>
 <span class="fu">labs</span><span class="op">(</span>x<span class="op">=</span><span class="st">"Age x"</span>, 
-     y<span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html">expression</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"Log Mortality rate "</span>, <span class="va">q</span><span class="op">[</span><span class="va">x</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>, 
+     y<span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html">expression</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"Log Mortality rate "</span>, 
+                         <span class="va">q</span><span class="op">[</span><span class="va">x</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>,
      title<span class="op">=</span><span class="st">"Log Mortality rates (U.S.A., 2019)"</span><span class="op">)</span> <span class="op">+</span>
 <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span><span class="va">gender</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure">
-<img src="01-intro_files/figure-html/unnamed-chunk-6-1.png" width="90%" style="display: block; margin: auto;">
+<img src="02-cross-refs_files/figure-html/unnamed-chunk-7-1.png" width="90%" style="display: block; margin: auto;">
 A glance at this log mortality graph indicates three important features of the evolution of mortality rates:</div>
 <ol style="list-style-type: decimal">
 <li>The rate for infants is locally high for the newborns, then it decreases.<br>
@@ -223,26 +206,27 @@ A glance at this log mortality graph indicates three important features of the e
 Alternatively, we could evaluate this probability as the division of the number of alive people <span class="math inline">\(l_x\)</span> in different ages. Up to rounding errors, both calculations lead to the same result!
 <span class="math display">\[{}_{k}p_{x}=\frac{l_{x+k}}{l_{x}}\]</span></p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Filter USA,2019, Age&gt;=18 </span>
-<span class="co">## Add column survival </span>
-<span class="va">usa_survival</span> <span class="op">=</span> <span class="va">full_df</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="co"># Filter USA,2019, Age&gt;=18</span>
+<span class="co"># Add column survival</span>
+<span class="co"># line: survival~1:92 (18-110) by gender</span>
+<span class="fu">ggplot</span><span class="op">(</span><span class="va">full_df</span> <span class="op">%&gt;%</span> 
          <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">country</span><span class="op">==</span><span class="st">"U.S.A."</span>,
                 <span class="va">year</span><span class="op">==</span><span class="fl">2019</span>,
                 <span class="va">Age</span><span class="op">&gt;=</span><span class="fl">18</span><span class="op">)</span> <span class="op">%&gt;%</span> 
          <span class="fu">group_by</span><span class="op">(</span><span class="va">gender</span><span class="op">)</span> <span class="op">%&gt;%</span> 
          <span class="fu">mutate</span><span class="op">(</span>survival<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/cumsum.html">cumprod</a></span><span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="va">qx</span><span class="op">)</span>,
                 k<span class="op">=</span><span class="fl">0</span><span class="op">:</span><span class="op">(</span><span class="fu">n</span><span class="op">(</span><span class="op">)</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-         <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span>
-<span class="co">## Line: survival~1:92 (18-110) by gender </span>
-<span class="fu">ggplot</span><span class="op">(</span><span class="va">usa_survival</span>,
+         <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span>,
        <span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">k</span>,y<span class="op">=</span><span class="va">survival</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
 <span class="fu">geom_line</span><span class="op">(</span>col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span> <span class="op">+</span>
 <span class="fu">labs</span><span class="op">(</span>x<span class="op">=</span><span class="st">"k"</span>, 
      y<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/expression.html">expression</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">""</span><span class="op">[</span><span class="va">k</span><span class="op">]</span>, <span class="st">"p"</span><span class="op">[</span><span class="fl">18</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>,
-     title<span class="op">=</span><span class="st">"Survival probabilities for people in age 18, 2019, U.S.A."</span><span class="op">)</span> <span class="op">+</span>
+     title<span class="op">=</span><span class="st">"Survival probabilities for people 
+            in age 18, 2019, U.S.A."</span><span class="op">)</span> <span class="op">+</span>
 <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span><span class="va">gender</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="01-intro_files/figure-html/unnamed-chunk-7-1.png" width="90%" style="display: block; margin: auto;"></div>
-<p>This graph indicates the probability of how many more years people would still be alive after the age of eighteen, for example, the chance of an eighteen girl to survive more fifty years up to sixty-eight years old should be about ninety percent.</p>
+<div class="inline-figure">
+<img src="02-cross-refs_files/figure-html/unnamed-chunk-8-1.png" width="90%" style="display: block; margin: auto;">
+This graph indicates the probability of how many more years people would still be alive after the age of eighteen, for example, the chance of an eighteen girl to survive more fifty years up to sixty-eight years old should be about ninety percent.</div>
 </div>
 <div id="life-expectancy-1" class="section level3 unnumbered">
 <h3>Life expectancy<a class="anchor" aria-label="anchor" href="#life-expectancy-1"><i class="fas fa-link"></i></a>
@@ -255,21 +239,21 @@ We can verify this equivalence empirically for the example of an 18-year-old. Wh
 <p>Using the probability function of <span class="math inline">\(K_x\)</span>, it is now straightforward to calculate the expected value of this random variable. That is the life expectancy of an x-year-old, expressed in whole years. For each possible outcome k, you multiply k with the probability that <span class="math inline">\(K_x\)</span> realizes this outcome. Taking the sum then results in the life expectancy. Further simplification leads to a simple expression: the sum of the k-year survival probabilities when k runs from 1 to its maximum possible value.</p>
 <p><span class="math display">\[E[K_x]= \sum_{k=0}^{\infty} k \times P(K_x=k) = \sum_{k=0}^{\infty} k \times ({}_{k}p_{x}-{}_{k+1}p_{x}) =  \sum_{k=1}^{\infty}{}_{k}p_{x}\]</span></p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Function to compute the curtate expected future lifetime for a given age and life table </span>
+<code class="sourceCode R"><span class="co"># Function to compute the curtate expected future lifetime for a given age and life table</span>
 <span class="va">curtate_future_lifetime</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">age</span>, <span class="va">life_table</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">px</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">-</span><span class="va">life_table</span><span class="op">$</span><span class="va">qx</span>
   <span class="va">kpx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cumsum.html">cumprod</a></span><span class="op">(</span><span class="va">px</span><span class="op">[</span><span class="op">(</span><span class="va">age</span><span class="op">+</span><span class="fl">1</span><span class="op">)</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">px</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>
   <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">kpx</span><span class="op">)</span>
 <span class="op">}</span>
 
-<span class="co">## Vector of ages </span>
+<span class="co"># Vector of ages</span>
 <span class="va">ages</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">full_df</span> <span class="op">%&gt;%</span> 
            <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">country</span><span class="op">==</span><span class="st">"U.S.A."</span>,
                   <span class="va">year</span><span class="op">==</span><span class="fl">2019</span>,
                   <span class="va">gender</span><span class="op">==</span><span class="st">"females"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
            <span class="fu">mutate</span><span class="op">(</span>Age<span class="op">=</span><span class="fu">replace_na</span><span class="op">(</span><span class="va">Age</span>,<span class="fl">110</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">Age</span>
 
-<span class="co">## Curtate future lifetimes for all ages </span>
+<span class="co"># Curtate future lifetimes for all ages</span>
 <span class="va">future_lifetimes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">ages</span>, 
                            <span class="va">curtate_future_lifetime</span>, 
                            <span class="va">full_df</span> <span class="op">%&gt;%</span> 
@@ -278,7 +262,9 @@ We can verify this equivalence empirically for the example of an 18-year-old. Wh
                                     <span class="va">gender</span><span class="op">==</span><span class="st">"females"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
                              <span class="fu">mutate</span><span class="op">(</span>Age<span class="op">=</span><span class="fu">replace_na</span><span class="op">(</span><span class="va">Age</span>,<span class="fl">110</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
-<span class="co">## Future lifetime by age </span>
+
+
+<span class="co"># Future lifetime by age</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">ages</span>, 
      <span class="va">future_lifetimes</span>, 
      type <span class="op">=</span> <span class="st">'l'</span>, 
@@ -288,13 +274,12 @@ We can verify this equivalence empirically for the example of an 18-year-old. Wh
      ylab <span class="op">=</span> <span class="st">"Future lifetime"</span>, 
      main <span class="op">=</span> <span class="st">"Future lifetime by age, females, 2019, U.S.A."</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure">
-<img src="01-intro_files/figure-html/unnamed-chunk-8-1.png" width="90%" style="display: block; margin: auto;">
+<img src="02-cross-refs_files/figure-html/unnamed-chunk-9-1.png" width="90%" style="display: block; margin: auto;">
 So it’s quite intuitive that women in the USA live up to 80 years old, and for each more age they live the expected value decreases by 1 forming the linear pattern from zero to eighty, after which we see the extreme cases following just a small little tail.</div>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Filter USA. line qx~Age by gender, color by year </span>
-<span class="va">usa</span> <span class="op">=</span> <span class="va">full_df</span> <span class="op">%&gt;%</span> 
-         <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">country</span> <span class="op">==</span> <span class="st">"U.S.A."</span><span class="op">)</span>
-<span class="fu">ggplot</span><span class="op">(</span><span class="va">usa</span>, 
+<code class="sourceCode R"><span class="co"># Filter USA. line qx~Age by gender, color by year</span>
+<span class="fu">ggplot</span><span class="op">(</span><span class="va">full_df</span> <span class="op">%&gt;%</span> 
+         <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">country</span> <span class="op">==</span> <span class="st">"U.S.A."</span><span class="op">)</span>, 
        <span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">Age</span>, y<span class="op">=</span><span class="va">qx</span>, color <span class="op">=</span> <span class="va">year</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
 <span class="fu">geom_line</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>group <span class="op">=</span> <span class="va">year</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
 <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span><span class="va">gender</span><span class="op">)</span> <span class="op">+</span>
@@ -302,27 +287,26 @@ So it’s quite intuitive that women in the USA live up to 80 years old, and for
      y<span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html">expression</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"Mortality rate "</span>, <span class="va">q</span><span class="op">[</span><span class="va">x</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>,
      title<span class="op">=</span><span class="st">"Mortality rates (USA, 1933-2019)"</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure">
-<img src="01-intro_files/figure-html/unnamed-chunk-9-1.png" width="90%" style="display: block; margin: auto;">
+<img src="02-cross-refs_files/figure-html/unnamed-chunk-10-1.png" width="90%" style="display: block; margin: auto;">
 Adding another dimension year to the plot with the attribute color, it is obvious to say as the years proceeded, the mortality rate has been stably improved and thus firmly decreased.
 We could try to compare the lifetime across the year between males and females:</div>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Filter USA.  </span>
-<span class="co">## Add column life_expectancy </span>
-<span class="va">usa_lifeex</span> <span class="op">=</span> <span class="va">full_df</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="co"># Filter USA. </span>
+<span class="co"># Add column life_expectancy</span>
+<span class="co"># line: life_expectancy~year, color by gender</span>
+<span class="fu">ggplot</span><span class="op">(</span><span class="va">full_df</span> <span class="op">%&gt;%</span> 
          <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">country</span> <span class="op">==</span> <span class="st">"U.S.A."</span><span class="op">)</span> <span class="op">%&gt;%</span> 
          <span class="fu">group_by</span><span class="op">(</span><span class="va">gender</span>,<span class="va">year</span><span class="op">)</span> <span class="op">%&gt;%</span> 
          <span class="fu">mutate</span><span class="op">(</span>kpx<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/cumsum.html">cumprod</a></span><span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="va">qx</span><span class="op">)</span>,
                 life_expectancy<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">kpx</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-         <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">Age</span><span class="op">==</span><span class="fl">0</span><span class="op">)</span>
-<span class="co">## line: life_expectancy~year, color by gender </span>
-<span class="fu">ggplot</span><span class="op">(</span><span class="va">usa_lifeex</span>, 
+         <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">Age</span><span class="op">==</span><span class="fl">0</span><span class="op">)</span> , 
        <span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">year</span>, y <span class="op">=</span> <span class="va">life_expectancy</span>, color <span class="op">=</span> <span class="va">gender</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
 <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
 <span class="fu">labs</span><span class="op">(</span>x<span class="op">=</span><span class="st">"Year"</span>, 
      y<span class="op">=</span> <span class="st">"Life Expectancy"</span>,
      title<span class="op">=</span><span class="st">"Life Expectancy, U.S.A."</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure">
-<img src="01-intro_files/figure-html/unnamed-chunk-10-1.png" width="90%" style="display: block; margin: auto;">
+<img src="02-cross-refs_files/figure-html/unnamed-chunk-11-1.png" width="90%" style="display: block; margin: auto;">
 It is evident to suggest that women outlived, outlive and will outlive men.</div>
 </div>
 </div>
@@ -333,29 +317,29 @@ It is evident to suggest that women outlived, outlive and will outlive men.</div
 <h3>The general looks<a class="anchor" aria-label="anchor" href="#the-general-looks"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Add column life_expectancy.  </span>
-<span class="co">## Filter Age=0 </span>
-<span class="va">age0_lifeex</span> <span class="op">=</span> <span class="va">full_df</span> <span class="op">%&gt;%</span>
+<code class="sourceCode R"><span class="co"># Add column life_expectancy. </span>
+<span class="co"># Filter Age=0, interesting countries</span>
+<span class="co"># scatter:life_expectancy~year color by country by gender</span>
+<span class="fu">ggplot</span><span class="op">(</span><span class="va">full_df</span> <span class="op">%&gt;%</span>
          <span class="fu">group_by</span><span class="op">(</span><span class="va">year</span>,<span class="va">country</span>,<span class="va">gender</span><span class="op">)</span> <span class="op">%&gt;%</span> 
          <span class="fu">mutate</span><span class="op">(</span>Age<span class="op">=</span><span class="fu">replace_na</span><span class="op">(</span><span class="va">Age</span>,<span class="fl">110</span><span class="op">)</span>,
                 kpx<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/cumsum.html">cumprod</a></span><span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="va">qx</span><span class="op">)</span>,
                 life_expectancy<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">kpx</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
                 <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">Age</span><span class="op">==</span><span class="fl">0</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-                <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span>
-<span class="co">## scatter:life_expectancy~year color by country by gender </span>
-<span class="fu">ggplot</span><span class="op">(</span><span class="va">age0_lifeex</span>,
+                <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span>,
        <span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">year</span>,y<span class="op">=</span><span class="va">life_expectancy</span>,color<span class="op">=</span><span class="va">country</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
 <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
 <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span><span class="va">gender</span><span class="op">)</span> <span class="op">+</span>
-<span class="fu">ggtitle</span><span class="op">(</span><span class="st">"Lifetime in 40 countries between men and women"</span><span class="op">)</span> <span class="op">+</span>
+<span class="fu">ggtitle</span><span class="op">(</span><span class="st">"Lifetime through years in 40 countries between men and women"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">xlab</span><span class="op">(</span><span class="st">"Year"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ylab</span><span class="op">(</span><span class="st">"Life Expectancy"</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure">
-<img src="01-intro_files/figure-html/unnamed-chunk-11-1.png" width="90%" style="display: block; margin: auto;">
+<img src="02-cross-refs_files/figure-html/unnamed-chunk-12-1.png" width="90%" style="display: block; margin: auto;">
 This colorful scatter plot summarizes how the data of 800.000 entries behave when it comes to life duration among top-ranking countries across the years. This may be overwhelming but this gives the strongest evidence for developing lifetime as years going by. What’s more, while the maximum (point of) males is just higher than eighty, that of females converges to the age of ninety just for the next few years.</div>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Add column life_expectancy </span>
-<span class="co">## Filter Age=0, interesting countries </span>
-<span class="va">some_age0_lifeex</span> <span class="op">=</span> <span class="va">full_df</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="co"># Add column life_expectancy</span>
+<span class="co"># Filter Age=0, interesting countries</span>
+<span class="co"># life_expectancy~year, color by gender by country</span>
+<span class="fu">ggplot</span><span class="op">(</span><span class="va">full_df</span> <span class="op">%&gt;%</span> 
          <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">country</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Australia"</span>, 
                                <span class="st">"Canada"</span>, 
                                <span class="st">"Hong Kong"</span>, 
@@ -371,16 +355,14 @@ This colorful scatter plot summarizes how the data of 800.000 entries behave whe
          <span class="fu">group_by</span><span class="op">(</span><span class="va">gender</span>,<span class="va">year</span><span class="op">)</span> <span class="op">%&gt;%</span> 
          <span class="fu">mutate</span><span class="op">(</span>kpx<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/cumsum.html">cumprod</a></span><span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="va">qx</span><span class="op">)</span>,
                 life_expectancy<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">kpx</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-         <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">Age</span><span class="op">==</span><span class="fl">0</span><span class="op">)</span>
-<span class="co">## life_expectancy~year, color by gender by country </span>
-<span class="fu">ggplot</span><span class="op">(</span><span class="va">some_age0_lifeex</span>, 
+         <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">Age</span><span class="op">==</span><span class="fl">0</span><span class="op">)</span>, 
        <span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">year</span>, y <span class="op">=</span> <span class="va">life_expectancy</span>, color <span class="op">=</span> <span class="va">gender</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
 <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
 <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span><span class="va">country</span><span class="op">)</span> <span class="op">+</span>
 <span class="fu">ggtitle</span><span class="op">(</span><span class="st">"Comparing women and men lifetime through years between 12 countries"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">xlab</span><span class="op">(</span><span class="st">"Year"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ylab</span><span class="op">(</span><span class="st">"Life Expectancy"</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure">
-<img src="01-intro_files/figure-html/unnamed-chunk-12-1.png" width="90%" style="display: block; margin: auto;">
+<img src="02-cross-refs_files/figure-html/unnamed-chunk-13-1.png" width="90%" style="display: block; margin: auto;">
 We can use line graph to compares the expectation of life for both sexes. Filter only countries of interest and split the data across the countries using is another way to view the data and the years available accordingly. Korea and Sweden have the smallest and the biggest dataset respectively.</div>
 </div>
 <div id="big-data-joining-gapminder" class="section level3 unnumbered">
@@ -416,12 +398,12 @@ We can use line graph to compares the expectation of life for both sexes. Filter
 <span class="fu">ggtitle</span><span class="op">(</span><span class="st">"How lifetime through years behave in continents between men and women"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">xlab</span><span class="op">(</span><span class="st">"Year"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ylab</span><span class="op">(</span><span class="st">"Life Expectancy"</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure">
-<img src="01-intro_files/figure-html/unnamed-chunk-13-1.png" width="90%" style="display: block; margin: auto;">
+<img src="02-cross-refs_files/figure-html/unnamed-chunk-14-1.png" width="90%" style="display: block; margin: auto;">
 It’s obvious to spot that the top 1 winner is Asia with 2 recurring champions Hong Kong and Japan and all of the other rich countries.</div>
 <p>Turning interests to 2007, let’s use available information in gapminder to conduct some analysis:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Scatter:gdpPercap~life_expectancy, 2007 color by continent by gender </span>
-<span class="va">gender_continent_2007</span> <span class="op">=</span> <span class="va">full_df</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="co"># Scatter:gdpPercap~life_expectancy, 2007 color by continent by gender</span>
+<span class="fu">ggplot</span><span class="op">(</span><span class="va">full_df</span> <span class="op">%&gt;%</span> 
          <span class="fu">inner_join</span><span class="op">(</span><span class="va">gapminder</span>,by<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"year"</span>,<span class="st">"country"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
          <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">country</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Australia"</span>, 
                                <span class="st">"Canada"</span>, 
@@ -442,8 +424,7 @@ It’s obvious to spot that the top 1 winner is Asia with 2 recurring champions 
          <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">Age</span><span class="op">==</span><span class="fl">0</span><span class="op">)</span> <span class="op">%&gt;%</span> 
          <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
          <span class="fu">group_by</span><span class="op">(</span><span class="va">year</span>,<span class="va">gender</span><span class="op">)</span> <span class="op">%&gt;%</span>
-         <span class="fu">arrange</span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">life_expectancy</span><span class="op">)</span><span class="op">)</span>
-<span class="fu">ggplot</span><span class="op">(</span><span class="va">gender_continent_2007</span>,
+         <span class="fu">arrange</span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">life_expectancy</span><span class="op">)</span><span class="op">)</span>,
        <span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">gdpPercap</span>,y<span class="op">=</span><span class="va">life_expectancy</span>,color<span class="op">=</span><span class="va">continent</span>,size<span class="op">=</span><span class="va">pop</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
 <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
 <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span><span class="va">gender</span><span class="op">)</span> <span class="op">+</span>
@@ -451,11 +432,12 @@ It’s obvious to spot that the top 1 winner is Asia with 2 recurring champions 
   <span class="fu">ggtitle</span><span class="op">(</span><span class="st">"How lifetime, and GDP per Capital behave between men and women"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">xlab</span><span class="op">(</span><span class="st">"Year"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ylab</span><span class="op">(</span><span class="st">"Life Expectancy"</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure">
-<img src="01-intro_files/figure-html/unnamed-chunk-15-1.png" width="90%" style="display: block; margin: auto;">
+<img src="02-cross-refs_files/figure-html/unnamed-chunk-16-1.png" width="90%" style="display: block; margin: auto;">
 Although the USA was superior with respect to the GDP per capita, the large population resulting from a whole lot of immigrants dragged the life expectancy down the road. So let’s verify this assumption by viewing the data over the course of 12 5-year from 1952. However, we have to leave 1 dimension for the variable year to come in. Since the graph of women and men behave in a pretty similar way, we could take females and observe the consistent result.</div>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Scatter:gdpPercap~life_expectancy, color by continent  </span>
-<span class="va">continent_female</span> <span class="op">=</span> <span class="va">full_df</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="co"># Scatter:gdpPercap~life_expectancy, color by continent </span>
+<span class="co"># Females, by years</span>
+<span class="fu">ggplot</span><span class="op">(</span><span class="va">full_df</span> <span class="op">%&gt;%</span> 
          <span class="fu">inner_join</span><span class="op">(</span><span class="va">gapminder</span>,by<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"year"</span>,<span class="st">"country"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
          <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">country</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Australia"</span>, 
                                <span class="st">"Canada"</span>, 
@@ -476,16 +458,15 @@ Although the USA was superior with respect to the GDP per capita, the large popu
          <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">Age</span><span class="op">==</span><span class="fl">0</span><span class="op">)</span> <span class="op">%&gt;%</span> 
          <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
          <span class="fu">group_by</span><span class="op">(</span><span class="va">year</span>,<span class="va">gender</span><span class="op">)</span> <span class="op">%&gt;%</span>
-         <span class="fu">arrange</span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">life_expectancy</span><span class="op">)</span><span class="op">)</span>
-<span class="co">## Females, by years </span>
-<span class="fu">ggplot</span><span class="op">(</span><span class="va">continent_female</span>,
+         <span class="fu">arrange</span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">life_expectancy</span><span class="op">)</span><span class="op">)</span>,
        <span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">gdpPercap</span>,y<span class="op">=</span><span class="va">life_expectancy</span>,color<span class="op">=</span><span class="va">continent</span>,size<span class="op">=</span><span class="va">pop</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
 <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
 <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span><span class="va">year</span><span class="op">)</span> <span class="op">+</span>
 <span class="fu">geom_text</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>label<span class="op">=</span><span class="va">country</span><span class="op">)</span>,hjust<span class="op">=</span><span class="fl">1</span>, vjust<span class="op">=</span><span class="fl">1</span>,size<span class="op">=</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span>
 <span class="fu">ggtitle</span><span class="op">(</span><span class="st">"How population, GDP per Capital and lifetime behave through years"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">xlab</span><span class="op">(</span><span class="st">"GDP per Capita"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ylab</span><span class="op">(</span><span class="st">"Life Expectancy"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="01-intro_files/figure-html/unnamed-chunk-16-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="02-cross-refs_files/figure-html/unnamed-chunk-17-1.png" width="90%" style="display: block; margin: auto;"></div>
+
 </div>
 </div>
 </div>
@@ -495,11 +476,7 @@ Although the USA was superior with respect to the GDP per capita, the large popu
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
-<li>
-<a class="nav-link" href="#life-expectancy">Life Expectancy</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#life-expectancy">
-Description
-</a></li></ul>
-</li>
+<li><a class="nav-link" href="#life-expectancy">Life Expectancy</a></li>
 <li>
 <a class="nav-link" href="#datasets">Datasets</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#the-information-table">The Information Table</a></li>
@@ -523,8 +500,8 @@ Description
 
       <div class="book-extra">
         <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/cliex159/portfolio/blob/master/01-intro.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/cliex159/portfolio/edit/master/01-intro.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+<li><a id="book-source" href="https://github.com/cliex159/portfolio/blob/master/02-cross-refs.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/cliex159/portfolio/edit/master/02-cross-refs.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
 </div>
     </nav>
@@ -536,7 +513,7 @@ Description
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Tran Thanh Dat Portfolio</strong>" was written by Tran Thanh Dat. It was last built on 2022-04-26.</p>
+    <p>"<strong>Tran Thanh Dat Portfolio</strong>" was written by Tran Thanh Dat. It was last built on 2022-04-27.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

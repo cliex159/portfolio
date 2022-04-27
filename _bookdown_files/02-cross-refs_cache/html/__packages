@@ -9,3 +9,7 @@ stringr
 forcats
 scales
 e1071
+httr
+rvest
+data.table
+gapminder

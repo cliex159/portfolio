@@ -4,6 +4,7 @@ new_session: true
 rmd_files: [
   "index.Rmd",
 
+  "02-cross-refs.Rmd",
   "01-intro.Rmd",
   
 ]

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 1 Datasets | Life Expectancy</title>
+<meta name="description" content="1.1 The Information Table First, we shall need to create an information table to observe (1) the countries, (2) the HTTPS link access to the mortality.org for each country dataset and (3) the...">
+<meta name="generator" content="bookdown 0.26.2 with bs4_book()">
+<meta property="og:title" content="Chapter 1 Datasets | Life Expectancy">
+<meta property="og:type" content="book">
+<meta property="og:description" content="1.1 The Information Table First, we shall need to create an information table to observe (1) the countries, (2) the HTTPS link access to the mortality.org for each country dataset and (3) the...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 1 Datasets | Life Expectancy">
+<meta name="twitter:description" content="1.1 The Information Table First, we shall need to create an information table to observe (1) the countries, (2) the HTTPS link access to the mortality.org for each country dataset and (3) the...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1.9000/transition.js"></script><script src="libs/bs3compat-0.3.1.9000/tabs.js"></script><script src="libs/bs3compat-0.3.1.9000/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="libs/pagedtable-1.1/js/pagedtable.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="bs4_style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="Dr. Le Nhat Tan">Life Expectancy</a>:
+        <small class="text-muted">Dr. Le Nhat Tan</small>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">About me</a></li>
+<li><a class="active" href="datasets.html"><span class="header-section-number">1</span> Datasets</a></li>
+<li><a class="" href="usa-insights.html"><span class="header-section-number">2</span> USA Insights</a></li>
+<li><a class="" href="big-data.html"><span class="header-section-number">3</span> Big Data</a></li>
+<li class="book-part">Personal Projects</li>
+<li><a class="" href="wage-determinants.html">Wage Determinants</a></li>
+<li><a class="" href="ielts-reading-topics.html">IELTS Reading Topics</a></li>
+<li><a class="" href="global-warming.html">Global Warming</a></li>
+<li><a class="" href="baby-names---sql.html">Baby Names - SQL</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/cliex159/portfolio">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="datasets" class="section level1" number="1">
+<h1>
+<span class="header-section-number">1</span> Datasets<a class="anchor" aria-label="anchor" href="#datasets"><i class="fas fa-link"></i></a>
+</h1>
+<div id="the-information-table" class="section level2" number="1.1">
+<h2>
+<span class="header-section-number">1.1</span> The Information Table<a class="anchor" aria-label="anchor" href="#the-information-table"><i class="fas fa-link"></i></a>
+</h2>
+<p>First, we shall need to create an information table to observe <em>(1) the countries</em>, <em>(2) the HTTPS link access to the</em> <strong>mortality.org</strong> <em>for each country dataset</em> and <em>(3) the range of years accordingly</em>. This would be much more helpful along the way whenever we encounter the index or the time being of the datasets.</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Information table</span>
+<span class="va">inform</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>country<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Australia"</span>, <span class="st">"Finland"</span>, <span class="st">"Latvia"</span>, <span class="st">"Slovenia"</span>, <span class="st">"Austria"</span>, <span class="st">"France"</span>, <span class="st">"Lithuania"</span>, <span class="st">"Spain"</span>, <span class="st">"Belarus"</span>, <span class="st">"Germany"</span>, <span class="st">"Luxembourg"</span>, <span class="st">"Sweden"</span>, <span class="st">"Belgium"</span>, <span class="st">"Greece"</span>, <span class="st">"Netherlands"</span>, <span class="st">"Switzerland"</span>, <span class="st">"Bulgaria"</span>, <span class="st">"Hong Kong"</span>, <span class="st">"New Zealand"</span>, <span class="st">"Taiwan"</span>, <span class="st">"Canada"</span>, <span class="st">"Hungary"</span>, <span class="st">"Norway"</span>, <span class="st">"U.K."</span>, <span class="st">"Chile"</span>, <span class="st">"Iceland"</span>, <span class="st">"Poland"</span>, <span class="st">"U.S.A."</span>, <span class="st">"Croatia"</span>, <span class="st">"Ireland"</span>, <span class="st">"Portugal"</span>, <span class="st">"Ukraine"</span>, <span class="st">"Czechia"</span>, <span class="st">"Israel"</span>, <span class="st">"Republic of Korea"</span>, <span class="st">"Denmark"</span>, <span class="st">"Italy"</span>, <span class="st">"Russia"</span>, <span class="st">"Estonia"</span>, <span class="st">"Japan"</span>, <span class="st">"Slovakia"</span><span class="op">)</span>,
+                  http<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"https://www.mortality.org"</span>,<span class="fl">41</span><span class="op">)</span>,<span class="fu">GET</span><span class="op">(</span><span class="st">"https://www.mortality.org"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">read_html</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">html_nodes</span><span class="op">(</span>xpath<span class="op">=</span><span class="st">'//*[@id = "countries_table"]/tr/td/p/a'</span><span class="op">)</span> <span class="op">%&gt;%</span>                            <span class="fu">html_attr</span><span class="op">(</span><span class="st">'href'</span><span class="op">)</span>,sep<span class="op">=</span><span class="st">""</span><span class="op">)</span>,
+                  years<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">41</span><span class="op">)</span><span class="op">)</span>
+
+<span class="co"># A function to extract years for each dataset</span>
+<span class="va">get_years</span><span class="op">=</span><span class="kw">function</span><span class="op">(</span><span class="va">http</span><span class="op">)</span><span class="op">{</span>
+  <span class="va">get</span><span class="op">=</span><span class="fu">GET</span><span class="op">(</span><span class="va">http</span><span class="op">)</span>
+  <span class="va">html</span> <span class="op">&lt;-</span> <span class="fu">read_html</span><span class="op">(</span><span class="va">get</span><span class="op">)</span>
+  <span class="va">year</span><span class="op">=</span><span class="va">html</span> <span class="op">%&gt;%</span> <span class="fu">html_nodes</span><span class="op">(</span>xpath<span class="op">=</span><span class="st">'//p[contains(text(),"Life tables")]/../../../tr[12]/td[2]/p'</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">html_text</span><span class="op">(</span>trim<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
+  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="co"># Adding years to information table. </span>
+<span class="va">inform</span><span class="op">$</span><span class="va">years</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">41</span><span class="op">]</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">inform</span><span class="op">$</span><span class="va">http</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">24</span><span class="op">]</span>,<span class="va">get_years</span>,USE.NAMES <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">glimpse</span><span class="op">(</span><span class="va">inform</span><span class="op">)</span></code></pre></div>
+<pre><code>#&gt; Rows: 41
+#&gt; Columns: 3
+#&gt; $ country &lt;chr&gt; "Australia", "Finland", "Latvia", "Slovenia", "Austria", "Fran…
+#&gt; $ http    &lt;chr&gt; "https://www.mortality.org/cgi-bin/hmd/country.php?cntr=AUS&amp;le…
+#&gt; $ years   &lt;chr&gt; "1921  - 2019", "1878  - 2020", "1959  - 2019", "1983  - 2019"…</code></pre>
+</div>
+<div id="scraping-the-data" class="section level2" number="1.2">
+<h2>
+<span class="header-section-number">1.2</span> Scraping the Data<a class="anchor" aria-label="anchor" href="#scraping-the-data"><i class="fas fa-link"></i></a>
+</h2>
+<p>Note that using Rstudio Cloud yields much a quicker result! At this point, we shall have all the HTTPS and xpath to collect all of 40 datasets and store it in the <em>full_df</em> variable. This is a time-consuming step since we are having the conversation with a dataframe containing more than 800 thousand entries. Function data_set is constructed with the idea that:</p>
+<ol style="list-style-type: decimal">
+<li>Create the HTTPS connection to each country data using the xpath from <strong>mortality.org</strong> homepage.<br>
+</li>
+<li>Use the <em>read_table</em> function with the <em>content</em> argument to import txt file into R. Since <strong>mortality.org</strong> requires a personal account for downloading any data provided, we shall need to input the account in the <em>authenticate</em> argument.<br>
+</li>
+<li>Filter needed columns.</li>
+</ol>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># A function to scrape data from the website. </span>
+<span class="va">data_set</span><span class="op">=</span><span class="kw">function</span><span class="op">(</span><span class="va">i</span>,<span class="va">gender</span><span class="op">)</span><span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"Successfully scrape "</span>,<span class="va">i</span>,<span class="st">":"</span>,<span class="va">inform</span><span class="op">$</span><span class="va">country</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
+  <span class="kw">if</span><span class="op">(</span><span class="va">gender</span><span class="op">==</span><span class="st">'females'</span><span class="op">)</span><span class="op">{</span>
+    <span class="va">data</span><span class="op">=</span><span class="fu">read_table</span><span class="op">(</span><span class="fu">content</span><span class="op">(</span><span class="fu">GET</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"https://www.mortality.org"</span><span class="op">)</span>,<span class="fu">GET</span><span class="op">(</span><span class="va">inform</span><span class="op">$</span><span class="va">http</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">read_html</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">html_nodes</span><span class="op">(</span>xpath<span class="op">=</span><span class="st">'//p[contains(text(),"Life tables")]/../../../tr[13]/td[3]/div/a'</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">html_attr</span><span class="op">(</span><span class="st">"href"</span><span class="op">)</span>,sep<span class="op">=</span><span class="st">""</span><span class="op">)</span>,<span class="fu">authenticate</span><span class="op">(</span>user<span class="op">=</span><span class="st">"dattran.hcmiu@gmail.com"</span>, password<span class="op">=</span><span class="st">"1632536609"</span>, type <span class="op">=</span> <span class="st">"basic"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,col_names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+  <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span>
+    <span class="va">data</span><span class="op">=</span><span class="fu">read_table</span><span class="op">(</span><span class="fu">content</span><span class="op">(</span><span class="fu">GET</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"https://www.mortality.org"</span><span class="op">)</span>,<span class="fu">GET</span><span class="op">(</span><span class="va">inform</span><span class="op">$</span><span class="va">http</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">read_html</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">html_nodes</span><span class="op">(</span>xpath<span class="op">=</span><span class="st">'//p[contains(text(),"Life tables")]/../../../tr[14]/td[3]/div/a'</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">html_attr</span><span class="op">(</span><span class="st">"href"</span><span class="op">)</span>,sep<span class="op">=</span><span class="st">""</span><span class="op">)</span>,<span class="fu">authenticate</span><span class="op">(</span>user<span class="op">=</span><span class="st">"dattran.hcmiu@gmail.com"</span>, password<span class="op">=</span><span class="st">"1632536609"</span>, type <span class="op">=</span> <span class="st">"basic"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,col_names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+  <span class="op">}</span>
+  <span class="va">data_3</span><span class="op">=</span><span class="va">data</span><span class="op">[</span><span class="fl">3</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">data_3</span><span class="op">)</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"year"</span>, <span class="st">"Age"</span>, <span class="st">"mx"</span>, <span class="st">"qx"</span>, <span class="st">"ax"</span>, <span class="st">"lx"</span>, <span class="st">"dx"</span><span class="op">)</span>
+  <span class="va">data_3</span><span class="op">$</span><span class="va">country</span><span class="op">=</span><span class="va">inform</span><span class="op">$</span><span class="va">country</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>
+  <span class="va">data_3</span>
+<span class="op">}</span>
+<span class="co"># A loop to combine 2*40 data tables</span>
+<span class="va">table_combine</span><span class="op">=</span><span class="kw">function</span><span class="op">(</span><span class="va">data_gender</span>,<span class="va">gender</span><span class="op">)</span><span class="op">{</span>
+  <span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">40</span><span class="op">)</span><span class="op">{</span>
+    <span class="va">new_data_gender</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">data_gender</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span>
+    <span class="kw">if</span><span class="op">(</span><span class="va">i</span><span class="op">==</span><span class="fl">1</span><span class="op">)</span><span class="op">{</span>
+      <span class="va">full_data_gender</span><span class="op">=</span><span class="va">new_data_gender</span>
+    <span class="op">}</span> <span class="kw">else</span><span class="op">{</span>
+      <span class="va">full_data_gender</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">full_data_gender</span>,<span class="va">new_data_gender</span><span class="op">)</span>
+    <span class="op">}</span>
+  <span class="op">}</span>
+  <span class="kw">if</span><span class="op">(</span><span class="va">gender</span><span class="op">==</span><span class="st">"females"</span><span class="op">)</span><span class="op">{</span>
+    <span class="va">full_data_gender</span><span class="op">=</span><span class="va">full_data_gender</span> <span class="op">%&gt;%</span> <span class="fu">mutate</span><span class="op">(</span>gender<span class="op">=</span><span class="st">"females"</span><span class="op">)</span>
+  <span class="op">}</span> <span class="kw">else</span><span class="op">{</span>
+    <span class="va">full_data_gender</span><span class="op">=</span><span class="va">full_data_gender</span> <span class="op">%&gt;%</span> <span class="fu">mutate</span><span class="op">(</span>gender<span class="op">=</span><span class="st">"males"</span><span class="op">)</span>
+  <span class="op">}</span>
+<span class="op">}</span>
+<span class="co"># Big data</span>
+<span class="co"># Error for 25:Chile data still haven't been explained so we only apply the scrape data function for 40 numbers</span>
+<span class="va">full_df</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="fu">table_combine</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">24</span>,<span class="fl">26</span><span class="op">:</span><span class="fl">41</span><span class="op">)</span>,<span class="va">data_set</span>,<span class="st">"females"</span><span class="op">)</span>,<span class="st">"females"</span><span class="op">)</span>,<span class="fu">table_combine</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">24</span>,<span class="fl">26</span><span class="op">:</span><span class="fl">41</span><span class="op">)</span>,<span class="va">data_set</span>,<span class="st">"males"</span><span class="op">)</span>,<span class="st">"males"</span><span class="op">)</span><span class="op">)</span>
+<span class="co"># Transform datatype to numeric</span>
+<span class="va">full_df</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/transform.html">transform</a></span><span class="op">(</span><span class="va">full_df</span>,Age<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">Age</span><span class="op">)</span>,qx<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">qx</span><span class="op">)</span>,lx<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">lx</span><span class="op">)</span>,year<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">glimpse</span><span class="op">(</span><span class="va">full_df</span><span class="op">)</span></code></pre></div>
+<pre><code>#&gt; Rows: 816,516
+#&gt; Columns: 9
+#&gt; $ year    &lt;dbl&gt; 1921, 1921, 1921, 1921, 1921, 1921, 1921, 1921, 1921, 1921, 19…
+#&gt; $ Age     &lt;dbl&gt; 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, …
+#&gt; $ mx      &lt;chr&gt; "0.05999", "0.01206", "0.00578", "0.00289", "0.00325", "0.0025…
+#&gt; $ qx      &lt;dbl&gt; 0.05750, 0.01199, 0.00576, 0.00288, 0.00325, 0.00251, 0.00248,…
+#&gt; $ ax      &lt;chr&gt; "0.28", "0.50", "0.50", "0.50", "0.50", "0.50", "0.50", "0.50"…
+#&gt; $ lx      &lt;dbl&gt; 100000, 94250, 93120, 92583, 92316, 92016, 91785, 91557, 91391…
+#&gt; $ dx      &lt;chr&gt; "5750", "1130", "537", "267", "300", "231", "228", "166", "126…
+#&gt; $ country &lt;chr&gt; "Australia", "Australia", "Australia", "Australia", "Australia…
+#&gt; $ gender  &lt;chr&gt; "females", "females", "females", "females", "females", "female…</code></pre>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="index.html">About me</a></div>
+<div class="next"><a href="usa-insights.html"><span class="header-section-number">2</span> USA Insights</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#datasets"><span class="header-section-number">1</span> Datasets</a></li>
+<li><a class="nav-link" href="#the-information-table"><span class="header-section-number">1.1</span> The Information Table</a></li>
+<li><a class="nav-link" href="#scraping-the-data"><span class="header-section-number">1.2</span> Scraping the Data</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/cliex159/portfolio/blob/master/02-cross-refs.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/cliex159/portfolio/edit/master/02-cross-refs.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Life Expectancy</strong>: Dr. Le Nhat Tan" was written by true. It was last built on 26 April 2022.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>
